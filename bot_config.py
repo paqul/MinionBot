@@ -5,7 +5,7 @@ import responses
 import roles
 import members
 import youtube_dl
-from token import test
+from params import token
 import asyncio
 # import audio
 import sys
@@ -15,7 +15,7 @@ channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 # Discord music feature of bot Initialization
-key = test
+key = token
 # key = token
 voice_clients = {}
 yt_dl_opts = {'format': 'bestaudio/best'}

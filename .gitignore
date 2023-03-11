@@ -117,7 +117,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 members.py
-token.py
+params.py
 MANIFEST
 
 # PyInstaller
