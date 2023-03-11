@@ -1,0 +1,2 @@
+TOKEN = MTA1NTU3NjY0MjI1NDI4NjkzOA.G-dYvF.WC5aUZCCDEgyi2UecbSeFoozfsY3yTNHrU13DI
+link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
