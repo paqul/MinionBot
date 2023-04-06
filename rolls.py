@@ -19,7 +19,7 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
         return apologize_message
 
 
-def roll_bonus_penalty(author, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
+def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
         dice_type = "premiowa"
     elif bonus == "k":
