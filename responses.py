@@ -50,7 +50,7 @@ def handle_response(msg, author) -> str:
         return roll_response
     #Rest
     elif msg == "help":
-        return "Aby uzyskać wynik wynik na k100, proszę o użycie funkcji roll"
+        return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>)"
     elif msg == "promotion":
         return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
     elif msg == "negative":
