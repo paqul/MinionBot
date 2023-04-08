@@ -1,4 +1,4 @@
-from rolls import roll, roll_bonus_penalty
+from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd
 import sys
 
 list_of_dices = list(range(1, 100))
@@ -11,8 +11,22 @@ def handle_response(msg, author) -> str:
     hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry"]
     for hi in hello:
         if msg.startswith(hi):
-            return "W imieniu dyrekicji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
+            return "W imieniu dyrekcji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
     #Dices
+    if msg[-1] in "ad": #Dnd5 (Dis)Advantage
+        if msg[0].isdigit() and (msg[1] == "k") and msg[2:-1].isdigit():
+                amount_of_rolls = int(msg[0])
+                dice = int(msg[2:-1])
+                bonus = msg[-1]
+                roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+                return roll_response
+        elif msg[0].isdigit() and msg[1].isdigit() and (msg[2] == "k") and msg[3:-1].isdigit():
+                amount_of_rolls = int(msg[0] + msg[1])
+                dice = int(msg[3:-2])
+                bonus = msg[-1]
+                roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+                return roll_response
+    else: pass #Call of Cthulu BonusPenalty dice
     if msg[-1] in "kp":
         if msg[-2] in "kp" and msg[-3].isdigit(): #dobule bonus/fault dice
             if msg[0].isdigit() and (msg[1] == "k") and msg[2:-2].isdigit():
@@ -35,7 +49,7 @@ def handle_response(msg, author) -> str:
                 amount_of_rolls = int(msg[0] + msg[1])
                 dice = int(msg[3:-1])
                 roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], False)
-                return roll_response
+                return roll_response       
         else:
             pass #normal roll
     if msg[0].isdigit() and (msg[1] == "k") and msg[2:].isdigit():
@@ -50,7 +64,7 @@ def handle_response(msg, author) -> str:
         return roll_response
     #Rest
     elif msg == "help":
-        return "Aby uzyskać wynik wynik rzutu, proszę o wpisanie ilości rzutów, następnie 'k' i ilosci ścian na kości (np. 1k100)"
+        return "Aby uzyskać wynik rzutu, proszę o wpisanie ilości rzutów, następnie 'k' i ilosci ścian na kości (np. 1k100)"
     elif msg == "promotion":
         return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
     elif msg == "negative":

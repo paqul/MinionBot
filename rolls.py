@@ -64,9 +64,9 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
         return apologize_message
 
 def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
-    if bonus == "p":
+    if bonus == "a":
         dice_type = "Ułatwienie / Advantage"
-    elif bonus == "k":
+    elif bonus == "d":
         dice_type = "Utrudnienie / Disadvantage"
     else:
         dice_type = "Błąd typu kości"
@@ -75,11 +75,11 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
         for _ in range(int(amount_of_rolls)):
             roll0 = r(1, dice)
             roll1 = r(1, dice)
-            combinedrolls = "[" + str(roll0) + ", " + str(roll1) + "]"
+            combinedrolls = "(" + str(roll0) + ", " + str(roll1) + ")"
             diceresults.append(combinedrolls)  
-        if bonus == "k":
-            return f"({author.mention} [k{dice}, {dice_type}]): **" + str(sorted(diceresults)) + "**"
-        if bonus == "p":
-            return f"({author.mention} [k{dice}, {dice_type}]): **" + str(sorted(diceresults, reverse=True)) + "**"
+        if bonus == "d":
+            return f"({author.mention} [k{dice}, {dice_type}]): " + str(sorted(diceresults))
+        if bonus == "a":
+            return f"({author.mention} [k{dice}, {dice_type}]): " + str(sorted(diceresults, reverse=True))
     else:
         return apologize_message
