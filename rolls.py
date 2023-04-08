@@ -1,8 +1,9 @@
 from random import randint as r
 from members import sorted_authors
 
-dices = [2, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
+dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 penalty_bonus_dices = [100]
+penalty_bonus_dices_dnd = [20]
 apologize_message = "Bardzo mi przykro ale nie posiadam takiej kostki"
 
 
@@ -59,5 +60,26 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
             return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **" + str(lst) + "**"
         else:
             return f"({author.mention} [k{dice}, {dice_type}]): **" + str(lst) + "**"
+    else:
+        return apologize_message
+
+def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
+    if bonus == "p":
+        dice_type = "Ułatwienie / Advantage"
+    elif bonus == "k":
+        dice_type = "Utrudnienie / Disadvantage"
+    else:
+        dice_type = "Błąd typu kości"
+    if dice in penalty_bonus_dices_dnd:
+        diceresults = []
+        for _ in range(int(amount_of_rolls)):
+            roll0 = r(1, dice)
+            roll1 = r(1, dice)
+            combinedrolls = "[" + str(roll0) + ", " + str(roll1) + "]"
+            diceresults.append(combinedrolls)  
+        if bonus == "k":
+            return f"({author.mention} [k{dice}, {dice_type}]): **" + str(sorted(diceresults)) + "**"
+        if bonus == "p":
+            return f"({author.mention} [k{dice}, {dice_type}]): **" + str(sorted(diceresults, reverse=True)) + "**"
     else:
         return apologize_message

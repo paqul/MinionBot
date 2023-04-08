@@ -2,7 +2,7 @@ from rolls import roll, roll_bonus_penalty
 import sys
 
 list_of_dices = list(range(1, 100))
-dices = [2, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
+dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
 
 def handle_response(msg, author) -> str:
@@ -50,13 +50,13 @@ def handle_response(msg, author) -> str:
         return roll_response
     #Rest
     elif msg == "help":
-        return "Aby uzyskać wynik wynik na k100, proszę o użycie funkcji roll"
+        return "Aby uzyskać wynik wynik rzutu, proszę o wpisanie ilości rzutów, następnie 'k' i ilosci ścian na kości (np. 1k100)"
     elif msg == "promotion":
         return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
     elif msg == "negative":
         return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
     elif msg == "welcome":
-        return f"{author} witamy na serwerze 'Władcy Kości'!"
+        return f"{author} Witamy na serwerze 'Władcy Kości'!"
     else:
         pass #do rest
 
