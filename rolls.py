@@ -89,3 +89,4 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
             return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
     else:
         return apologize_message
+        
