@@ -70,7 +70,7 @@ def handle_response(msg, author) -> str:
     elif msg == "negative":
         return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
     elif msg == "welcome":
-        return f"{author} Witamy na serwerze 'Władcy Kości'!"
+        return f"{author} witamy na serwerze 'Władcy Kości'!"
     else:
         pass #do rest
 
