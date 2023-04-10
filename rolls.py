@@ -71,15 +71,21 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
     else:
         dice_type = "Błąd typu kości"
     if dice in penalty_bonus_dices_dnd:
-        diceresults = []
+        diceresults = ""
         for _ in range(int(amount_of_rolls)):
+            combinedrolls = []
             roll0 = r(1, dice)
+            combinedrolls.append(roll0)
             roll1 = r(1, dice)
-            combinedrolls = "(" + str(roll0) + ", " + str(roll1) + ")"
-            diceresults.append(combinedrolls)  
+            combinedrolls.append(roll1)
+            if bonus == "d":
+                return diceresults == "(" + sorted(combinedrolls) + ")"
+            elif bonus == "a":
+                return diceresults == "(" + sorted(combinedrolls, reverse=True) + ")"
+            else: continue
         if bonus == "d":
-            return f"({author.mention} [k{dice}, {dice_type}]): " + str(sorted(diceresults))
+            return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
         if bonus == "a":
-            return f"({author.mention} [k{dice}, {dice_type}]): " + str(sorted(diceresults, reverse=True))
+            return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
     else:
         return apologize_message
