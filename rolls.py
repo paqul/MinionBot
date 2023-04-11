@@ -63,7 +63,7 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
     else:
         return apologize_message
 
-def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
+def penalty_bonus_roll_dnd(author, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
     if bonus == "a":
         dice_type = "Ułatwienie / Advantage"
     elif bonus == "d":
@@ -71,7 +71,7 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
     else:
         dice_type = "Błąd typu kości"
     if dice in penalty_bonus_dices_dnd:
-        diceresults = ""
+        diceresults = []
         for _ in range(int(amount_of_rolls)):
             combinedrolls = []
             roll0 = r(1, dice)
@@ -79,10 +79,11 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
             roll1 = r(1, dice)
             combinedrolls.append(roll1)
             if bonus == "d":
-                return diceresults == "(" + sorted(combinedrolls) + ")"
+                diceresults.append("(" + str(sorted(combinedrolls)) + ")")
             elif bonus == "a":
-                return diceresults == "(" + sorted(combinedrolls, reverse=True) + ")"
-            else: continue
+                diceresults.append("(" + str(sorted(combinedrolls, reverse=True)) + ")")
+            else: 
+                continue
         if bonus == "d":
             return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
         if bonus == "a":
