@@ -63,7 +63,7 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
     else:
         return apologize_message
 
-def penalty_bonus_roll_dnd(author, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
+def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
     if bonus == "a":
         dice_type = "Ułatwienie / Advantage"
     elif bonus == "d":
