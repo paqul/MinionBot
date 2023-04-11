@@ -71,23 +71,24 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
     else:
         dice_type = "Błąd typu kości"
     if dice in penalty_bonus_dices_dnd:
-        diceresults = []
+        lst_diceresults = []
         for _ in range(int(amount_of_rolls)):
-            combinedrolls = []
-            roll0 = r(1, dice)
-            combinedrolls.append(roll0)
-            roll1 = r(1, dice)
-            combinedrolls.append(roll1)
+            lst_combinedrolls = []
+            int_roll0 = r(1, dice)
+            lst_combinedrolls.append(int_roll0)
+            int_roll1 = r(1, dice)
+            lst_combinedrolls.append(int_roll1)
             if bonus == "d":
-                diceresults.append("(" + str(sorted(combinedrolls)) + ")")
+                lst_diceresults.append(str(sorted(lst_combinedrolls, reverse=False)))
             elif bonus == "a":
-                diceresults.append("(" + str(sorted(combinedrolls, reverse=True)) + ")")
+                lst_diceresults.append(str(sorted(lst_combinedrolls, reverse=True)))
             else: 
                 continue
-        if bonus == "d":
-            return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
-        if bonus == "a":
-            return f"({author.mention} [k{dice}, {dice_type}]): " + str(diceresults)
+        if bonus in ("a", "d"):
+            str_diceresults = str(lst_diceresults).replace("[", "", 1).replace("'","")
+            return f"({author} [k{dice}, {dice_type}]): " + str_diceresults[0:-1]
+        elif dice_type == "Błąd typu kości":
+            return apologize_message
     else:
         return apologize_message
         

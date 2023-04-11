@@ -22,7 +22,7 @@ def handle_response(msg, author) -> str:
                 return roll_response
         elif msg[0].isdigit() and msg[1].isdigit() and (msg[2] == "k") and msg[3:-1].isdigit():
                 amount_of_rolls = int(msg[0] + msg[1])
-                dice = int(msg[3:-2])
+                dice = int(msg[3:-1])
                 bonus = msg[-1]
                 roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
                 return roll_response
