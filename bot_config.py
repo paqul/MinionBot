@@ -63,7 +63,7 @@ def setup_bot():
 
 async def send_private(member, msg):
     try:
-        response = responses.handle_response(msg, member.name)
+        response = responses.handle_response(msg, member.name, member.id)
         await member.send(response)
     except Exception as E:
         print(E)
@@ -82,7 +82,7 @@ async def send_msg(msg, user_msg, private):
                 print(E)
         else:
             try:
-                resp = responses.handle_response(user_msg, msg.author)
+                resp = responses.handle_response(user_msg, msg.author, msg.author.id)
                 await msg.author.send(resp) if private else await msg.channel.send(resp)
             except Exception as E:
                 print(E)

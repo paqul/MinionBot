@@ -1,17 +1,28 @@
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd
 import sys
+import csv 
 
 list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
 
-def handle_response(msg, author) -> str:
+def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
+    lst_KnownUsers = []
+    with open("WelcomedUserIDs.csv", newline="\n") as csvfile_read:
+        reader = csv.reader(csvfile_read, delimiter=";")
+        for row in reader:
+            lst_KnownUsers.extend(row)       
     #Welcome
-    hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry"]
+    hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry", "siema", "joł", "elo", "czolem", "czołem"]
     for hi in hello:
-        if msg.startswith(hi):
+        if msg.startswith(hi) and author_id not in lst_KnownUsers:
+            with open("WelcomedUserIDs.csv","a", newline="\n",) as csvfile_write:
+                writer = csv.writer(csvfile_write, delimiter=";")
+                writer.writerow([author_id])
             return "W imieniu dyrekcji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
+        else:
+            continue
     #Dices
     if msg[-1] in "ad": #Dnd5 (Dis)Advantage
         if msg[0].isdigit() and (msg[1] == "k") and msg[2:-1].isdigit():
