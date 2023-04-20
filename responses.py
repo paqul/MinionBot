@@ -13,7 +13,7 @@ def handle_response(msg, author, author_id) -> str:
         for row in reader:
             lst_KnownUsers.append(row[0])
     #Welcome
-    hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry", "siema", "joł", "elo", "czolem", "czołem"]
+    hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry", "siema", "joł", "elo", "czolem", "czołem", "siema", "siemka", "siemano"]
     for hi in hello:
         if msg.startswith(hi) and str(author_id) not in lst_KnownUsers:
             with open("WelcomedUserIDs.csv","a", newline="\n",) as csvfile_write:
