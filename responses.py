@@ -5,7 +5,6 @@ import csv
 list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
-
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     lst_KnownUsers = []
@@ -19,7 +18,7 @@ def handle_response(msg, author, author_id) -> str:
         if msg.startswith(hi) and author_id not in lst_KnownUsers:
             with open("WelcomedUserIDs.csv","a", newline="\n",) as csvfile_write:
                 writer = csv.writer(csvfile_write, delimiter=";")
-                writer.writerow([author_id])
+                writer.writerow([author_id, author])
             return "W imieniu dyrekcji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
         else:
             continue
