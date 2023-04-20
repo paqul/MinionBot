@@ -11,14 +11,14 @@ def handle_response(msg, author, author_id) -> str:
     with open("WelcomedUserIDs.csv", newline="\n") as csvfile_read:
         reader = csv.reader(csvfile_read, delimiter=";")
         for row in reader:
-            lst_KnownUsers.extend(row)       
+            lst_KnownUsers.append(row[0])
     #Welcome
     hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry", "siema", "joł", "elo", "czolem", "czołem"]
     for hi in hello:
-        if msg.startswith(hi) and author_id not in lst_KnownUsers:
+        if msg.startswith(hi) and str(author_id) not in lst_KnownUsers:
             with open("WelcomedUserIDs.csv","a", newline="\n",) as csvfile_write:
                 writer = csv.writer(csvfile_write, delimiter=";")
-                writer.writerow([author_id, author])
+                writer.writerow([str(author_id), str(author)])
             return "W imieniu dyrekcji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
         else:
             continue
