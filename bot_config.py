@@ -11,8 +11,8 @@ import asyncio
 import sys
 
 from discord.ext import commands
-channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy", "gra", "dungeonsanddragons", "neuroshima", "zew", "rzuty-w-trakcie-sesji", "DD", "ZEW"]
-channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy", "gra", "dungeonsanddragons", "neuroshima", "zew", "rzuty-w-trakcie-sesji", "DD", "ZEW", "testy"]
+channels_on_test = ["sala_spotkań", "dział_techcznicny", "general", "testy"]
 
 # Discord music feature of bot Initialization
 key = token
