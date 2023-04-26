@@ -1,6 +1,7 @@
 import sys
 import csv
 import time
+import discord
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd
 from rolls import dices, penalty_bonus_dices, penalty_bonus_dices_dnd
 
@@ -90,20 +91,20 @@ def handle_name_response(name_msg) -> str:
     if name_msg == "<@1055576642254286938> znikaj":
         sys.exit()
     elif name_msg == "<@1055576642254286938> autotest":
-        autotest_feature_positive()
-        print(str("Autotest Commencing"))        
+        return autotest_feature_positive()      
     else:
         return "Proszę o wybaczanie, aczkolwiek mój zasób usług którę oferuje jest bardzo ograniczony, Przepraszam"
     
 #Autotest - Allows to test all current rolls 
 
-roll_amounts = [1,3,10,99,100]
+roll_amounts = [1,3,10,99]
 def autotest_feature_positive() -> str:
-    print(str("Autotest Commencing"))
+    print("Autotest Commencing")
+    rollscount = 0
     for current_dice in dices: 
         for current_roll_amount in roll_amounts:
             message = str(str(current_roll_amount) + "k" + str(current_dice))
-            time.sleep(2) 
-            print(message)   
-                 
-    return print(str("Autotest Finished"))
+            rollscount += 1
+            time.sleep(1)
+            print(message)             
+    return print("Autotest Finished" + " " + "- I have rolled a total of" + " " + str(rollscount) + " " + "rolls")
