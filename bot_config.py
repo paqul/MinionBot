@@ -13,7 +13,7 @@ import sys
 from discord.ext import commands
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
-               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW"]
+               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 # Discord music feature of bot Initialization
