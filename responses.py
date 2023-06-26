@@ -1,7 +1,7 @@
 import sys
 import csv
 import time
-from discord.ext import commands
+from bot_config import client
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd
 from rolls import dices, penalty_bonus_dices, penalty_bonus_dices_dnd
 
@@ -96,10 +96,10 @@ def handle_name_response(name_msg) -> str:
         return "Proszę o wybaczanie, aczkolwiek mój zasób usług którę oferuje jest bardzo ograniczony, Przepraszam"
     
 #Autotest - Allows to test all current rolls 
-test_dice = dices
-roll_amounts = [1,3,10,99]
+
 async def autotest_feature_positive() -> str:
-    channel = commands.Bot.get_channel(1099995730518745128)
+    roll_amounts = [1,3,10,99]
+    channel = client.get_channel(1099995730518745128)
     await channel.send("Autotest Commencing")
     rollscount = 0
     for current_dice in dices: 
