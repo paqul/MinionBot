@@ -1,7 +1,6 @@
 import sys
 import csv
 import time
-from bot_config import client
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd
 from rolls import dices, penalty_bonus_dices, penalty_bonus_dices_dnd
 
