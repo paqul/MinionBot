@@ -96,10 +96,10 @@ def handle_name_response(name_msg) -> str:
     
 #Autotest - Allows to test all current rolls 
 
-async def autotest_feature_positive() -> str:
+async def autotest_feature_positive():
     roll_amounts = [1,3,10,99]
     channel = client.get_channel(1099995730518745128)
-    await channel.send("Autotest Commencing")
+    await channel.send(print("Autotest Commencing"))
     rollscount = 0
     for current_dice in dices: 
         for current_roll_amount in roll_amounts:
@@ -108,4 +108,4 @@ async def autotest_feature_positive() -> str:
             time.sleep(2)
             print(message)   
             await channel.send(message)
-    return await channel.send("Autotest Finished - I have rolled a total of "+ str(rollscount) + " rolls")
+    return print("Autotest Finished - I have rolled a total of "+ str(rollscount) + " rolls")
