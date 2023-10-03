@@ -15,7 +15,7 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
             lst.append(number)
         if str(author.name) in sorted_authors:
             lst = sorted(lst)
-        return f"({author.mention} k{dice}): **" + str(lst) + "**"
+        return f"({author.mention} k{dice}): **" + str(lst) + " | Suma: " + sum(lst) + "**"
     else:
         return apologize_message
 
@@ -86,7 +86,7 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
                 continue
         if bonus in ("a", "d"):
             str_diceresults = str(lst_diceresults).replace("[", "", 1).replace("'","")
-            return f"({author.mention} [k{dice}, {dice_type}]): " + str_diceresults[0:-1]
+            return f"({author.mention} [k{dice}, {dice_type}]): **" + str_diceresults[0:-1] + "**"
         elif dice_type == "Błąd typu kości":
             return apologize_message
     else:
