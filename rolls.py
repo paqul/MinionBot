@@ -10,15 +10,15 @@ apologize_message = "Bardzo mi przykro ale nie posiadam takiej kostki"
 def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice in dices:
         lst = []
-        sum = ""
+        sum_of_rolls = ""
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
             lst.append(number)
         if str(author.name) in sorted_authors:
             lst = sorted(lst)
         if amount_of_rolls > 1:
-            sum = " | Suma: " + str(sum(lst))
-        return f"({author.mention} k{dice}): **" + str(lst) + sum +"**"
+            sum_of_rolls = " | Suma: " + str(sum((lst)))
+        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
         return apologize_message
 
