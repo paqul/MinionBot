@@ -94,4 +94,13 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
             return apologize_message
     else:
         return apologize_message
-        
+def roll_dnd_stat_block(author: object) -> str:
+    lst_stats_final = []
+    n = 6
+    for x in range(n):
+        stat_single = [r(1, 6),r(1, 6),r(1, 6),r(1, 6)]
+        stat_single.sort(reverse=True)
+        droplow_stat_single = stat_single[:3]
+        sum_stat_single = sum(droplow_stat_single)
+        lst_stats_final.append(sum_stat_single) 
+    return f"({author.mention}, Rzuty na statystyki DnD): **" + str(sorted(lst_stats_final, reverse=True)) + "**"
