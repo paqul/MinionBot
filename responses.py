@@ -75,12 +75,12 @@ def handle_response(msg, author, author_id) -> str:
     #Rest
     elif msg == "help":
         return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>)"
-    elif msg == "promotion":
-        return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
-    elif msg == "negative":
-        return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
-    elif msg == "welcome":
-        return f"{author} witamy na serwerze 'Władcy Kości'!"
+    # elif msg == "promotion":
+    #     return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
+    # elif msg == "negative":
+    #     return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
+    # elif msg == "welcome":
+    #     return f"{author} witamy na serwerze 'Władcy Kości'!"
     elif msg == "statystyki_dnd":
         return roll_dnd_stat_block(author)
     else:
