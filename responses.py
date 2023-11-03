@@ -5,6 +5,7 @@ import csv
 list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
+
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     lst_KnownUsers = []
@@ -72,6 +73,10 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(msg[3:])
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
+    elif msg == "autotest":
+        # autotest()
+        # return autotest()
+        return "1k10"
     #Rest
     elif msg == "help":
         return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>)"

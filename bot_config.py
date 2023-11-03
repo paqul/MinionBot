@@ -6,6 +6,7 @@ import roles
 import members
 import youtube_dl
 from params import token
+import threading
 import asyncio
 # import audio
 import sys
@@ -14,7 +15,7 @@ from discord.ext import commands
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
-               "jednostrzały", "DD 5e"]
+               "jednostrzały", "DD 5e", "CYBERPUNKRED"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 # Discord music feature of bot Initialization
@@ -45,7 +46,10 @@ def setup_bot():
         if msg.author == client.user:
             return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        await send_msg(msg, msg.content, private=False)
+        if msg.author == "autotest":
+            await send_msg(msg, "1k10", private=False)
+        else:
+            await send_msg(msg, msg.content, private=False)
 
     @client.event
     async def on_member_join(member):
@@ -63,6 +67,11 @@ def setup_bot():
     client.run(token)
     # bot.run(token)
 
+async def autotest():
+    print("TEST")
+    await send_msg("1k10", "1k10".content, private=False)
+    # send_msg("1k10", user_msg, private)
+    # return "1k10"
 
 async def send_private(member, msg):
     try:
@@ -90,6 +99,14 @@ async def send_msg(msg, user_msg, private):
             except Exception as E:
                 print(E)
 
+def double_thread(user_msg, author, author_id):
+    th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    th_1.start()
+    th_2.start()
+    th_1.join()
+    th_2.join()
+    # return th_2
 
 async def get_role(member):
     try:
