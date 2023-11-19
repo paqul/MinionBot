@@ -1,6 +1,7 @@
 #link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
 
 import discord
+from discord.ext import tasks, commands
 import responses
 import roles
 import members
@@ -15,7 +16,7 @@ from discord.ext import commands
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
-               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna"]
+               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 # Discord music feature of bot Initialization
@@ -50,6 +51,14 @@ def setup_bot():
             await send_msg(msg, "1k10", private=False)
         else:
             await send_msg(msg, msg.content, private=False)
+
+    @tasks.loop(seconds=120)
+    async def check_role():
+        print("CHECK ROLE")
+        global members
+        guild = client.get_guild(client)
+        role = guild.get_role(roles)
+        members = [member for member in guild.members if role in member.roles]
 
     @client.event
     async def on_member_join(member):
