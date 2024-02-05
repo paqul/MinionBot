@@ -66,7 +66,7 @@ def handle_response(msg, author, author_id) -> str:
                 roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], False)
                 return roll_response       
         else:
-            pass #normal roll
+            pass
     if "+" in msg or "-" in msg or "*" in msg:
         modifier_type = None
         msg_index_of_modifier = None
@@ -99,7 +99,6 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(msg[3:])
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
-
     elif msg == "autotest":
         # autotest()
         # return autotest()
