@@ -23,6 +23,20 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
         return apologize_message
 
 
+def roll_with_modifier(author, amount_of_rolls: int, dice: int, modifier_type: str, value_after_math_operator: str) -> str:
+    if dice in dices:
+        lst = []
+        sum_of_rolls = ""
+        for _ in range(int(amount_of_rolls)):
+            number = r(1, dice)
+            lst.append(number)
+            number_mod = eval(str(sum((lst))) + modifier_type + value_after_math_operator)
+            sum_of_rolls = " | Wynik: " + str(number_mod)
+        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
+    else:
+        return apologize_message
+
+
 def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
         dice_type = "premiowa"
