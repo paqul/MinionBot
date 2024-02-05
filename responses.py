@@ -77,6 +77,10 @@ def handle_response(msg, author, author_id) -> str:
         # autotest()
         # return autotest()
         return "1k10"
+    elif msg == "midjourney":
+        # autotest()
+        # return autotest()
+        return "/imagine\x0bNight City, city of dreams"
     #Rest
     elif msg == "help":
         return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>)"
