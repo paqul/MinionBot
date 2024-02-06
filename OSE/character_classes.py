@@ -1,4 +1,4 @@
-from rolls import r
+from statistics import *
 
 
 def roll_hit_points(dices_phrase: str):
@@ -9,6 +9,16 @@ def roll_hit_points(dices_phrase: str):
         results.append(dice)
         hp = sum(results)
     return hp
+
+
+def randomize_all_statistics():
+    STR = Strength()
+    INT = Intelligence()
+    DEX = Dexterity()
+    CHA = Charisma()
+    WIS = Wisdom()
+    CON = Constitution()
+    return STR, INT, DEX, CHA, WIS, CON
 
 
 class Fighter(object):
@@ -22,26 +32,15 @@ class Fighter(object):
         Weapons: Any
         Languages: Alignment, Common
         """
+        self.STR, self.INT, self.DEX, self.CHA, self.WIS, self.CON = randomize_all_statistics()
 
-        """
-        Fighter Level Progression
-            Saving Throws
-            Level XP HD THAC0 D W P B S
-            1 0 1d8 19 [0] 12 13 14 15 16
-            2 2,000 2d8 19 [0] 12 13 14 15 16
-            3 4,000 3d8 19 [0] 12 13 14 15 16
-            4 8,000 4d8 17 [+2] 10 11 12 13 14
-            5 16,000 5d8 17 [+2] 10 11 12 13 14
-            6 32,000 6d8 17 [+2] 10 11 12 13 14
-            7 64,000 7d8 14 [+5] 8 9 10 10 12
-            8 120,000 8d8 14 [+5] 8 9 10 10 12
-            9 240,000 9d8 14 [+5] 8 9 10 10 12
-            10 360,000 9d8+2* 12 [+7] 6 7 8 8 10
-            11 480,000 9d8+4* 12 [+7] 6 7 8 8 10
-            12 600,000 9d8+6* 12 [+7] 6 7 8 8 10
-            13 720,000 9d8+8* 10 [+9] 4 5 6 5 8
-            14 840,000 9d8+10* 10 [+9] 4 5 6 5 8
-            """
+        self.requirements = None
+        self.prime_requisite = "STR"
+        self.hit_dice = "1d8"
+        self.max_lvl = 14
+        self.armours = None
+        self.weapons = None
+        self.languages = "Alignment", "Common"
 
         #Level XP HD THAC0 D W P B S
         fighter_statistics = {1:  [     0, "1d8", 0, 12, 13, 14, 15, 16],
@@ -64,3 +63,5 @@ class Fighter(object):
 
 x = Fighter()
 print(x)
+print(x.STR.value)
+print(x.WIS.value)

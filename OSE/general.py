@@ -1,4 +1,4 @@
-import OSE.statsistics
+import OSE.statistics
 
 
 x = OSE.statsistics.Strength()

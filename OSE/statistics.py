@@ -148,3 +148,23 @@ class Constitution(object):
     def __str__(self):
         return (f"Wartość cechy {self.name_of_trait}: {self.value}, Wyniki rzutu koścmi {self.results}, "
                 f" Modyfikator punktów życia {self.modifier_hit_points} ")
+
+
+class PrimeRequisite(object):
+    def __init__(self):
+        name_of_trait = "Modyfikator XP"
+        values_xp_modifiers = {3: -0.2, 4: -0.2, 5: -0.2, 6: -0.1, 7: -0.1, 8: -0.1,
+                               9: 0, 10: 0, 11: 0, 12: 0,
+                               13: 0.05, 14: 0.05, 15: 0.05, 16: 0.1, 17: 0.1, 18: 0.1}
+        results = []
+        for result in range(3):
+            dice = r(1, 6)
+            results.append(dice)
+        self.name_of_trait = name_of_trait
+        self.results = results
+        self.value = sum(results)
+        self.modifier_xp_modifiers = values_xp_modifiers[self.value]
+
+    def __str__(self):
+        return (f"Wartość cechy {self.name_of_trait}: {self.value}, Wyniki rzutu koścmi {self.results}, "
+                f" Modyfikator punktów doświadczenia {self.modifier_xp_modifiers} ")
