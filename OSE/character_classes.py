@@ -1,5 +1,5 @@
-from statistics import *
-from fantasy_names import *
+from OSE.statistics import *
+from OSE.fantasy_names import *
 
 
 def roll_dice(dices_phrase: str):

@@ -105,6 +105,7 @@ async def send_msg(msg, user_msg, private):
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
                 await msg.author.send(resp) if private else await msg.channel.send(resp)
+                # await channel.send('Working!', file=discord.File("file.txt"))
             except Exception as E:
                 print(E)
 
