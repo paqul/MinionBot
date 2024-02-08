@@ -1,32 +1,26 @@
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block
-import sys, time
-import csv 
-
-list_of_dices = list(range(1, 100))
-dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
-
+import sys, re
 
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
+    #Regular Roll Patttern
+    regular_roll_pattern = r'(\d+)[kd](\d+)$'
+    regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
+    if regular_roll_pattern_match:
+        amount_of_rolls = int(regular_roll_pattern_match.group(1))
+        dice = int(regular_roll_pattern_match.group(2))
+        roll_response = roll(author, amount_of_rolls, dice)
+        return roll_response
+    #Advantage/Disadvantage Roll Matching
+    dnd5_ad_roll_pattern = r'(\d+)[kd](\d+)[ad]$'
+    dnd5_ad_roll_pattern_match = re.match(dnd5_ad_roll_pattern, msg)
+    if dnd5_ad_roll_pattern_match:
+        amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
+        dice = int(dnd5_ad_roll_pattern_match.group(3))
+        bonus = dnd5_ad_roll_pattern_match.group(4)
+    else:
+        return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości> lub <ilość_kości>d<ilość_ściań_kości>). Aby modyfikować rzuty dla "
     
-    #Legacy code for welcoming users on the server on first msg from hello list
-    #lst_KnownUsers = []
-    #with open("WelcomedUserIDs.csv", newline="\n") as csvfile_read:
-        #reader = csv.reader(csvfile_read, delimiter=";")
-        #for row in reader:
-            #lst_KnownUsers.append(row[0])
-    #Welcome
-    #hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry", "siema", "joł", "elo", "czolem", "czołem", "siema", "siemka", "siemano"]
-    #for hi in hello:
-        #if msg.startswith(hi) and str(author_id) not in lst_KnownUsers:
-            #with open("WelcomedUserIDs.csv","a", newline="\n",) as csvfile_write:
-                #writer = csv.writer(csvfile_write, delimiter=";")
-                #writer.writerow([str(author_id), str(author)])
-            #return "W imieniu dyrekcji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
-        #else:
-            #continue
-    #Legacy code for welcoming users on the server on first msg from hello list
-
     #Dices
     if msg[-1] in "ad": #Dnd5 (Dis)Advantage
         if msg[0].isdigit() and (msg[1] == "k" or msg[1] == "d") and msg[2:-1].isdigit():
@@ -66,7 +60,21 @@ def handle_response(msg, author, author_id) -> str:
                 roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], False)
                 return roll_response       
         else:
-            pass #normal roll
+            pass
+    if "+" in msg or "-" in msg or "*" in msg:
+        modifier_expression = None
+        msg_index_of_modifier = None
+        if msg.find("+") != -1:
+            msg_index_of_modifier = msg.find("+")
+            modifier_type = "+"
+        elif msg.find("-") != -1:
+            msg_index_of_modifier = msg.find("-")
+            modifier_type = "-"
+        elif msg.find("*") != -1:
+            msg_index_of_modifier = msg.find("*")
+            modifier_type = "*"        
+        
+         #normal roll
     if msg[0].isdigit() and (msg[1] == "k" or msg[1] == "d") and msg[2:].isdigit():
         amount_of_rolls = int(msg[0])
         dice = int(msg[2:])
@@ -77,20 +85,8 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(msg[3:])
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
-    elif msg == "autotest":
-        # autotest()
-        # return autotest()
-        time.sleep(2)
-        return "1k10"
-    #Rest
     elif msg == "help":
         return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]"
-    # elif msg == "promotion":
-    #     return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
-    # elif msg == "negative":
-    #     return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
-    # elif msg == "welcome":
-    #     return f"{author} witamy na serwerze 'Władcy Kości'!"
     elif msg == "statystyki_dnd":
         return roll_dnd_stat_block(author)
     else:
