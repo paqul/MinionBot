@@ -1,5 +1,5 @@
 from random import randint as r
-#from members import sorted_authors
+from members import sorted_authors
 
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 penalty_bonus_dices = [100]
@@ -14,8 +14,8 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
             lst.append(number)
-        #if str(author.name) in sorted_authors:
-            #lst = sorted(lst)
+        if str(author.name) in sorted_authors:
+            lst = sorted(lst)
         if amount_of_rolls > 1:
             sum_of_rolls = " | Suma: " + str(sum((lst)))
         return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
