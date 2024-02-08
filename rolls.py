@@ -33,7 +33,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, equation: str) -
             sum_of_rolls = " | Wynik: " + str(number_mod)
         return f"({author} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
-        return "rollwithmod"
+        return apologize_message
 
 def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
