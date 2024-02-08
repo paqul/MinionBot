@@ -1,5 +1,5 @@
 from random import randint as r
-from members import sorted_authors
+#from members import sorted_authors
 
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 penalty_bonus_dices = [100]
@@ -14,26 +14,26 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
             lst.append(number)
-        if str(author.name) in sorted_authors:
-            lst = sorted(lst)
+        #if str(author.name) in sorted_authors:
+            #lst = sorted(lst)
         if amount_of_rolls > 1:
             sum_of_rolls = " | Suma: " + str(sum((lst)))
         return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
         return apologize_message
 
-def roll_with_modifier(author, amount_of_rolls: int, dice: int, modifier_type: str, value_after_math_operator: str) -> str:
+def roll_with_modifier(author, amount_of_rolls: int, dice: int, equation: str) -> str:
     if dice in dices:
         lst = []
         sum_of_rolls = ""
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
             lst.append(number)
-            number_mod = eval(str(sum((lst))) + modifier_type + value_after_math_operator)
+            number_mod = eval(str(sum((lst))) + "+" + "(" + equation + ")")
             sum_of_rolls = " | Wynik: " + str(number_mod)
-        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
+        return f"({author} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
-        return apologize_message
+        return "rollwithmod"
 
 def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
