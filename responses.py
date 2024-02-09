@@ -1,6 +1,6 @@
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier
 import sys, re
-
+#Add limiter for lenght to 2000 char.
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     #Regular Roll Patttern
@@ -12,13 +12,15 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
     #Roll with Modifier
-    modifier_roll_pattern = r'(\d+)[kd](\d+)[\+\-\*](.*)'
+    #add handling for multiplication
+    modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
     if modifier_roll_pattern_match:
         amount_of_rolls = int(modifier_roll_pattern_match.group(1))
         dice = int(modifier_roll_pattern_match.group(2))
-        equation = modifier_roll_pattern_match.group(3)
-        roll_response = roll_with_modifier(author, amount_of_rolls, dice, equation)
+        operator = modifier_roll_pattern_match.group(3)
+        equation = modifier_roll_pattern_match.group(4)
+        roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
         return roll_response   
     #Advantage/Disadvantage Roll Matching
     dnd5_ad_roll_pattern = r'(\d+)[kd](20)([ad])$'

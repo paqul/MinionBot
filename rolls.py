@@ -6,7 +6,6 @@ penalty_bonus_dices = [100]
 penalty_bonus_dices_dnd = [20]
 apologize_message = "Bardzo mi przykro ale nie posiadam takiej kostki"
 
-
 def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice in dices:
         lst = []
@@ -22,14 +21,14 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     else:
         return apologize_message
 
-def roll_with_modifier(author, amount_of_rolls: int, dice: int, equation: str) -> str:
+def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice in dices:
         lst = []
         sum_of_rolls = ""
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
             lst.append(number)
-            number_mod = eval(str(sum((lst))) + "+" + "(" + equation + ")")
+            number_mod = eval(str(sum((lst))) + operator + equation)
             sum_of_rolls = " | Wynik: " + str(number_mod)
         return f"({author} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
