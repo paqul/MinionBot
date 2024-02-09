@@ -80,7 +80,7 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private):
+async def send_msg(msg, user_msg, private, client):
     if msg.channel.name in channels_on:
         if msg.content.startswith(f"<@{client.user.id}>"):
             try:
