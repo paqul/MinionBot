@@ -78,12 +78,13 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private):
+async def send_msg(msg, user_msg, private, client):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
     if msg.channel.name in channels_on:
-        if msg.content.startswith("<@1055576642254286938>"):
+        bot_mention = f"<@{client.user.id}>"
+        if msg.content.startswith(bot_mention):
             try:
                 resp_name = responses.handle_name_response(user_msg)
                 await msg.channel.send(resp_name)

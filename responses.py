@@ -65,6 +65,8 @@ def handle_response(msg, author, author_id) -> str:
     elif msg == "statystyki_dnd":
         roll_response = roll_dnd_stat_block(author)
         return roll_response
+    elif msg == "autotest":
+        roll_response = "1k10"
     elif roll_response is None:
         return sorry_response
     else:
