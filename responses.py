@@ -18,7 +18,7 @@ help_response = (
 )
 character_limit_response = (
 "- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
-"Spróbuj zmniejszyć ilość rzutów" + "**"
+"Spróbuj zmniejszyć ilość rzutów." + "**"
 )
 
 def handle_response(msg, author, author_id) -> str:
@@ -77,7 +77,7 @@ def handle_response(msg, author, author_id) -> str:
         pass #do nothing if previous conditions did not match
     
 def handle_name_response(name_msg,bot_self_mention_string) -> str:
-    if name_msg == bot_self_mention_string +"znikaj":
+    if name_msg == bot_self_mention_string +" znikaj":
         sys.exit()
     else:
         return sorry_response
