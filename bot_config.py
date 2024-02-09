@@ -84,7 +84,7 @@ async def send_msg(msg, user_msg, private, client):
     # print(msg)
     # print(msg.channel)
     if msg.channel.name in channels_on:
-        bot_mention = f"<@"+{client.user.id}+">"
+        bot_mention = f"<@{client.user.id}>"
         if msg.content.startswith(bot_mention):
             try:
                 resp_name = responses.handle_name_response(user_msg)
