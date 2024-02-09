@@ -40,9 +40,9 @@ def setup_bot():
     @client.event
     async def on_ready():
         print("Bot working!")
-    bot_id = client.user.id
+    bot_id = int(client.user.id)
     bot_self_mention_string = f"<@{bot_id}>"
-    
+
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
