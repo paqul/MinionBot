@@ -55,7 +55,7 @@ def handle_response(msg, author, author_id) -> str:
     if morkborg_roll_pattern_match:
         amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
         dice = int(morkborg_roll_pattern_match.group(2))
-        roll_response = morkborg_roll(author, amount_of_rolls, dice, bonus)             
+        roll_response = morkborg_roll(author, amount_of_rolls, dice)             
     # Call of Cthulu BonusPenalty Dice
     callofcthulu_kp_roll_pattern = r'(\d+)([kd])(\d+)([kp])([kp]?)$'
     callofcthulu_kp_roll_pattern_match = re.match(callofcthulu_kp_roll_pattern, msg)
