@@ -1,5 +1,5 @@
 from random import randint as r
-from members import sorted_authors
+#from members import sorted_authors
 
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
