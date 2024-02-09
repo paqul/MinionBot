@@ -34,14 +34,15 @@ channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 def setup_bot():
     intents = discord.Intents.all() #all/none/default
     client = discord.Client(intents=intents)
-    bot_id = client.user.id
-    bot_self_mention_string = f"<@{bot_id}>"
+    
     # bot = commands.Bot(command_prefix="!", intents=intents)
 
     @client.event
     async def on_ready():
         print("Bot working!")
-
+    bot_id = client.user.id
+    bot_self_mention_string = f"<@{bot_id}>"
+    
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
