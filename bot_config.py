@@ -10,16 +10,9 @@ import threading
 import asyncio
 import sys
 #import youtube_dl
-# import audio
-
-channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
-               "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
-               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
-               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
-channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+#import audio
 
 # Discord music feature of bot Initialization
-key = token
 # key = token
 #voice_clients = {}
 #yt_dl_opts = {'format': 'bestaudio/best'}
@@ -31,6 +24,12 @@ key = token
 # msg.content - zawartosc wiadomosci np "Hej to ja"
 # msg.channel - na ktorym kanale to sie dzieje
 
+key = token
+channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
+               "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
+               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
+               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
+channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 def setup_bot():
     intents = discord.Intents.all() #all/none/default
@@ -43,13 +42,9 @@ def setup_bot():
 
     @client.event
     async def on_message(msg):
-        if msg.author == client.user or msg.author == "<@1055576642254286938>":
+        if msg.author == client.user or msg.author == f"<@{client.user.id}>":
             return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        if msg.author == "autotest":
-            await send_msg(msg, "1k10", private=False)
-        else:
-            await send_msg(msg, msg.content, private=False)
 
     @tasks.loop(seconds=120)
     async def check_role():
@@ -75,12 +70,6 @@ def setup_bot():
     client.run(token)
     # bot.run(token)
 
-async def autotest():
-    print("TEST")
-    await send_msg("1k10", "1k10".content, private=False)
-    # send_msg("1k10", user_msg, private)
-    # return "1k10"
-
 async def send_private(member, msg):
     try:
         response = responses.handle_response(msg, member.name, member.id)
@@ -89,12 +78,12 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private):
+async def send_msg(msg, user_msg, private, client):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
     if msg.channel.name in channels_on:
-        if msg.content.startswith("<@1055576642254286938>"):
+        if msg.content.startswith(f"<@{client.user.id}>"):
             try:
                 resp_name = responses.handle_name_response(user_msg)
                 await msg.channel.send(resp_name)
@@ -107,16 +96,6 @@ async def send_msg(msg, user_msg, private):
             except Exception as E:
                 print(E)
 
-
-def double_thread(user_msg, author, author_id):
-    th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    th_1.start()
-    th_2.start()
-    th_1.join()
-    th_2.join()
-    # return th_2
-
 async def get_role(member):
     try:
         role_name = roles.handle_roles(member)
@@ -125,4 +104,17 @@ async def get_role(member):
     except Exception as E:
         print(E)
 
+#def double_thread(user_msg, author, author_id):
+    #th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    #th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    #th_1.start()
+    #th_2.start()
+    #th_1.join()
+    #th_2.join()
+    # return th_2
+#async def autotest():
+    #print("TEST")
+    #await send_msg("1k10", "1k10".content, private=False)
+    # send_msg("1k10", user_msg, private)
+    # return "1k10"
 # asyncio.run(debug_console())
