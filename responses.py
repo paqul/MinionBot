@@ -3,8 +3,8 @@ import sys, re
 #MSG Variables
 dices_imported = str(dices)
 sorry_response = (
-    "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam.\n" 
-    "Po wiecej informacji i pomoc napisz komendę *help*"
+"Proszę o wybaczenie, ale nie posiadam takiej funkcji. Moje możliwości są ograniczone, przepraszam.\n"
+"Po więcej informacji i pomoc, napisz komendę help."
 )    
 help_response = (
     "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość_kości>k<ilość_ściań_kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
@@ -14,7 +14,7 @@ help_response = (
     "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
-    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2 k6 gdzie jedna to dziesiątki a druga jedności, nie kompatybilne z modyfikatorami)\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2 k6 gdzie jedna to dziesiątki a druga jedności; niekompatybilne z modyfikatorami)\n"
     "- Rzut do Statystyk D&D 3e & 5e: ***statyki_dnd***\n"
     "- Pomoc: komenda ***help***"
 )
