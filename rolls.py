@@ -7,32 +7,21 @@ penalty_bonus_dices_dnd = [20]
 apologize_message = "Bardzo mi przykro ale nie posiadam takiej kostki"
 
 def roll(author, amount_of_rolls: int, dice: int) -> str:
-    if dice in dices:
-        lst = []
-        sum_of_rolls = ""
-        for _ in range(int(amount_of_rolls)):
-            number = r(1, dice)
-            lst.append(number)
-        if str(author.name) in sorted_authors:
-            lst = sorted(lst)
-        if amount_of_rolls > 1:
-            sum_of_rolls = " | Suma: " + str(sum((lst)))
-        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
-    else:
+    if dice not in dices:
         return apologize_message
+    rolls = [r(1, dice) for _ in range(amount_of_rolls)]
+    if str(author.name) in sorted_authors:
+        rolls.sort()
+    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"
 
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
-    if dice in dices:
-        lst = []
-        sum_of_rolls = ""
-        for _ in range(int(amount_of_rolls)):
-            number = r(1, dice)
-            lst.append(number)
-            number_mod = eval(str(sum((lst))) + operator + equation)
-            sum_of_rolls = " | Wynik: " + str(number_mod)
-        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
-    else:
+    if dice not in dices:
         return apologize_message
+    rolls = [r(1, dice) for _ in range(amount_of_rolls)]
+    total_sum = sum(rolls)
+    modified_sum = eval(f"{total_sum} {operator} {equation}")
+    return f"({author.mention} k{dice}): **{rolls} | Wynik: {modified_sum}**"
 
 def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
@@ -77,41 +66,19 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
     else:
         return apologize_message
 
-def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str, ) -> str:
-    if bonus == "a":
-        dice_type = "Ułatwienie / Advantage"
-    elif bonus == "d":
-        dice_type = "Utrudnienie / Disadvantage"
-    else:
-        dice_type = "Błąd typu kości"
-    if dice in penalty_bonus_dices_dnd:
-        lst_diceresults = []
-        for _ in range(int(amount_of_rolls)):
-            lst_combinedrolls = []
-            int_roll0 = r(1, dice)
-            lst_combinedrolls.append(int_roll0)
-            int_roll1 = r(1, dice)
-            lst_combinedrolls.append(int_roll1)
-            if bonus == "d":
-                lst_diceresults.append(str(sorted(lst_combinedrolls, reverse=False)))
-            elif bonus == "a":
-                lst_diceresults.append(str(sorted(lst_combinedrolls, reverse=True)))
-            else: 
-                continue
-        if bonus in ("a", "d"):
-            str_diceresults = str(lst_diceresults).replace("[", "", 1).replace("'","")
-            return f"({author.mention} [k{dice}, {dice_type}]): **" + str_diceresults[0:-1] + "**"
-        elif dice_type == "Błąd typu kości":
-            return apologize_message
-    else:
+def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
+    if bonus not in ("a", "d") or dice not in penalty_bonus_dices_dnd:
         return apologize_message
+    dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
+    rolls = [[r(1, dice) for _ in range(2)] for _ in range(amount_of_rolls)]
+    if bonus == "a":
+        rolls.sort(reverse=True)
+    else:
+        rolls.sort()
+    formatted_rolls = ", ".join(str(roll) for roll in rolls)
+    return f"({author.mention} [k{dice}, {dice_type}]): **{formatted_rolls}**"
+    
 def roll_dnd_stat_block(author: object) -> str:
-    lst_stats_final = []
-    n = 6
-    for x in range(n):
-        stat_single = [r(1, 6),r(1, 6),r(1, 6),r(1, 6)]
-        stat_single.sort(reverse=True)
-        droplow_stat_single = stat_single[:3]
-        sum_stat_single = sum(droplow_stat_single)
-        lst_stats_final.append(sum_stat_single) 
-    return f"({author.mention}, Rzuty na statystyki DnD): **" + str(sorted(lst_stats_final, reverse=True)) + "**"
+    lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
+    formatted_stats = str(sorted(lst_stats_final, reverse=True))
+    return f"({author.mention}, Rzuty na statystyki D&D): **{formatted_stats}**"
