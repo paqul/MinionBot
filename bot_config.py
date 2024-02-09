@@ -87,7 +87,7 @@ async def send_msg(msg, user_msg, private):
     if msg.channel.name in channels_on:
         if msg.content.startswith(bot_self_mention_string):
             try:
-                resp_name = responses.handle_name_response(user_msg)
+                resp_name = responses.handle_name_response(user_msg, bot_self_mention_string)
                 await msg.channel.send(resp_name)
             except Exception as E:
                 print(E)
