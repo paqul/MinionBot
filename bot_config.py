@@ -5,14 +5,13 @@ from discord.ext import tasks, commands
 import responses
 import roles
 import members
-import youtube_dl
+#import youtube_dl
 from params import token
-import threading
+#import threading
 import asyncio
 # import audio
 import sys
 
-from discord.ext import commands
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
@@ -22,10 +21,10 @@ channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 # Discord music feature of bot Initialization
 key = token
 # key = token
-voice_clients = {}
-yt_dl_opts = {'format': 'bestaudio/best'}
-ytdl = youtube_dl.YoutubeDL(yt_dl_opts)
-ffmpeg_options = {'options': "-vn"}
+#voice_clients = {}
+#yt_dl_opts = {'format': 'bestaudio/best'}
+#ytdl = youtube_dl.YoutubeDL(yt_dl_opts)
+#ffmpeg_options = {'options': "-vn"}
 # End of music feature initialization
 
 # msg.author - uzytkownik ktory pisze do bota
@@ -74,13 +73,6 @@ def setup_bot():
             await send_private(member, "welcome")
 
     client.run(token)
-    # bot.run(token)
-
-async def autotest():
-    print("TEST")
-    await send_msg("1k10", "1k10".content, private=False)
-    # send_msg("1k10", user_msg, private)
-    # return "1k10"
 
 async def send_private(member, msg):
     try:
@@ -90,12 +82,9 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private):
-    # print(msg.channel.name)
-    # print(msg)
-    # print(msg.channel)
+async def send_msg(client, msg, user_msg, private):
     if msg.channel.name in channels_on:
-        if msg.content.startswith("<@1055576642254286938>"):
+        if msg.content.startswith(f"<@{client.user.id}>"):
             try:
                 resp_name = responses.handle_name_response(user_msg)
                 await msg.channel.send(resp_name)
@@ -108,15 +97,6 @@ async def send_msg(msg, user_msg, private):
             except Exception as E:
                 print(E)
 
-def double_thread(user_msg, author, author_id):
-    th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    th_1.start()
-    th_2.start()
-    th_1.join()
-    th_2.join()
-    # return th_2
-
 async def get_role(member):
     try:
         role_name = roles.handle_roles(member)
@@ -124,5 +104,3 @@ async def get_role(member):
         await member.add_roles(role)
     except Exception as E:
         print(E)
-
-# asyncio.run(debug_console())
