@@ -23,6 +23,23 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     modified_sum = eval(f"{total_sum} {operator} {equation}")
     return f"({author.mention} k{dice}): **{rolls} | Wynik: {modified_sum}**"
 
+def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
+    if bonus not in ("a", "d") or dice not in penalty_bonus_dices_dnd:
+        return apologize_message
+    dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
+    rolls = [[r(1, dice) for _ in range(2)] for _ in range(amount_of_rolls)]
+    if bonus == "a":
+        rolls.sort(reverse=True)
+    else:
+        rolls.sort()
+    formatted_rolls = ", ".join(str(roll) for roll in rolls)
+    return f"({author.mention} [k{dice}, {dice_type}]): **{formatted_rolls}**"
+    
+def roll_dnd_stat_block(author: object) -> str:
+    lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
+    formatted_stats = str(sorted(lst_stats_final, reverse=True))
+    return f"({author.mention}, Rzuty na statystyki D&D): **{formatted_stats}**"
+
 def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
         dice_type = "premiowa"
@@ -66,19 +83,3 @@ def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: s
     else:
         return apologize_message
 
-def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
-    if bonus not in ("a", "d") or dice not in penalty_bonus_dices_dnd:
-        return apologize_message
-    dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
-    rolls = [[r(1, dice) for _ in range(2)] for _ in range(amount_of_rolls)]
-    if bonus == "a":
-        rolls.sort(reverse=True)
-    else:
-        rolls.sort()
-    formatted_rolls = ", ".join(str(roll) for roll in rolls)
-    return f"({author.mention} [k{dice}, {dice_type}]): **{formatted_rolls}**"
-    
-def roll_dnd_stat_block(author: object) -> str:
-    lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
-    formatted_stats = str(sorted(lst_stats_final, reverse=True))
-    return f"({author.mention}, Rzuty na statystyki D&D): **{formatted_stats}**"
