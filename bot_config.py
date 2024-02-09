@@ -45,7 +45,7 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        await send_msg(msg, msg.content, private=False)
+        await send_msg(msg, msg.content, private=False, client=client)
 
     @tasks.loop(seconds=120)
     async def check_role():
