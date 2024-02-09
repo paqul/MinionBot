@@ -10,7 +10,6 @@ import sys
 #import threading
 #import youtube_dl
 # import audio
-
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
@@ -81,7 +80,7 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(client, msg, user_msg, private):
+async def send_msg(msg, user_msg, private):
     if msg.channel.name in channels_on:
         if msg.content.startswith(f"<@{client.user.id}>"):
             try:
