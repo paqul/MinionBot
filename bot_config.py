@@ -18,6 +18,8 @@ channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+intents = discord.Intents.all() #all/none/default
+client = discord.Client(intents=intents)
 
 # Discord music feature of bot Initialization
 # key = token
