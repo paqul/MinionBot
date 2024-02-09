@@ -10,7 +10,14 @@ import threading
 import asyncio
 import sys
 #import youtube_dl
-#import audio
+# import audio
+
+key = token
+channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
+               "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
+               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
+               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
+channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 # Discord music feature of bot Initialization
 # key = token
@@ -24,12 +31,6 @@ import sys
 # msg.content - zawartosc wiadomosci np "Hej to ja"
 # msg.channel - na ktorym kanale to sie dzieje
 
-key = token
-channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
-               "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
-               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
-               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
-channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 
 def setup_bot():
     intents = discord.Intents.all() #all/none/default
@@ -42,9 +43,8 @@ def setup_bot():
 
     @client.event
     async def on_message(msg):
-        if msg.author == client.user or msg.author == f"<@{client.user.id}>":
-            await send_msg(msg, msg.content, private=False)
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
+        await send_msg(msg, msg.content, private=False)
 
     @tasks.loop(seconds=120)
     async def check_role():
@@ -78,12 +78,12 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private, client):
+async def send_msg(msg, user_msg, private):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
     if msg.channel.name in channels_on:
-        if msg.content.startswith(f"<@{client.user.id}>"):
+        if msg.content.startswith("<@1055576642254286938>"):
             try:
                 resp_name = responses.handle_name_response(user_msg)
                 await msg.channel.send(resp_name)
@@ -104,6 +104,14 @@ async def get_role(member):
     except Exception as E:
         print(E)
 
+# asyncio.run(debug_console())
+        
+#async def autotest():
+    #print("TEST")
+    #await send_msg("1k10", "1k10".content, private=False)
+    # send_msg("1k10", user_msg, private)
+    # return "1k10"
+
 #def double_thread(user_msg, author, author_id):
     #th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
     #th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
@@ -112,9 +120,3 @@ async def get_role(member):
     #th_1.join()
     #th_2.join()
     # return th_2
-#async def autotest():
-    #print("TEST")
-    #await send_msg("1k10", "1k10".content, private=False)
-    # send_msg("1k10", user_msg, private)
-    # return "1k10"
-# asyncio.run(debug_console())
