@@ -1,5 +1,6 @@
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
 import sys, re
+
 #MSG Variables
 dices_imported = str(dices)
 sorry_response = (
@@ -16,7 +17,7 @@ help_response = (
     "- Rzut do Statystyk D&D 3e & 5e: *statyki_dnd*\n"
     "- Pomoc: komenda *help*"
 )
-#Add limiter for lenght to 2000 char.
+
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     roll_response = sorry_response
