@@ -18,8 +18,6 @@ channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
-intents = discord.Intents.all() #all/none/default
-client = discord.Client(intents=intents)
 
 # Discord music feature of bot Initialization
 # key = token
@@ -85,7 +83,7 @@ async def send_msg(msg, user_msg, private, client):
     # print(msg)
     # print(msg.channel)
     if msg.channel.name in channels_on:
-        bot_mention = f"<@{client.user.id}>"
+        bot_mention = f"<@"+{client.user.id}+">"
         if msg.content.startswith(bot_mention):
             try:
                 resp_name = responses.handle_name_response(user_msg)
