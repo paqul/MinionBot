@@ -1,68 +1,77 @@
-from rolls import roll, roll_bonus_penalty
-import sys
+from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
+import sys, re
 
-list_of_dices = list(range(1, 100))
-dices = [2, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
+#MSG Variables
+dices_imported = str(dices)
+sorry_response = (
+    "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam.\n" 
+    "Po wiecej informacji i pomoc napisz komendę *help*"
+)    
+help_response = (
+    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>*"+"**k**"+"*<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)\n"
+    "Obecnie wspierane kości " + dices_imported + ".\n"
+    "Dostępne Funkcje dodatkowe:\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e: *1k20a* lub *1k20d*\n"
+    "- Rzut Premiowy/Karny Call Of Cthulu: *1k100p* lub *1k100k*\n"
+    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: *1k100pp* lub *1k100kk*\n"
+    "- Rzut do Statystyk D&D 3e & 5e: *statyki_dnd*\n"
+    "- Pomoc: komenda *help*"
+)
 
-
-def handle_response(msg, author) -> str:
+def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
-    #Welcome
-    hello = ["czesc", "cześć", "czesć", "cześc", "hej", "dzien dobry", "dzień dobry", "dziendob", "yo", "witaj", "witam", "dobry"]
-    for hi in hello:
-        if msg.startswith(hi):
-            return "W imieniu dyrekicji bardzo serdecznie chciałbym powitać Cię na serwerze Władcy Kości"
-    #Dices
-    if msg[-1] in "kp":
-        if msg[-2] in "kp" and msg[-3].isdigit(): #dobule bonus/fault dice
-            if msg[0].isdigit() and (msg[1] == "k") and msg[2:-2].isdigit():
-                amount_of_rolls = int(msg[0])
-                dice = int(msg[2:-2])
-                roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], True)
-                return roll_response
-            elif msg[0].isdigit() and msg[1].isdigit() and (msg[2] == "k") and msg[3:-2].isdigit():
-                amount_of_rolls = int(msg[0] + msg[1])
-                dice = int(msg[3:-2])
-                roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], True)
-                return roll_response
-        elif msg[-2].isdigit(): #normal funciton one bonus of fault dice
-            if msg[0].isdigit() and (msg[1] == "k") and msg[2:-1].isdigit():
-                amount_of_rolls = int(msg[0])
-                dice = int(msg[2:-1])
-                roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], False)
-                return roll_response
-            elif msg[0].isdigit() and msg[1].isdigit() and (msg[2] == "k") and msg[3:-1].isdigit():
-                amount_of_rolls = int(msg[0] + msg[1])
-                dice = int(msg[3:-1])
-                roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, msg[-1], False)
-                return roll_response
-        else:
-            pass #normal roll
-    if msg[0].isdigit() and (msg[1] == "k") and msg[2:].isdigit():
-        amount_of_rolls = int(msg[0])
-        dice = int(msg[2:])
+    roll_response = sorry_response
+    #Regular Roll Patttern
+    regular_roll_pattern = r'(\d+)[kd](\d+)$'
+    regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
+    if regular_roll_pattern_match:
+        amount_of_rolls = int(regular_roll_pattern_match.group(1))
+        dice = int(regular_roll_pattern_match.group(2))
         roll_response = roll(author, amount_of_rolls, dice)
+    #Roll with Modifier
+    modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
+    modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
+    if modifier_roll_pattern_match:
+        amount_of_rolls = int(modifier_roll_pattern_match.group(1))
+        dice = int(modifier_roll_pattern_match.group(2))
+        operator = modifier_roll_pattern_match.group(3)
+        equation = modifier_roll_pattern_match.group(4)
+        roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
+    #Advantage/Disadvantage Roll Matching
+    dnd5_ad_roll_pattern = r'(\d+)[kd](20)([ad])$'
+    dnd5_ad_roll_pattern_match = re.match(dnd5_ad_roll_pattern, msg)
+    if dnd5_ad_roll_pattern_match:
+        amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
+        dice = int(dnd5_ad_roll_pattern_match.group(2))
+        bonus = dnd5_ad_roll_pattern_match.group(3)
+        roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+    # Call of Cthulu BonusPenalty Dice
+    callofcthulu_kp_roll_pattern = r'(\d+)([kd])(\d+)([kp])([kp]?)$'
+    callofcthulu_kp_roll_pattern_match = re.match(callofcthulu_kp_roll_pattern, msg)
+    if callofcthulu_kp_roll_pattern_match:
+        amount_of_rolls = int(callofcthulu_kp_roll_pattern_match.group(1))
+        dice = int(callofcthulu_kp_roll_pattern_match.group(3))
+        bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
+        double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
+        double = False if not double_bonus_or_penalty else True
+        roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+    if roll_response and len(roll_response) > 1999:
+        roll_response = roll_response[:1898] +" " + "-" + "Rzut przekroczył dozwolony limit znaków w wiadomości Discord, spróbuj zmniejszyć ilość rzutów" + "**" # Truncate and add explanation
+        return roll_response 
+    if roll_response is not None and roll_response != sorry_response:
         return roll_response
-    elif msg[0].isdigit() and msg[1].isdigit() and (msg[2] == "k") and msg[3:].isdigit():
-        amount_of_rolls = int(msg[0]+msg[1])
-        dice = int(msg[3:])
-        roll_response = roll(author, amount_of_rolls, dice)
-        return roll_response
-    #Rest
     elif msg == "help":
-        return "Aby uzyskać wynik wynik na k100, proszę o użycie funkcji roll"
-    elif msg == "promotion":
-        return "Moje najszczersze gratulacje z okazji awansu! Mam nadzieję że spełnisz się w swojej nowej roli, trzymam kciuki i życzę powodzenia!"
-    elif msg == "negative":
-        return "Dzień Dobry, Chciałym poinformować, że jesteś osobą która nie jest milie widziana na tym kanale, wobec tego administracja kanału uprasza o nie podejmowanie kolejnych prób dołączenia. Z góry dziękuję, życzę miłego dnia."
-    elif msg == "welcome":
-        return f"{author} witamy na serwerze 'Władcy Kości'!"
+        return help_response
+    elif msg == "statystyki_dnd":
+        roll_response = roll_dnd_stat_block(author)
+        return roll_response
+    elif roll_response is None:
+        return sorry_response
     else:
-        pass #do rest
-
-
+        pass #do nothing if previous conditions did not match
+    
 def handle_name_response(name_msg) -> str:
     if name_msg == "<@1055576642254286938> znikaj":
         sys.exit()
     else:
-        return "Proszę o wybaczanie, aczkolwiek mój zasób usług którę oferuje jest bardzo ograniczony, Przepraszam"
+        return sorry_response
