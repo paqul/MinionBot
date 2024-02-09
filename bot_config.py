@@ -43,7 +43,7 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         if msg.author == client.user or msg.author == f"<@{client.user.id}>":
-            return
+            await send_msg(msg, msg.content, private=False)
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
 
     @tasks.loop(seconds=120)
