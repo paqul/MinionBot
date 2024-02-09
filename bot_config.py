@@ -1,16 +1,15 @@
 #link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
-
 import discord
 from discord.ext import tasks, commands
 import responses
 import roles
 import members
-#import youtube_dl
 from params import token
-#import threading
 import asyncio
-# import audio
 import sys
+#import threading
+#import youtube_dl
+# import audio
 
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
