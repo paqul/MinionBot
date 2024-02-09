@@ -46,12 +46,12 @@ def handle_response(msg, author, author_id) -> str:
         return roll_response 
     if roll_response is not None:
         return roll_response
-    if roll_response is None:
-        return sorry_response
     elif msg == "help":
         return help_response
     elif msg == "statystyki_dnd":
         return roll_dnd_stat_block(author)
+    if roll_response is None:
+        return sorry_response
     else:
         pass #do nothing if previous conditions did not match
     
