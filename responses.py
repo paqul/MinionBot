@@ -67,6 +67,7 @@ def handle_response(msg, author, author_id) -> str:
         return roll_response
     elif msg == "autotest":
         roll_response = "1k10"
+        return roll_response
     elif roll_response is None:
         return sorry_response
     else:
