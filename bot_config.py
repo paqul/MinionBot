@@ -30,7 +30,8 @@ channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 # msg.author - uzytkownik ktory pisze do bota
 # msg.content - zawartosc wiadomosci np "Hej to ja"
 # msg.channel - na ktorym kanale to sie dzieje
-
+intents = discord.Intents.all() 
+client = discord.Client(intents=intents)
 
 def setup_bot():
     intents = discord.Intents.all() #all/none/default
