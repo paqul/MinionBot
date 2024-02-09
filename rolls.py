@@ -30,7 +30,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
             lst.append(number)
             number_mod = eval(str(sum((lst))) + operator + equation)
             sum_of_rolls = " | Wynik: " + str(number_mod)
-        return f"({author} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
+        return f"({author.mention} k{dice}): **" + str(lst) + str(sum_of_rolls) +"**"
     else:
         return apologize_message
 
