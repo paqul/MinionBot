@@ -30,13 +30,12 @@ channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 # msg.author - uzytkownik ktory pisze do bota
 # msg.content - zawartosc wiadomosci np "Hej to ja"
 # msg.channel - na ktorym kanale to sie dzieje
-intents = discord.Intents.all() 
-client = discord.Client(intents=intents)
-bot_id = client.user.id
-bot_self_mention_string = f"<@{bot_id}>"
+
 def setup_bot():
     intents = discord.Intents.all() #all/none/default
     client = discord.Client(intents=intents)
+    bot_id = client.user.id
+    bot_self_mention_string = f"<@{bot_id}>"
     # bot = commands.Bot(command_prefix="!", intents=intents)
 
     @client.event
@@ -46,7 +45,7 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        await send_msg(msg, msg.content, private=False)
+        await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
     @tasks.loop(seconds=120)
     async def check_role():
@@ -80,7 +79,7 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private):
+async def send_msg(msg, user_msg,bot_self_mention_string, private):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
