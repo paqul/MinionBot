@@ -42,7 +42,7 @@ def setup_bot():
     async def on_ready():
         print("Bot working!")
         global bot_self_mention_string 
-        bot_id = int(client.user.id)
+        bot_id = client.user.id
         bot_self_mention_string = f"<@{bot_id}>"
 
     @client.event
