@@ -1,11 +1,12 @@
-from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices, apologize_message 
+from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
 import sys, re
 
 #Add limiter for lenght to 2000 char.
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
-    roll_response = apologize_message
     help_response = "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości {dices}.\nDostępne Funkcje dodatkowe:\n- Rzut Przewaga/Utrudnienie D&D 5e: 1k20a lub 1k20d\n- Rzut Premiowy/Karny Call Of Cthulu: 1k100p lub 1k100k\n- Podwójny Rzut Premiowy/Karny Call Of Cthulu: 1k100pp lub 1k100kk\n- Rzut do Statystyk D&D 3e & 5e: statyki_dnd"
+    sorry_response = "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam. Po wiecej informacji i pomoc napisz komendę help"
+    roll_response = sorry_response
     #Regular Roll Patttern
     regular_roll_pattern = r'(\d+)[kd](\d+)$'
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
@@ -46,7 +47,7 @@ def handle_response(msg, author, author_id) -> str:
     if roll_response is not None:
         return roll_response
     if roll_response is None:
-        return apologize_message
+        return sorry_response
     elif msg == "help":
         return help_response
     elif msg == "statystyki_dnd":
@@ -58,4 +59,4 @@ def handle_name_response(name_msg) -> str:
     if name_msg == "<@1055576642254286938> znikaj":
         sys.exit()
     else:
-        return "Proszę o wybaczanie, aczkolwiek mój zasób usług którę oferuje jest bardzo ograniczony, Przepraszam"
+        return "Proszę o wybaczanie, aczkolwiek mój zasób usług którę oferuje jest bardzo ograniczony, Przepraszam. Po pomoc napisz komendę help"
