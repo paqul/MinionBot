@@ -26,7 +26,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
     total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
-    return f"({author} k{dice}): **{rolls}{total_sum}**"
+    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"
 
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
