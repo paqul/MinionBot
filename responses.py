@@ -2,8 +2,20 @@ from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_sta
 import sys, re
 #MSG Variables
 dices_imported = str(dices)
-sorry_response = "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam. Po wiecej informacji i pomoc napisz komendę help"
-help_response = "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości " + dices_imported + ".\nDostępne Funkcje dodatkowe:\n- Rzut Przewaga/Utrudnienie D&D 5e: 1k20a lub 1k20d\n- Rzut Premiowy/Karny Call Of Cthulu: 1k100p lub 1k100k\n- Podwójny Rzut Premiowy/Karny Call Of Cthulu: 1k100pp lub 1k100kk\n- Rzut do Statystyk D&D 3e & 5e: statyki_dnd\n- Pomoc: komenda *help*"
+sorry_response = (
+    "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam.\n" 
+    "Po wiecej informacji i pomoc napisz komendę help"
+)    
+help_response = (
+    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>k<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)"
+    "Obecnie wspierane kości " + dices_imported + ".\n"
+    "Dostępne Funkcje dodatkowe:\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e: 1k20a lub 1k20d\n"
+    "- Rzut Premiowy/Karny Call Of Cthulu: 1k100p lub 1k100k\n"
+    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: 1k100pp lub 1k100kk\n"
+    "- Rzut do Statystyk D&D 3e & 5e: statyki_dnd\n"
+    "- Pomoc: komenda *help*"
+)
 #Add limiter for lenght to 2000 char.
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
