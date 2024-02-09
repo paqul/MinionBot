@@ -4,10 +4,10 @@ import sys, re
 dices_imported = str(dices)
 sorry_response = (
     "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam.\n" 
-    "Po wiecej informacji i pomoc napisz komendę help"
+    "Po wiecej informacji i pomoc napisz komendę *help*"
 )    
 help_response = (
-    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>k<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)"
+    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>***k***<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)\n"
     "Obecnie wspierane kości " + dices_imported + ".\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut Przewaga/Utrudnienie D&D 5e: 1k20a lub 1k20d\n"
@@ -55,7 +55,7 @@ def handle_response(msg, author, author_id) -> str:
         double = False if not double_bonus_or_penalty else True
         roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, bonus_or_penalty, double) 
     if roll_response and len(roll_response) > 1999:
-        roll_response = roll_response[:1898] +" " + "-" + "Rzut przekroczył dozwolony limit znaków w wiadomości discord, spróbuj zmniejszyć ilość rzutów" + "**" # Truncate and add explanation
+        roll_response = roll_response[:1898] +" " + "-" + "Rzut przekroczył dozwolony limit znaków w wiadomości Discord, spróbuj zmniejszyć ilość rzutów" + "**" # Truncate and add explanation
         return roll_response 
     if roll_response is not None and roll_response != sorry_response:
         return roll_response
