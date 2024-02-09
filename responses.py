@@ -1,6 +1,6 @@
 from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
 import sys, re
-
+from bot_config import bot_self_mention_string
 #MSG Variables
 dices_imported = str(dices)
 sorry_response = (
@@ -74,7 +74,7 @@ def handle_response(msg, author, author_id) -> str:
         pass #do nothing if previous conditions did not match
     
 def handle_name_response(name_msg) -> str:
-    if name_msg == "<@1055576642254286938> znikaj":
+    if name_msg == {bot_self_mention_string} +"znikaj":
         sys.exit()
     else:
         return sorry_response
