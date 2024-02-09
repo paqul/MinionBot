@@ -40,6 +40,8 @@ def handle_response(msg, author, author_id) -> str:
     if roll_response and len(roll_response) > 1999:
         roll_response = roll_response[:1897] +"..." + "**" + "Rzut przekroczył dozwolony limit znaków w wiadomości discord, spróbuj zmniejszyć ilość rzutów" + "**"  # Truncate and add explanation
         return roll_response 
+    if roll_response is not None:
+        return roll_response
     elif msg == "help":
         return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]"
     elif msg == "statystyki_dnd":
