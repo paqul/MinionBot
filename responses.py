@@ -73,7 +73,7 @@ def handle_response(msg, author, author_id) -> str:
         pass #do nothing if previous conditions did not match
     
 def handle_name_response(name_msg,bot_self_mention_string) -> str:
-    if name_msg == {bot_self_mention_string} +"znikaj":
+    if name_msg == bot_self_mention_string +"znikaj":
         sys.exit()
     else:
         return sorry_response
