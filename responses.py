@@ -1,9 +1,11 @@
-from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier
+from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices, apologize_message 
 import sys, re
+
 #Add limiter for lenght to 2000 char.
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
-    roll_response = None
+    roll_response = apologize_message
+    help_response = "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości {dices}.\nDostępne Funkcje dodatkowe:\n- Rzut Przewaga/Utrudnienie D&D 5e: 1k20a lub 1k20d\n- Rzut Premiowy/Karny Call Of Cthulu: 1k100p lub 1k100k\n- Podwójny Rzut Premiowy/Karny Call Of Cthulu: 1k100pp lub 1k100kk\n- Rzut do Statystyk D&D 3e & 5e: statyki_dnd"
     #Regular Roll Patttern
     regular_roll_pattern = r'(\d+)[kd](\d+)$'
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
@@ -43,8 +45,10 @@ def handle_response(msg, author, author_id) -> str:
         return roll_response 
     if roll_response is not None:
         return roll_response
+    if roll_response is None:
+        return apologize_message
     elif msg == "help":
-        return "Aby uzyskać wynik rzutu kością rzuć np. 1k100, 3k20, 2k10, itp. (zasada poprawnych rzutów: <ilość_kości>k<ilość_ściań_kości>) Obecnie wspierane kości [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]"
+        return help_response
     elif msg == "statystyki_dnd":
         return roll_dnd_stat_block(author)
     else:
