@@ -3,6 +3,7 @@ import sys, re
 #Add limiter for lenght to 2000 char.
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
+    roll_response = None
     #Regular Roll Patttern
     regular_roll_pattern = r'(\d+)[kd](\d+)$'
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
