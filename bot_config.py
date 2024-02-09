@@ -44,7 +44,7 @@ def setup_bot():
 
     @client.event
     async def on_message(msg):
-        if msg.author == client.user:
+        if msg.author == client.user or msg.author == "<@1055576642254286938>":
             return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.author == "autotest":
@@ -107,6 +107,7 @@ async def send_msg(msg, user_msg, private):
                 await msg.author.send(resp) if private else await msg.channel.send(resp)
             except Exception as E:
                 print(E)
+
 
 def double_thread(user_msg, author, author_id):
     th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
