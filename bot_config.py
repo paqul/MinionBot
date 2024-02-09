@@ -1,15 +1,17 @@
 #link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
+
 import discord
 from discord.ext import tasks, commands
 import responses
 import roles
 import members
 from params import token
+import threading
 import asyncio
 import sys
-#import threading
 #import youtube_dl
 # import audio
+
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
@@ -41,7 +43,7 @@ def setup_bot():
 
     @client.event
     async def on_message(msg):
-        if msg.author == client.user:
+        if msg.author == client.user or msg.author == "<@1055576642254286938>":
             return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.author == "autotest":
@@ -71,6 +73,13 @@ def setup_bot():
             await send_private(member, "welcome")
 
     client.run(token)
+    # bot.run(token)
+
+async def autotest():
+    print("TEST")
+    await send_msg("1k10", "1k10".content, private=False)
+    # send_msg("1k10", user_msg, private)
+    # return "1k10"
 
 async def send_private(member, msg):
     try:
@@ -80,9 +89,12 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg, private, client):
+async def send_msg(msg, user_msg, private):
+    # print(msg.channel.name)
+    # print(msg)
+    # print(msg.channel)
     if msg.channel.name in channels_on:
-        if msg.content.startswith(f"<@{client.user.id}>"):
+        if msg.content.startswith("<@1055576642254286938>"):
             try:
                 resp_name = responses.handle_name_response(user_msg)
                 await msg.channel.send(resp_name)
@@ -95,6 +107,16 @@ async def send_msg(msg, user_msg, private, client):
             except Exception as E:
                 print(E)
 
+
+def double_thread(user_msg, author, author_id):
+    th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
+    th_1.start()
+    th_2.start()
+    th_1.join()
+    th_2.join()
+    # return th_2
+
 async def get_role(member):
     try:
         role_name = roles.handle_roles(member)
@@ -102,3 +124,5 @@ async def get_role(member):
         await member.add_roles(role)
     except Exception as E:
         print(E)
+
+# asyncio.run(debug_console())
