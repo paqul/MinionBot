@@ -16,6 +16,10 @@ help_response = (
     "- Rzut do Statystyk D&D 3e & 5e: ***statyki_dnd***\n"
     "- Pomoc: komenda ***help***"
 )
+character_limit_response = (
+"- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
+"Spróbuj zmniejszyć ilość rzutów" + "**"
+)
 
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
@@ -55,7 +59,7 @@ def handle_response(msg, author, author_id) -> str:
         double = False if not double_bonus_or_penalty else True
         roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, bonus_or_penalty, double) 
     if roll_response and len(roll_response) > 1999:
-        roll_response = roll_response[:1898] +" " + "-" + "Rzut przekroczył dozwolony limit znaków w wiadomości Discord, spróbuj zmniejszyć ilość rzutów" + "**" # Truncate and add explanation
+        roll_response = roll_response[:1999-(len(character_limit_response))] + " " + character_limit_response # Truncate and add explanation
         return roll_response 
     if roll_response is not None and roll_response != sorry_response:
         return roll_response
