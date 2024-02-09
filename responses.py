@@ -1,4 +1,4 @@
-from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
+from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices 
 import sys, re
 #MSG Variables
 dices_imported = str(dices)
@@ -25,7 +25,8 @@ def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     roll_response = sorry_response
     #Regular Roll Patttern
-    regular_roll_pattern = r'(\d+)[kd](\d+)$'
+    regular_roll_pattern = r'(\d+)[kd](?!(?:66)$)(\d+)$'
+
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
     if regular_roll_pattern_match:
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
@@ -48,6 +49,13 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
         roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+    #MorkBorg k66 
+    morkborg_roll_pattern = r'(\d+)[kd](66)$'
+    morkborg_roll_pattern_match = re.match(morkborg_roll_pattern, msg)
+    if morkborg_roll_pattern_match:
+        amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
+        dice = int(morkborg_roll_pattern_match.group(2))
+        roll_response = morkborg_roll(author, amount_of_rolls, dice, bonus)             
     # Call of Cthulu BonusPenalty Dice
     callofcthulu_kp_roll_pattern = r'(\d+)([kd])(\d+)([kp])([kp]?)$'
     callofcthulu_kp_roll_pattern_match = re.match(callofcthulu_kp_roll_pattern, msg)
