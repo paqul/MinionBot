@@ -32,8 +32,6 @@ channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 # msg.channel - na ktorym kanale to sie dzieje
 
 def setup_bot():
-    client.run(token)
-    # bot.run(token)
     intents = discord.Intents.all() #all/none/default
     client = discord.Client(intents=intents)
     
@@ -71,7 +69,8 @@ def setup_bot():
             await get_role(member)
             await send_private(member, "welcome")
 
-
+    client.run(token)
+    # bot.run(token)
 
 async def send_private(member, msg):
     try:
