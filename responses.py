@@ -8,7 +8,7 @@ sorry_response = (
     "Po wiecej informacji i pomoc napisz komendę *help*"
 )    
 help_response = (
-    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>*"+"**"+"k"+"**"+"*<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)\n"
+    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość_kości>k<ilość_ściań_kości>*** (np. 1k100, 3k20, 2k10, itp.)\n"
     "Obecnie wspierane kości " + dices_imported + ".\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut Przewaga/Utrudnienie D&D 5e: *1k20a* lub *1k20d*\n"
@@ -68,7 +68,6 @@ def handle_response(msg, author, author_id) -> str:
     elif msg == "autotest":
         roll_response = "1k10"
         return roll_response
-        return "1k20a"
     elif roll_response is None:
         return sorry_response
     else:
