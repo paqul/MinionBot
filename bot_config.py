@@ -18,6 +18,7 @@ channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+bot_self_mention_string = ""
 
 # Discord music feature of bot Initialization
 # key = token
@@ -40,8 +41,9 @@ def setup_bot():
     @client.event
     async def on_ready():
         print("Bot working!")
-    bot_id = int(client.user.id)
-    bot_self_mention_string = f"<@{bot_id}>"
+        global bot_self_mention_string 
+        bot_id = int(client.user.id)
+        bot_self_mention_string = f"<@{bot_id}>"
 
     @client.event
     async def on_message(msg):
