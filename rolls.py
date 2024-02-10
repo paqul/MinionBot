@@ -38,7 +38,7 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     rolls = [r(1, dice) for _ in range(amount_of_rolls)]
     #if str(author.name) in sorted_authors:
     #    rolls.sort()
-    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    total_sum = "" if amount_of_rolls == 1 else f"{sum(rolls)}"
     return format_response_msg(author, rolls, total_sum, dice=dice)
 
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
@@ -72,7 +72,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         roll1 = r(1, 6)
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
-    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    total_sum = "" if amount_of_rolls == 1 else f"{sum(rolls)}"
     return format_response_msg(author, rolls, total_sum, dice=dice)   
 
 def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> str:
