@@ -51,11 +51,16 @@ def setup_bot():
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.content == bot_self_mention_string+" autotest":
-            await auto_test(msg)
+        # Cancel the existing autotest task, if any running to avoid parallelization
+            if auto_test_task and not auto_test_task.done():
+                auto_test_task.cancel()
+        # Create an asyncio task and invoke autotest func        
+            auto_test_task = asyncio.create_task(auto_test(msg)) 
+        # Cancel the auto_test task if stop msg received   
         elif msg.content == bot_self_mention_string + " stop":
-            await msg.channel.send("Zatrzymuję Autotest.")
-            if auto_test_task:
-                auto_test_task.cancel()  # Cancel the auto test task if running 
+            await msg.channel.send("Przerywam Autotest.")
+            if auto_test_task and not auto_test_task.done():
+                auto_test_task.cancel() 
         else:
             await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
@@ -121,22 +126,16 @@ async def auto_test(msg):
     global auto_test_task
     # Predefined lists of amount of rolls and dice
     rolls = [1, 10, 1000]  # Example rolls
-    dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice
+    dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice      
     # Iterate through the lists
     for roll in rolls:
         for die in dice:
-            # Check if stop message received
-            if bot_self_mention_string + " stop" in msg.content:
-                await msg.channel.send("Zatrzymuje Autotest.")
-                return  # Exit the function
-                
             await msg.channel.send(f"{roll}d{die}")
-            # Delay to avoid rate limiting by discord
+            # Delay to avoid rate limiting by Discord
             await asyncio.sleep(2)
-
     # Send a final message indicating the completion of the auto test
     await msg.channel.send("Autotest Zakończony.")
-
+    auto_test_task = asyncio.create_task(auto_test(msg))
 
 # asyncio.run(debug_console())
         
