@@ -8,6 +8,30 @@ apologize_message = (
     "Bardzo mi przykro ale nie posiadam takiej kostki\n"
     "Po wiecej informacji i pomoc napisz komendę *help*"
 )
+
+def format_response_msg(author, rolls, total_sum=None, dice=None, modifier=None, equation=None, bonus=None, twice=False, dice_type=None):
+    if total_sum is not None:
+        #If total sum exists and there is an equation - Rolls with modifiers
+        if modifier is not None and equation is not None:
+            return f"({author.mention} k{dice}): **{rolls} | Wynik: {total_sum}**"
+        #If total sum exists and there is an equation - Rolls with modifiers
+        else:
+            return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
+    elif dice_type is not None:
+        if bonus is not None:
+            #call of cthulu double bonus/penalty
+            if twice:
+                return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **{rolls}**"
+            #single bonus call of cthulu and dnd5e
+            else:
+                return f"({author.mention} [k{dice}, {dice_type}]): **{rolls}**"
+    #Default format         
+    elif dice is not None:
+        return f"({author.mention} k{dice}): **{rolls}**"
+    #If error:
+    else:
+        return apologize_message
+
 def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
         return apologize_message
@@ -15,7 +39,7 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     #if str(author.name) in sorted_authors:
     #    rolls.sort()
     total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
-    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"
+    return format_response_msg(author, rolls, total_sum, dice=dice)
 
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
@@ -26,7 +50,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
         rolls = [r(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
     modified_sum = eval(f"{total_sum} {operator} {equation}")
-    return f"({author.mention} k{dice}): **{rolls} | Wynik: {modified_sum}**"
+    return format_response_msg(author, rolls, modified_sum, dice=dice, modifier=operator, equation=equation)
 
 def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
     if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
@@ -38,7 +62,7 @@ def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonu
     else:
         rolls.sort()
     formatted_rolls = ", ".join(str(roll) for roll in rolls)
-    return f"({author.mention} [k{dice}, {dice_type}]): **{formatted_rolls}**"
+    return format_response_msg(author, formatted_rolls, dice_type=dice_type)
 
 def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
@@ -49,7 +73,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
     total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
-    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"    
+    return format_response_msg(author, rolls, total_sum, dice=dice)   
 
 def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
@@ -64,14 +88,15 @@ def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> 
 
 def roll_dnd_stat_block(author: object) -> str:
     lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
-    formatted_stats = str(sorted(lst_stats_final, reverse=True))
-    return f"({author.mention}, Rzuty na statystyki D&D): **{formatted_stats}**"
+    formatted_stats = sorted(lst_stats_final, reverse=True)
+    dice_type = "Rzuty na statystyki D&D"
+    return format_response_msg(author, dice_type , rolls=formatted_stats)
 
 def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
-        dice_type = "premiowa"
+        dice_type = "Premiowa"
     elif bonus == "k":
-        dice_type = "karna"
+        dice_type = "Karna"
     else:
         dice_type = "Błąd typu kości"
     if dice in call_of_cthlu_penalty_bonus_dice:
@@ -103,9 +128,7 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
                 lst.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
             else:
                 lst.append([number, penalty_bonus_dice])
-        if twice:
-            return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **" + str(lst) + "**"
-        else:
-            return f"({author.mention} [k{dice}, {dice_type}]): **" + str(lst) + "**"
+        return format_response_msg(author, lst, dice_type=dice_type)
     else:
         return apologize_message
+
