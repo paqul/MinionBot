@@ -7,15 +7,16 @@ sorry_response = (
 "Po więcej informacji i pomoc, napisz komendę ***help***."
 )    
 help_response = (
-    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość_kości>k<ilość_ściań_kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
+    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość kości>k<ilość ściań kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
     "Obecnie wspierane kości ***" + dices_imported + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
-    "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*\n"
+    "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
+    "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry ;)\n"
     "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
-    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2 k6 gdzie jedna to dziesiątki a druga jedności; niekompatybilne z modyfikatorami)\n"
-    "- Rzut do Statystyk D&D 3e & 5e: ***statyki_dnd***\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna to dziesiątki a druga jedności)\n"
+    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
     "- Pomoc: komenda ***help***"
 )
 character_limit_response = (
@@ -69,8 +70,10 @@ def handle_response(msg, author, author_id) -> str:
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
         double = False if not double_bonus_or_penalty else True
-        if bonus_or_penalty == double_bonus_or_penalty:
-            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+        if bonus_or_penalty == double_bonus_or_penalty and double == True:
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
+        elif bonus_or_penalty != double_bonus_or_penalty and double == False:     
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
         else: 
             roll_response = None 
     # Truncate if response exceeds character limit
