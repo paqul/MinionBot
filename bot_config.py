@@ -48,7 +48,10 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        await send_msg(msg, msg.content, bot_self_mention_string, private=False)
+        if msg.content == "autotest":
+            await auto_test(msg)
+        else:
+            await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
     @tasks.loop(seconds=120)
     async def check_role():
@@ -107,6 +110,17 @@ async def get_role(member):
         await member.add_roles(role)
     except Exception as E:
         print(E)
+
+async def auto_test(msg):
+    # Predefined lists of amount of rolls and dice
+    rolls = [1, 10, 1000]  # Example rolls
+    dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice
+
+    # Iterate through the lists
+    for roll in rolls:
+        for die in dice:
+            # Example of sending the roll and die combination
+            await msg.channel.send(f"{roll}d{die}")
 
 # asyncio.run(debug_console())
         

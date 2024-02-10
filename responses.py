@@ -4,7 +4,7 @@ import sys, re
 dices_imported = str(dices)
 sorry_response = (
 "Proszę o wybaczenie, ale nie posiadam takiej funkcji. Moje możliwości są ograniczone, przepraszam.\n"
-"Po więcej informacji i pomoc, napisz komendę help."
+"Po więcej informacji i pomoc, napisz komendę ***help***."
 )    
 help_response = (
     "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość_kości>k<ilość_ściań_kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
