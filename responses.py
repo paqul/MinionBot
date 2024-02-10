@@ -1,21 +1,26 @@
-from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier, dices 
+from rolls import roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices 
 import sys, re
-
 #MSG Variables
 dices_imported = str(dices)
 sorry_response = (
-    "Proszę o wybaczanie ale nie posiadam takiej funkcji. Mój zasób usług jest ograniczony, przepraszam.\n" 
-    "Po wiecej informacji i pomoc napisz komendę *help*"
+"Proszę o wybaczenie, ale nie posiadam takiej funkcji. Moje możliwości są ograniczone, przepraszam.\n"
+"Po więcej informacji i pomoc, napisz komendę ***help***."
 )    
 help_response = (
-    "Aby uzyskać wynik rzutu kością wpisz komendę *<ilość_kości>*"+"**k**"+"*<ilość_ściań_kości>* (np. 1k100, 3k20, 2k10, itp.)\n"
-    "Obecnie wspierane kości " + dices_imported + ".\n"
+    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość_kości>k<ilość_ściań_kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
+    "Obecnie wspierane kości ***" + dices_imported + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
-    "- Rzut Przewaga/Utrudnienie D&D 5e: *1k20a* lub *1k20d*\n"
-    "- Rzut Premiowy/Karny Call Of Cthulu: *1k100p* lub *1k100k*\n"
-    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: *1k100pp* lub *1k100kk*\n"
-    "- Rzut do Statystyk D&D 3e & 5e: *statyki_dnd*\n"
-    "- Pomoc: komenda *help*"
+    "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
+    "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
+    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2 k6 gdzie jedna to dziesiątki a druga jedności; niekompatybilne z modyfikatorami)\n"
+    "- Rzut do Statystyk D&D 3e & 5e: ***statyki_dnd***\n"
+    "- Pomoc: komenda ***help***"
+)
+character_limit_response = (
+"- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
+"Spróbuj zmniejszyć ilość rzutów." + "**"
 )
 
 def handle_response(msg, author, author_id) -> str:
@@ -27,7 +32,10 @@ def handle_response(msg, author, author_id) -> str:
     if regular_roll_pattern_match:
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
         dice = int(regular_roll_pattern_match.group(2))
-        roll_response = roll(author, amount_of_rolls, dice)
+        if dice == 66:
+            roll_response = morkborg_roll(author, amount_of_rolls, dice)
+        else:
+            roll_response = roll(author, amount_of_rolls, dice)
     #Roll with Modifier
     modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
@@ -44,7 +52,14 @@ def handle_response(msg, author, author_id) -> str:
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
-        roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus)
+    #MorkBorg k66 
+    morkborg_roll_pattern = r'(\d+)[kd](66)$'
+    morkborg_roll_pattern_match = re.match(morkborg_roll_pattern, msg)
+    if morkborg_roll_pattern_match:
+        amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
+        dice = int(morkborg_roll_pattern_match.group(2))
+        roll_response = morkborg_roll(author, amount_of_rolls, dice)             
     # Call of Cthulu BonusPenalty Dice
     callofcthulu_kp_roll_pattern = r'(\d+)([kd])(\d+)([kp])([kp]?)$'
     callofcthulu_kp_roll_pattern_match = re.match(callofcthulu_kp_roll_pattern, msg)
@@ -54,10 +69,15 @@ def handle_response(msg, author, author_id) -> str:
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
         double = False if not double_bonus_or_penalty else True
-        roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+        if bonus_or_penalty == double_bonus_or_penalty:
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+        else: 
+            roll_response = None 
+    # Truncate if response exceeds character limit
     if roll_response and len(roll_response) > 1999:
-        roll_response = roll_response[:1898] +" " + "-" + "Rzut przekroczył dozwolony limit znaków w wiadomości Discord, spróbuj zmniejszyć ilość rzutów" + "**" # Truncate and add explanation
+        roll_response = roll_response[:1999-(len(character_limit_response))] + " " + character_limit_response 
         return roll_response 
+    # Return response handling for all above
     if roll_response is not None and roll_response != sorry_response:
         return roll_response
     elif msg == "help":
@@ -65,13 +85,14 @@ def handle_response(msg, author, author_id) -> str:
     elif msg == "statystyki_dnd":
         roll_response = roll_dnd_stat_block(author)
         return roll_response
+    #Return Sorry message on error or when roll response is set to None
     elif roll_response is None:
         return sorry_response
     else:
         pass #do nothing if previous conditions did not match
     
-def handle_name_response(name_msg) -> str:
-    if name_msg == "<@1055576642254286938> znikaj":
+def handle_name_response(name_msg,bot_self_mention_string) -> str:
+    if name_msg == bot_self_mention_string +" znikaj":
         sys.exit()
     else:
         return sorry_response
