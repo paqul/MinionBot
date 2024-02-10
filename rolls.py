@@ -20,8 +20,11 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
         return apologize_message
-    rolls = [r(1, dice) for _ in range(amount_of_rolls)]
-    total_sum = sum(rolls)
+    if dice == 66:
+        rolls, total_sum = morkborg_roll_for_with_modifier(author, amount_of_rolls, dice)
+    else:
+        rolls = [r(1, dice) for _ in range(amount_of_rolls)]
+        total_sum = sum(rolls)
     modified_sum = eval(f"{total_sum} {operator} {equation}")
     return f"({author.mention} k{dice}): **{rolls} | Wynik: {modified_sum}**"
 
@@ -47,6 +50,17 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         rolls.append(int(str(roll1) + str(roll2)))
     total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
     return f"({author.mention} k{dice}): **{rolls}{total_sum}**"    
+
+def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> str:
+    if dice not in dices:
+        return apologize_message
+    rolls= []
+    for _ in range(amount_of_rolls):
+        roll1 = r(1, 6)
+        roll2 = r(1, 6)
+        rolls.append(int(str(roll1) + str(roll2)))
+    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    return rolls,total_sum    
 
 def roll_dnd_stat_block(author: object) -> str:
     lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
