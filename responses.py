@@ -72,7 +72,7 @@ def handle_response(msg, author, author_id) -> str:
         if bonus_or_penalty == double_bonus_or_penalty:
             roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double) 
         else: 
-            roll_response = sorry_response
+            roll_response = None 
     # Truncate if response exceeds character limit
     if roll_response and len(roll_response) > 1999:
         roll_response = roll_response[:1999-(len(character_limit_response))] + " " + character_limit_response 
@@ -85,6 +85,7 @@ def handle_response(msg, author, author_id) -> str:
     elif msg == "statystyki_dnd":
         roll_response = roll_dnd_stat_block(author)
         return roll_response
+    #Return Sorry message on error or when roll response is set to None
     elif roll_response is None:
         return sorry_response
     else:
