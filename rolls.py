@@ -17,17 +17,6 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
     return f"({author.mention} k{dice}): **{rolls}{total_sum}**"
 
-def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
-    if dice not in dices:
-        return apologize_message
-    rolls= []
-    for _ in range(amount_of_rolls):
-        roll1 = r(1, 6)
-        roll2 = r(1, 6)
-        rolls.append(int(str(roll1) + str(roll2)))
-    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
-    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"
-
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
         return apologize_message
@@ -36,7 +25,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     modified_sum = eval(f"{total_sum} {operator} {equation}")
     return f"({author.mention} k{dice}): **{rolls} | Wynik: {modified_sum}**"
 
-def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
+def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
     if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
         return apologize_message
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
@@ -47,13 +36,24 @@ def penalty_bonus_roll_dnd(author: object, amount_of_rolls: int, dice: int, bonu
         rolls.sort()
     formatted_rolls = ", ".join(str(roll) for roll in rolls)
     return f"({author.mention} [k{dice}, {dice_type}]): **{formatted_rolls}**"
-    
+
+def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
+    if dice not in dices:
+        return apologize_message
+    rolls= []
+    for _ in range(amount_of_rolls):
+        roll1 = r(1, 6)
+        roll2 = r(1, 6)
+        rolls.append(int(str(roll1) + str(roll2)))
+    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    return f"({author.mention} k{dice}): **{rolls}{total_sum}**"    
+
 def roll_dnd_stat_block(author: object) -> str:
     lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
     formatted_stats = str(sorted(lst_stats_final, reverse=True))
     return f"({author.mention}, Rzuty na statystyki D&D): **{formatted_stats}**"
 
-def roll_bonus_penalty(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
+def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
     if bonus == "p":
         dice_type = "premiowa"
     elif bonus == "k":

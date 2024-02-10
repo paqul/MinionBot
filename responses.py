@@ -1,4 +1,4 @@
-from rolls import roll, roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices 
+from rolls import roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices 
 import sys, re
 #MSG Variables
 dices_imported = str(dices)
@@ -52,7 +52,7 @@ def handle_response(msg, author, author_id) -> str:
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
-        roll_response = penalty_bonus_roll_dnd(author, amount_of_rolls, dice, bonus)
+        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus)
     #MorkBorg k66 
     morkborg_roll_pattern = r'(\d+)[kd](66)$'
     morkborg_roll_pattern_match = re.match(morkborg_roll_pattern, msg)
@@ -69,19 +69,21 @@ def handle_response(msg, author, author_id) -> str:
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
         double = False if not double_bonus_or_penalty else True
-        roll_response = roll_bonus_penalty(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+        if bonus_or_penalty == double_bonus_or_penalty:
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double) 
+        else: 
+            roll_response = sorry_response
+    # Truncate if response exceeds character limit
     if roll_response and len(roll_response) > 1999:
-        roll_response = roll_response[:1999-(len(character_limit_response))] + " " + character_limit_response # Truncate and add explanation
+        roll_response = roll_response[:1999-(len(character_limit_response))] + " " + character_limit_response 
         return roll_response 
+    # Return response handling for all above
     if roll_response is not None and roll_response != sorry_response:
         return roll_response
     elif msg == "help":
         return help_response
     elif msg == "statystyki_dnd":
         roll_response = roll_dnd_stat_block(author)
-        return roll_response
-    elif msg == "autotest":
-        roll_response = "1k10"
         return roll_response
     elif roll_response is None:
         return sorry_response
