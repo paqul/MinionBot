@@ -131,7 +131,7 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
                 lst.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
             else:
                 lst.append([number, penalty_bonus_dice])
-        return format_response_msg(author, lst, dice_type=dice_type)
+        return format_response_msg(author, lst, dice_type=dice_type, twice=twice)
     else:
         return apologize_message
 
