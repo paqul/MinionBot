@@ -125,13 +125,17 @@ async def auto_test(msg):
     # Iterate through the lists
     for roll in rolls:
         for die in dice:
+            # Check if stop message received
             if bot_self_mention_string + " stop" in msg.content:
                 await msg.channel.send("Zatrzymuje Autotest.")
                 return  # Exit the function
+                
             await msg.channel.send(f"{roll}d{die}")
-    #Delay to avoid rate limiting by discord
+            # Delay to avoid rate limiting by discord
             await asyncio.sleep(2)
 
+    # Send a final message indicating the completion of the auto test
+    await msg.channel.send("Autotest Zakończony.")
 
 
 # asyncio.run(debug_console())
