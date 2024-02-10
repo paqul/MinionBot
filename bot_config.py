@@ -49,6 +49,7 @@ def setup_bot():
 
     @client.event
     async def on_message(msg):
+        global auto_test_task
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.content == bot_self_mention_string+" autotest":
         # Cancel the existing autotest task, if any running to avoid parallelization
@@ -123,7 +124,6 @@ async def get_role(member):
         print(E)
 
 async def auto_test(msg):
-    global auto_test_task
     # Predefined lists of amount of rolls and dice
     rolls = [1, 10, 1000]  # Example rolls
     dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice      
