@@ -11,24 +11,27 @@ apologize_message = (
 
 def format_response_msg(author, rolls, total_sum=None, dice=None, modifier=None, equation=None, bonus=None, twice=False, dice_type=None):
     if total_sum is not None:
-        #If total sum exists and there is an equation - Rolls with modifiers
+        # If total sum exists and there is an equation - Rolls with modifiers
         if modifier is not None and equation is not None:
             return f"({author.mention} k{dice}): **{rolls} | Wynik: {total_sum}**"
-        #If total sum exists and there is an equation - Rolls with modifiers
+        # If total sum exists and there is no equation - Rolls with modifiers
         else:
             return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
     elif dice_type is not None:
         if bonus is not None:
-            #call of cthulu double bonus/penalty
+            # Call of Cthulhu double bonus/penalty
             if twice:
                 return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **{rolls}**"
-            #single bonus call of cthulu and dnd5e
+            # Single bonus Call of Cthulhu and D&D 5e advantage/disadvantage
             else:
                 return f"({author.mention} [k{dice}, {dice_type}]): **{rolls}**"
-    #Default format         
+        else:
+            # Default format for other cases of dice_type
+            return f"({author.mention} [{dice_type}]): **{rolls}**"
+    # Default format for regular rolls
     elif dice is not None:
         return f"({author.mention} k{dice}): **{rolls}**"
-    #If error:
+    # If error:
     else:
         return apologize_message
 
