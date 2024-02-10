@@ -9,10 +9,10 @@ apologize_message = (
     "Po wiecej informacji i pomoc napisz komendę *help*"
 )
 
-def format_response_msg(author, rolls, total_sum=None, dice=None, modifier=None, equation=None, bonus=None, twice=False, dice_type=None):
+def format_response_msg(author, rolls, total_sum=None, dice=None, operator=None, equation=None, bonus=None, twice=False, dice_type=None):
     if total_sum is not None:
         # If total sum exists and there is an equation - Rolls with modifiers
-        if modifier is not None and equation is not None:
+        if operator is not None and equation is not None:
             return f"({author.mention} k{dice}): **{rolls} | Wynik: {total_sum}**"
         # If total sum exists and there is no equation - Rolls with modifiers
         else:
@@ -48,12 +48,12 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     if dice not in dices:
         return apologize_message
     if dice == 66:
-        rolls, total_sum = morkborg_roll_for_with_modifier(author, amount_of_rolls, dice)
+        rolls, total_sum = morkborg_roll(author, amount_of_rolls, dice, operator)
     else:
         rolls = [r(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
     modified_sum = eval(f"{total_sum} {operator} {equation}")
-    return format_response_msg(author, rolls, modified_sum, dice=dice, modifier=operator, equation=equation)
+    return format_response_msg(author, rolls, modified_sum, dice=dice, operator=operator, equation=equation)
 
 def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
     if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
@@ -69,27 +69,19 @@ def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonu
     formatted_rolls = ", ".join(str(roll) for roll in rolls)
     return format_response_msg(author, formatted_rolls, dice_type=dice_type)
 
-def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
+def morkborg_roll(author, amount_of_rolls: int, dice: int, operator=None) -> str:
     if dice not in dices:
         return apologize_message
-    rolls= []
+    rolls = []
+    total_sum = None
     for _ in range(amount_of_rolls):
         roll1 = r(1, 6)
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
-    total_sum = None if amount_of_rolls == 1 else f"{sum(rolls)}"
-    return format_response_msg(author, rolls, total_sum, dice=dice)   
+    if operator not in None:
+        total_sum = sum(rolls)
+    return (rolls, total_sum) if operator not in None else format_response_msg(author, rolls, total_sum, dice=dice)
 
-def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> str:
-    if dice not in dices:
-        return apologize_message
-    rolls= []
-    for _ in range(amount_of_rolls):
-        roll1 = r(1, 6)
-        roll2 = r(1, 6)
-        rolls.append(int(str(roll1) + str(roll2)))
-    total_sum = sum(rolls)
-    return rolls,total_sum    
 
 def roll_dnd_stat_block(author: object) -> str:
     lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
