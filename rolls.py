@@ -59,7 +59,7 @@ def morkborg_roll_for_with_modifier(author, amount_of_rolls: int, dice: int) -> 
         roll1 = r(1, 6)
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
-    total_sum = "" if amount_of_rolls == 1 else f" | Suma: {sum(rolls)}"
+    total_sum = sum(rolls)
     return rolls,total_sum    
 
 def roll_dnd_stat_block(author: object) -> str:
