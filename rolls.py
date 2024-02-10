@@ -78,9 +78,9 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int, operator=None) -> str
         roll1 = r(1, 6)
         roll2 = r(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
-    if operator not in None:
+    if operator is not None:
         total_sum = sum(rolls)
-    return (rolls, total_sum) if operator not in None else format_response_msg(author, rolls, total_sum, dice=dice)
+    return (rolls, total_sum) if operator is not None else format_response_msg(author, rolls, total_sum, dice=dice)
 
 
 def roll_dnd_stat_block(author: object) -> str:
