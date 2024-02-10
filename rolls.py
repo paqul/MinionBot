@@ -109,4 +109,3 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
             return f"({author.mention} [k{dice}, {dice_type}]): **" + str(lst) + "**"
     else:
         return apologize_message
-
