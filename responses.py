@@ -11,7 +11,7 @@ help_response = (
     "Obecnie wspierane kości ***" + dices_imported + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
-    "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens :)"
+    "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry ;)"
     "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
