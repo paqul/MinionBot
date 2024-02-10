@@ -27,13 +27,15 @@ def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     roll_response = sorry_response
     #Regular Roll Patttern
-    regular_roll_pattern = r'(\d+)[kd](?!(?:66)$)(\d+)$'
-
+    regular_roll_pattern = r'(\d+)[kd](\d+)$'
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
     if regular_roll_pattern_match:
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
         dice = int(regular_roll_pattern_match.group(2))
-        roll_response = roll(author, amount_of_rolls, dice)
+        if dice == 66:
+            roll_response = morkborg_roll(author, amount_of_rolls, dice)
+        else:
+            roll_response = roll(author, amount_of_rolls, dice)
     #Roll with Modifier
     modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
