@@ -132,7 +132,7 @@ async def auto_test(msg):
         for die in dice:
             await msg.channel.send(f"{roll}d{die}")
             # Delay to avoid rate limiting by Discord
-            await asyncio.sleep(2)
+            await asyncio.sleep(2.5)
     # Send a final message indicating the completion of the auto test
     await msg.channel.send("Zakończono Autotest.")
 
