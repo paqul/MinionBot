@@ -61,9 +61,11 @@ def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonu
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
     rolls = [[r(1, dice) for _ in range(2)] for _ in range(amount_of_rolls)]
     if bonus == "a":
-        rolls.sort(reverse=True)
+        for sublist in rolls:
+            sublist.sort(reverse=True)
     else:
-        rolls.sort()
+        for sublist in rolls:
+            sublist.sort()
     formatted_rolls = ", ".join(str(roll) for roll in rolls)
     return format_response_msg(author, formatted_rolls, dice_type=dice_type)
 
