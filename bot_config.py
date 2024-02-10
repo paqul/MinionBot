@@ -51,6 +51,8 @@ def setup_bot():
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.content == bot_self_mention_string+" autotest":
             await auto_test(msg)
+        if msg.content == bot_self_mention_string + " stop":
+            await auto_test(msg)    
         else:
             await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
