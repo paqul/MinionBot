@@ -121,7 +121,7 @@ async def auto_test(msg):
         for die in dice:
             await msg.channel.send(f"{roll}d{die}")
     #Delay to avoid rate limiting by discord
-            await asyncio.sleep(1)
+            await asyncio.sleep(1.7)
 
 
 
