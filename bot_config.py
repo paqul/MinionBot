@@ -49,7 +49,7 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        if msg.content == "autotest":
+        if msg.content == bot_self_mention_string+"autotest":
             await auto_test(msg)
         else:
             await send_msg(msg, msg.content, bot_self_mention_string, private=False)
