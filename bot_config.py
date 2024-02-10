@@ -20,6 +20,7 @@ channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
+auto_test_task = None  # Define the auto_test_task variable globally
 
 # Discord music feature of bot Initialization
 # key = token
@@ -51,8 +52,10 @@ def setup_bot():
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.content == bot_self_mention_string+" autotest":
             await auto_test(msg)
-        if msg.content == bot_self_mention_string + " stop":
-            await auto_test(msg)    
+        elif msg.content == bot_self_mention_string + " stop":
+            await msg.channel.send("Zatrzymuję Autotest.")
+            if auto_test_task:
+                auto_test_task.cancel()  # Cancel the auto test task if running 
         else:
             await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
@@ -115,6 +118,7 @@ async def get_role(member):
         print(E)
 
 async def auto_test(msg):
+    global auto_test_task
     # Predefined lists of amount of rolls and dice
     rolls = [1, 10, 1000]  # Example rolls
     dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice
