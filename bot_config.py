@@ -17,7 +17,7 @@ key = token
 channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
                "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
                "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA",
-               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA"]
+               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
 auto_test_task = None  # Define the auto_test_task variable globally
