@@ -105,13 +105,15 @@ async def send_msg(msg, user_msg,bot_self_mention_string, private):
         if msg.content.startswith(bot_self_mention_string):
             try:
                 resp_name = responses.handle_name_response(user_msg, bot_self_mention_string)
-                await msg.channel.send(resp_name)
+                if resp_name:
+                    await msg.channel.send(resp_name)
             except Exception as E:
                 print(E)
         else:
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
-                await msg.author.send(resp) if private else await msg.channel.send(resp)
+                if resp:
+                    await msg.author.send(resp) if private else await msg.channel.send(resp)
             except Exception as E:
                 print(E)
 
