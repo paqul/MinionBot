@@ -105,13 +105,15 @@ async def send_msg(msg, user_msg,bot_self_mention_string, private):
         if msg.content.startswith(bot_self_mention_string):
             try:
                 resp_name = responses.handle_name_response(user_msg, bot_self_mention_string)
-                await msg.channel.send(resp_name)
+                if resp_name:
+                    await msg.channel.send(resp_name)
             except Exception as E:
                 print(E)
         else:
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
-                await msg.author.send(resp) if private else await msg.channel.send(resp)
+                if resp:
+                    await msg.author.send(resp) if private else await msg.channel.send(resp)
             except Exception as E:
                 print(E)
 
@@ -134,21 +136,9 @@ async def auto_test(msg):
             # Delay to avoid rate limiting by Discord
             await asyncio.sleep(2.5)
     # Send a final message indicating the completion of the auto test
+    await msg.channel.send("statystyki_dnd")
+    await msg.channel.send("help")
     await msg.channel.send("Zakończono Autotest.")
 
 # asyncio.run(debug_console())
-        
-#async def autotest():
-    #print("TEST")
-    #await send_msg("1k10", "1k10".content, private=False)
-    # send_msg("1k10", user_msg, private)
-    # return "1k10"
 
-#def double_thread(user_msg, author, author_id):
-    #th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    #th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    #th_1.start()
-    #th_2.start()
-    #th_1.join()
-    #th_2.join()
-    # return th_2

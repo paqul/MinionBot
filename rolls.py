@@ -18,7 +18,7 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, operator=None,
         else:
             return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
     elif dice_type is not None:
-        if bonus is not None:
+        if bonus == "p" or bonus == "k":
             # Call of Cthulhu double bonus/penalty
             if twice:
                 return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **{rolls}**"
@@ -83,12 +83,11 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int, operator=None) -> str
     return (rolls, total_sum) if operator is not None else format_response_msg(author, rolls, total_sum, dice=dice)
 
 def roll_dnd_stat_block(author: object) -> str:
-    lst_stats_final = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
-    formatted_stats = sorted(lst_stats_final, reverse=True)
+    rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)], reverse=True)
     dice_type = "Rzuty na statystyki D&D"
-    return format_response_msg(author, dice_type , rolls=formatted_stats)
+    return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
-def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
+def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
     if bonus == "p":
         dice_type = "Premiowa"
     elif bonus == "k":
@@ -96,7 +95,7 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     else:
         dice_type = "Błąd typu kości"
     if dice in call_of_cthlu_penalty_bonus_dice:
-        lst = []
+        rolls = []
         penalty_bonus_dice_2 = None
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
@@ -121,10 +120,10 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
             if penalty_bonus_dice == 0:
                 penalty_bonus_dice = 100
             if twice:
-                lst.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
+                rolls.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
             else:
-                lst.append([number, penalty_bonus_dice])
-        return format_response_msg(author, lst, dice_type=dice_type, twice=twice)
+                rolls.append([number, penalty_bonus_dice])
+        return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus, twice=twice)
     else:
         return apologize_message
 

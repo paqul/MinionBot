@@ -15,8 +15,8 @@ help_response = (
     "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
-    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna to dziesiątki a druga jedności)\n"
-    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności)\n"
+    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
     "- Pomoc: komenda ***help***"
 )
 character_limit_response = (
@@ -69,11 +69,11 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(callofcthulu_kp_roll_pattern_match.group(3))
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
-        double = False if not double_bonus_or_penalty else True
-        if bonus_or_penalty == double_bonus_or_penalty and double == True:
-            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
-        elif bonus_or_penalty != double_bonus_or_penalty and double == False:     
-            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
+        twice = False if not double_bonus_or_penalty else True
+        if bonus_or_penalty == double_bonus_or_penalty and twice == True:
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, twice)
+        elif bonus_or_penalty != double_bonus_or_penalty and twice == False:     
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, twice)
         else: 
             roll_response = None 
     # Truncate if response exceeds character limit
