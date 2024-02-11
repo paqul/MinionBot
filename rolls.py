@@ -83,7 +83,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int, operator=None) -> str
     return (rolls, total_sum) if operator is not None else format_response_msg(author, rolls, total_sum, dice=dice)
 
 def roll_dnd_stat_block(author: object) -> str:
-    rolls = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
+    rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)], reverse=True)
     dice_type = "Rzuty na statystyki D&D"
     return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
