@@ -141,18 +141,4 @@ async def auto_test(msg):
     await msg.channel.send("Zakończono Autotest.")
 
 # asyncio.run(debug_console())
-        
-#async def autotest():
-    #print("TEST")
-    #await send_msg("1k10", "1k10".content, private=False)
-    # send_msg("1k10", user_msg, private)
-    # return "1k10"
 
-#def double_thread(user_msg, author, author_id):
-    #th_1 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    #th_2 = threading.Thread(responses.handle_response, user_msg, author, author_id)
-    #th_1.start()
-    #th_2.start()
-    #th_1.join()
-    #th_2.join()
-    # return th_2

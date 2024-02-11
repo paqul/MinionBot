@@ -15,8 +15,8 @@ help_response = (
     "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
-    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna to dziesiątki a druga jedności)\n"
-    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności)\n"
+    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
     "- Pomoc: komenda ***help***"
 )
 character_limit_response = (
