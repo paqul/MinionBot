@@ -69,11 +69,11 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(callofcthulu_kp_roll_pattern_match.group(3))
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
-        double = False if not double_bonus_or_penalty else True
-        if bonus_or_penalty == double_bonus_or_penalty and double == True:
-            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
-        elif bonus_or_penalty != double_bonus_or_penalty and double == False:     
-            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, double)
+        twice = False if not double_bonus_or_penalty else True
+        if bonus_or_penalty == double_bonus_or_penalty and twice == True:
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, twice)
+        elif bonus_or_penalty != double_bonus_or_penalty and twice == False:     
+            roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, twice)
         else: 
             roll_response = None 
     # Truncate if response exceeds character limit
