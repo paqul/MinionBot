@@ -136,6 +136,8 @@ async def auto_test(msg):
             # Delay to avoid rate limiting by Discord
             await asyncio.sleep(2.5)
     # Send a final message indicating the completion of the auto test
+    await msg.channel.send("statystyki_dnd")
+    await msg.channel.send("help")
     await msg.channel.send("Zakończono Autotest.")
 
 # asyncio.run(debug_console())
