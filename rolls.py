@@ -88,7 +88,7 @@ def roll_dnd_stat_block(author: object) -> str:
     dice_type = "Rzuty na statystyki D&D"
     return format_response_msg(author, dice_type , rolls=formatted_stats)
 
-def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool = False) -> str:
+def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
     if bonus == "p":
         dice_type = "Premiowa"
     elif bonus == "k":
