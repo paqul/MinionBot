@@ -88,6 +88,7 @@ def roll_dnd_stat_block(author: object) -> str:
     return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
 def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
+    twice = twice
     if bonus == "p":
         dice_type = "Premiowa"
     elif bonus == "k":
