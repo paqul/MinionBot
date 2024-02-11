@@ -85,7 +85,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int, operator=None) -> str
 def roll_dnd_stat_block(author: object) -> str:
     rolls = [sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3]) for _ in range(6)]
     dice_type = "Rzuty na statystyki D&D"
-    return format_response_msg(author, dice_type , rolls=rolls)
+    return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
 def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
     if bonus == "p":
@@ -95,7 +95,7 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     else:
         dice_type = "Błąd typu kości"
     if dice in call_of_cthlu_penalty_bonus_dice:
-        lst = []
+        rolls = []
         penalty_bonus_dice_2 = None
         for _ in range(int(amount_of_rolls)):
             number = r(1, dice)
@@ -120,10 +120,10 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
             if penalty_bonus_dice == 0:
                 penalty_bonus_dice = 100
             if twice:
-                lst.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
+                rolls.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
             else:
-                lst.append([number, penalty_bonus_dice])
-        return format_response_msg(author, lst, dice_type=dice_type, twice=twice)
+                rolls.append([number, penalty_bonus_dice])
+        return format_response_msg(author, rolls=rolls, dice_type=dice_type, twice=twice)
     else:
         return apologize_message
 
