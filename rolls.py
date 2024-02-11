@@ -18,7 +18,7 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, operator=None,
         else:
             return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
     elif dice_type is not None:
-        if bonus is not None:
+        if bonus == "p" or bonus == "k":
             # Call of Cthulhu double bonus/penalty
             if twice:
                 return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **{rolls}**"
