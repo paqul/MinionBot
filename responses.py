@@ -1,4 +1,5 @@
 import discord
+import io
 
 from rolls import roll, roll_with_modifier,  roll_bonus_penalty, penalty_bonus_roll_dnd, roll_dnd_stat_block
 import sys, time
@@ -104,12 +105,19 @@ def handle_response(msg, author, author_id) -> str:
         return roll_response
     elif msg == "ose_gen_fighter":
         print("GENERUJE...")
-        import io
+
         data = generate_fighter()
-        # buffer = io.BytesIO(b'data')
-        # file = discord.File(buffer, "fajter_testowy.txt")
-        # print(type(file), file.filename)
-        return str(data)
+        print(data)
+
+        with open("file.txt", "a+", encoding="utf-8") as file:
+            for text in data:
+                print(text)
+                file.write(str(text)+"\n")
+            # buffer = io.BytesIO(b'data')
+        # file = discord.File(r"C:\Users\hyper\PycharmProjects\MinionBot", "file.txt")
+        print(type(file), file, file.name)
+        return file
+
     elif msg == "autotest":
         # autotest()
         # return autotest()

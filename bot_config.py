@@ -1,4 +1,5 @@
 #link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
+import os
 
 import discord
 from discord.ext import tasks, commands
@@ -8,6 +9,7 @@ import members
 import youtube_dl
 from params import token
 import threading
+import io
 import asyncio
 # import audio
 import sys
@@ -47,10 +49,11 @@ def setup_bot():
         if msg.author == client.user or msg.author == "<@1055576642254286938>":
             return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
-        if msg.author == "autotest":
-            await send_msg(msg, "1k10", private=False)
-        else:
-            await send_msg(msg, msg.content, private=False)
+        # if msg.content.startswith("ose"):
+        #     print("TEST")
+
+        # else:
+        await send_msg(msg, msg.content, private=False)
 
     @tasks.loop(seconds=120)
     async def check_role():
@@ -101,11 +104,24 @@ async def send_msg(msg, user_msg, private):
                 await msg.channel.send(resp_name)
             except Exception as E:
                 print(E)
+        # elif msg.content.startswith("ose"):
+        #     await channel.send('Working!', file=discord.File("file.txt"))
         else:
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
-                await msg.author.send(resp) if private else await msg.channel.send(resp)
-                # await channel.send('Working!', file=discord.File("file.txt"))
+                print("RESPONSE", type(resp), resp)
+                if type(resp) is io.TextIOWrapper:
+                    # path = './example.txt'
+                    # check_file = os.path.isfile(path)
+                    print("TESTujemy", resp)
+                    # os.PathLike("")
+                    # with open(resp, 'rb') as file:
+                    #     await msg.channel.send(file=discord.File(file))
+                    await msg.channel.send(file=discord.File(r"C:\Users\hyper\PycharmProjects\MinionBot", resp))
+                    # await msg.channel.send(file=discord.File(resp))
+                else:
+                    await msg.author.send(file=discord.File(resp)) if private else await msg.channel.send(resp)
+                    # await msg.author.send(file=discord.File(resp))
             except Exception as E:
                 print(E)
 
