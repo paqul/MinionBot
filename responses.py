@@ -106,25 +106,37 @@ def handle_response(msg, author, author_id) -> str:
         dice = int(msg[3:])
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
-    elif msg == "ose_gen_fighter":
+    elif msg.startswith("ose"):
+        data_stats = []
+        file_path_name = None
         files_in_ose = os.listdir(os.path.join(os.getcwd(), "OSE"))
+        print("FILES:::::", files_in_ose)
         for file_name in files_in_ose:
             name_to_delete = check_if_file_exist(file_name)
             if name_to_delete in files_in_ose:
                 os.remove(os.path.join(os.getcwd(), "OSE", name_to_delete))
-
-        print("GENERUJE...")
-        data = generate_fighter()
-        print(data)
-
-        with open("OSE//user-magic.txt", "a+", encoding="utf-8") as file:
-            for text in data:
-                # print(text)
+        print("Generating...")  # start generating
+        if msg.endswith(ose_file_names[0]):
+            data_stats = generate_hero(ose_file_names[0])
+            file_path_name = "OSE//cleric.csv"
+            print("CLERIC")
+        elif msg.endswith(ose_file_names[1]):
+            data_stats = generate_hero(ose_file_names[1])
+            file_path_name = "OSE//fighter.csv"
+            print("fighter")
+        elif msg.endswith(ose_file_names[2]):
+            data_stats = generate_hero(ose_file_names[2])
+            file_path_name = "OSE//magic_user.csv"
+            print("magicuser")
+        elif msg.endswith(ose_file_names[3]):
+            data_stats = generate_hero(ose_file_names[3])
+            file_path_name = "OSE//thief.csv"
+            print("thief")
+        with open(file_path_name, "a+", encoding="utf-8") as file:
+            for text in data_stats:
                 file.write(str(text)+"\n")
-        # file = discord.File(r"C:\Users\hyper\PycharmProjects\MinionBot", "file.txt")
-        print(type(file), file, file.name)
+        data_stats = None
         return file
-
     elif msg == "autotest":
         # autotest()
         # return autotest()

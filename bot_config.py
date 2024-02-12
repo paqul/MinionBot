@@ -109,17 +109,13 @@ async def send_msg(msg, user_msg, private):
         else:
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
-                print("RESPONSE", type(resp), resp)
                 if type(resp) is io.TextIOWrapper:
-                    print("TESTujemy", resp)
-                    print("TESTujemy", resp.name)
                     file = discord.File(os.path.join(r"C:\Users\hyper\PycharmProjects\MinionBot", resp.name))
-                    print("PLIK", file)
+                    print("PLIK", file.filename)
                     # del file
                     await msg.channel.send(file=file)
                 else:
                     await msg.author.send(file=discord.File(resp)) if private else await msg.channel.send(resp)
-                    # await msg.author.send(file=discord.File(resp))
             except Exception as E:
                 print(E)
 

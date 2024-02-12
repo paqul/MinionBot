@@ -1,4 +1,4 @@
-ose_file_names = ["cleric", "fighter", "user-magic", "thief"]
+ose_file_names = ["cleric", "fighter", "magic_user", "thief"]
 
 
 def check_if_file_exist(file_name: str):
