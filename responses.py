@@ -1,3 +1,5 @@
+import os
+
 import discord
 import io
 
@@ -5,6 +7,7 @@ from rolls import roll, roll_with_modifier,  roll_bonus_penalty, penalty_bonus_r
 import sys, time
 import csv
 from OSE.general import *
+from OSE.ose_utility_functions import *
 
 list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
@@ -104,16 +107,20 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = roll(author, amount_of_rolls, dice)
         return roll_response
     elif msg == "ose_gen_fighter":
-        print("GENERUJE...")
+        files_in_ose = os.listdir(os.path.join(os.getcwd(), "OSE"))
+        for file_name in files_in_ose:
+            name_to_delete = check_if_file_exist(file_name)
+            if name_to_delete in files_in_ose:
+                os.remove(os.path.join(os.getcwd(), "OSE", name_to_delete))
 
+        print("GENERUJE...")
         data = generate_fighter()
         print(data)
 
-        with open("file.txt", "a+", encoding="utf-8") as file:
+        with open("OSE//user-magic.txt", "a+", encoding="utf-8") as file:
             for text in data:
-                print(text)
+                # print(text)
                 file.write(str(text)+"\n")
-            # buffer = io.BytesIO(b'data')
         # file = discord.File(r"C:\Users\hyper\PycharmProjects\MinionBot", "file.txt")
         print(type(file), file, file.name)
         return file

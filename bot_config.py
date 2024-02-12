@@ -111,14 +111,12 @@ async def send_msg(msg, user_msg, private):
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
                 print("RESPONSE", type(resp), resp)
                 if type(resp) is io.TextIOWrapper:
-                    # path = './example.txt'
-                    # check_file = os.path.isfile(path)
                     print("TESTujemy", resp)
-                    # os.PathLike("")
-                    # with open(resp, 'rb') as file:
-                    #     await msg.channel.send(file=discord.File(file))
-                    await msg.channel.send(file=discord.File(r"C:\Users\hyper\PycharmProjects\MinionBot", resp))
-                    # await msg.channel.send(file=discord.File(resp))
+                    print("TESTujemy", resp.name)
+                    file = discord.File(os.path.join(r"C:\Users\hyper\PycharmProjects\MinionBot", resp.name))
+                    print("PLIK", file)
+                    # del file
+                    await msg.channel.send(file=file)
                 else:
                     await msg.author.send(file=discord.File(resp)) if private else await msg.channel.send(resp)
                     # await msg.author.send(file=discord.File(resp))
