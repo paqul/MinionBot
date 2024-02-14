@@ -94,23 +94,24 @@ def roll_dnd_stat_block(author: object) -> str:
 def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
     if dice not in call_of_cthlu_penalty_bonus_dice:
         return apologize_message
+    #Define the dicetype for futher use
     dice_type_initial = "Premiowa" if bonus == "p" else "Karna"
-    rolls = []
-    for _ in range(int(amount_of_rolls)):
-        initial_roll = r(1, dice)
-        units_str = str(initial_roll % 10)
-        penalty_bonus_dice_tens = r(0, 9)
-        if twice:
-            dice_type = f"{dice_type_initial}, {dice_type_initial}"
-            penalty_bonus_dice_2_tens = r(0, 9)
-            second_penalty_bonus_roll = int(f"{penalty_bonus_dice_2_tens}{units_str}")
-            if second_penalty_bonus_roll == 0 :
-                second_penalty_bonus_roll = 100
-            rolls.append(initial_roll, penalty_bonus_dice_tens, second_penalty_bonus_roll)
-        else:
-            dice_type = f"{dice_type_initial}"
-            first_penalty_bonus_roll = int(f"{penalty_bonus_dice_2_tens}{units_str}")
-            if first_penalty_bonus_roll == 0:
-                first_penalty_bonus_roll = 100
-            rolls.append(initial_roll, first_penalty_bonus_roll)
-        return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
+    dice_type = f"{dice_type_initial}, {dice_type_initial}" if twice else dice_type_initial
+    #Generate Rolls
+    list_of_internal_rolls = []
+    for _ in range(amount_of_rolls):
+        starting_regular_roll = r(1, dice)  
+        internal_rolls = [starting_regular_roll] 
+        units_digit_of_starting_roll = starting_regular_roll % 10
+        #Loop for 2 if twice or 1 if not
+        for _ in range(2 if twice else 1):
+            tens_digit = r(0, 9)
+            compound_penalty_bonus_roll = int(f"{tens_digit}{units_digit_of_starting_roll}")
+            if  compound_penalty_bonus_roll == 0:
+                compound_penalty_bonus_roll = 100
+            internal_rolls.append(compound_penalty_bonus_roll)
+        #create a list of lists with all rolls in each element    
+        list_of_internal_rolls.append(internal_rolls)
+    #format rolls for final response msg
+    rolls = ", ".join(str(element) for element in list_of_internal_rolls)
+    return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
