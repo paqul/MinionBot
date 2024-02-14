@@ -97,31 +97,20 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     dice_type_initial = "Premiowa" if bonus == "p" else "Karna"
     rolls = []
     for _ in range(int(amount_of_rolls)):
-        number = r(1, dice)
-        str_number = str(number)
-        if len(str_number) == 1:  # 0x
-            str_number = "0"+str_number
-        elif len(str_number) == 2:  # xx
-            ...
-        else:  # 100
-            str_number = "00"
+        initial_roll = r(1, dice)
+        units_str = str(initial_roll % 10)
+        penalty_bonus_dice_tens = r(0, 9)
         if twice:
             dice_type = f"{dice_type_initial}, {dice_type_initial}"
-            penalty_bonus_dice = r(0, 9)
-            penalty_bonus_dice_2 = r(0, 9)
-            str_penalty_bonus_dice_2 = str(penalty_bonus_dice_2) + str_number[1]
-            penalty_bonus_dice_2 = int(str_penalty_bonus_dice_2)
-            if penalty_bonus_dice_2 == 0:
-                penalty_bonus_dice_2 = 100
+            penalty_bonus_dice_2_tens = r(0, 9)
+            second_penalty_bonus_roll = int(f"{penalty_bonus_dice_2_tens}{units_str}")
+            if second_penalty_bonus_roll == 0 :
+                second_penalty_bonus_roll = 100
+            rolls.append(initial_roll, penalty_bonus_dice_tens, second_penalty_bonus_roll)
         else:
             dice_type = f"{dice_type_initial}"
-            penalty_bonus_dice = r(0, 9)
-            str_penalty_bonus_dice = str(penalty_bonus_dice)+str_number[1]
-            penalty_bonus_dice = int(str_penalty_bonus_dice)
-        if penalty_bonus_dice == 0:
-            penalty_bonus_dice = 100
-        if twice:
-            rolls.append([number, penalty_bonus_dice, penalty_bonus_dice_2])
-        else:
-            rolls.append([number, penalty_bonus_dice])
+            first_penalty_bonus_roll = int(f"{penalty_bonus_dice_2_tens}{units_str}")
+            if first_penalty_bonus_roll == 0:
+                first_penalty_bonus_roll = 100
+            rolls.append(initial_roll, first_penalty_bonus_roll)
         return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
