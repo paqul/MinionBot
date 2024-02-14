@@ -18,13 +18,8 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, operator=None,
         else:
             return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
     elif dice_type is not None:
-        if bonus == "p" or bonus == "k":
-            # Call of Cthulhu double bonus/penalty
-            if twice:
-                return f"({author.mention} [k{dice}, {dice_type}, {dice_type}]): **{rolls}**"
-            # Single bonus Call of Cthulhu and D&D 5e advantage/disadvantage
-            else:
-                return f"({author.mention} [k{dice}, {dice_type}]): **{rolls}**"
+        if bonus in ("p", "k"):
+            return f"({author} [k{dice}, {dice_type}]): **{rolls}**"
         else:
             # Default format for other cases of dice_type
             return f"({author.mention} [{dice_type}]): **{rolls}**"
@@ -89,9 +84,9 @@ def roll_dnd_stat_block(author: object) -> str:
 
 def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, twice: bool) -> str:
     if bonus == "p":
-        dice_type = "Premiowa"
+        dice_type_initial = "Premiowa"
     elif bonus == "k":
-        dice_type = "Karna"
+        dice_type_initial = "Karna"
     else:
         dice_type = "Błąd typu kości"
     if dice in call_of_cthlu_penalty_bonus_dice:
@@ -107,6 +102,7 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
             else: #100
                 str_number = "00"
             if twice:
+                dice_type = f"{dice_type_initial}, {dice_type_initial}"
                 penalty_bonus_dice = r(0, 9)
                 penalty_bonus_dice_2 = r(0, 9)
                 str_penalty_bonus_dice_2 = str(penalty_bonus_dice_2) + str_number[1]
@@ -114,9 +110,10 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
                 if penalty_bonus_dice_2 == 0:
                     penalty_bonus_dice_2 = 100
             else:
+                dice_type = f"{dice_type_initial}"    
                 penalty_bonus_dice = r(0, 9)
-            str_penalty_bonus_dice = str(penalty_bonus_dice)+str_number[1]
-            penalty_bonus_dice = int(str_penalty_bonus_dice)
+                str_penalty_bonus_dice = str(penalty_bonus_dice)+str_number[1]
+                penalty_bonus_dice = int(str_penalty_bonus_dice)
             if penalty_bonus_dice == 0:
                 penalty_bonus_dice = 100
             if twice:
