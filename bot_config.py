@@ -128,7 +128,7 @@ async def get_role(member):
 async def auto_test(msg):
     # Predefined lists of amount of rolls and dice
     rolls = [1, 10, 1000]  # Example rolls
-    dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice      
+    dice = ["2", "3", "4", "6", "8", "10", "11", "12", "16", "20", "24", "30", "66", "100", "1000","20a", "20d", "100kk", "100kp", "100pk", "100k", "100p", "20*2", "20+2", "20-2", "10+2+2+5-3*2"]   # Example dice      
     # Iterate through the lists
     for roll in rolls:
         for die in dice:
@@ -137,8 +137,10 @@ async def auto_test(msg):
             await asyncio.sleep(2.5)
     # Send a final message indicating the completion of the auto test
     await msg.channel.send("statystyki_dnd")
+    await asyncio.sleep(2.5)
     await msg.channel.send("help")
-    await msg.channel.send("Zakończono Autotest.")
+    await asyncio.sleep(2.5)
+    await msg.channel.send("***Zakończono Autotest.***")
 
 # asyncio.run(debug_console())
 

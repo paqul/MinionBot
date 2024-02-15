@@ -93,7 +93,6 @@ def handle_response(msg, author, author_id) -> str:
     elif roll_response is None:
         return sorry_response
     else:
-        print("Roll entered the handle_response but did not match any existing conditions")
         pass #do nothing if previous conditions did not match
     
 def handle_name_response(name_msg,bot_self_mention_string) -> str:
