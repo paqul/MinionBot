@@ -100,27 +100,18 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     #Generate Rolls
     list_of_internal_rolls = []
     for _ in range(amount_of_rolls):
-        starting_regular_roll = r(1, dice)
-        print(starting_regular_roll)  
+        starting_regular_roll = r(1, dice)  
         internal_rolls = [starting_regular_roll] 
         units_digit_of_starting_roll = starting_regular_roll % 10
-        print(units_digit_of_starting_roll) 
         #Loop for 2 if twice or 1 if not
         for _ in range(2 if twice else 1):
             tens_digit_of_bonus_penalty_roll = r(0, 9)
-            print(tens_digit_of_bonus_penalty_roll) 
             compound_penalty_bonus_roll = int(f"{tens_digit_of_bonus_penalty_roll}{units_digit_of_starting_roll}")
-            print(compound_penalty_bonus_roll) 
             if  compound_penalty_bonus_roll == 0:
                 compound_penalty_bonus_roll = 100
-                print(compound_penalty_bonus_roll)
-            print(compound_penalty_bonus_roll)    
             internal_rolls.append(compound_penalty_bonus_roll)
-            print(internal_rolls)
         #create a list of lists with all rolls in each element    
         list_of_internal_rolls.append(internal_rolls)
-        print(internal_rolls)
     #format rolls for final response msg
     rolls = ", ".join(str(element) for element in list_of_internal_rolls)
-    print(rolls)
     return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
