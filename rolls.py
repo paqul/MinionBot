@@ -110,6 +110,11 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
             if  compound_penalty_bonus_roll == 0:
                 compound_penalty_bonus_roll = 100
             internal_rolls.append(compound_penalty_bonus_roll)
+                # Sort second and third items in the list
+        if bonus == "p":
+            internal_rolls[1:] = sorted(internal_rolls[1:], reverse=True)
+        else:
+            internal_rolls[1:] = sorted(internal_rolls[1:])    
         #create a list of lists with all rolls in each element    
         list_of_internal_rolls.append(internal_rolls)
     #format rolls for final response msg
