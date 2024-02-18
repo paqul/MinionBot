@@ -87,9 +87,12 @@ def roll_dnd_stat_block(author: object) -> str:
     while True:
         rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3])
                         for _ in range(6)], reverse=True)
-        if max(rolls) == 13 or sum(rolls) <= 60:
+        if max(rolls) == 13:
             print("Dokonano Rerollu bo statystyki nie spełniały minimalnych wymagań")
             continue  # Restart the loop if conditions are met
+        elif sum(rolls) <= 60:
+            print("Dokonano Rerollu bo statystyki nie spełniały minimalnych wymagań")
+            continue  # Restart the loop if conditions are met            
         else:
             break  # Exit the loop if conditions are not met
     dice_type = "Rzuty na statystyki D&D"
