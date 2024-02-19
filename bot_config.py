@@ -142,7 +142,7 @@ async def auto_test(msg):
     await asyncio.sleep(2.5)
     await msg.channel.send("help")
     await asyncio.sleep(2.5)
-    await msg.channel.send("***Zakończono Autotest.***")
+    await msg.channel.send("# ***Zakończono Autotest.***")
 
 # asyncio.run(debug_console())
 
