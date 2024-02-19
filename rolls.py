@@ -19,10 +19,10 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None,
             return f"({author.mention} k{dice}) | ***Suma: {total_sum}*** | **Rzuty:{rolls}**"
     elif dice_type is not None:
         if bonus in ("p", "k"):
-            return f"({author.mention} [k{dice}, {dice_type}]): **{rolls}**"
+            return f"({author.mention} [k{dice}, *{dice_type}*]): **{rolls}**"
         else:
             # Default format for other cases of dice_type
-            return f"({author.mention} [{dice_type}]): **{rolls}**"
+            return f"({author.mention} [*{dice_type}*]): **{rolls}**"
     # Default format for regular rolls
     elif dice is not None:
         return f"({author.mention} k{dice}): **{rolls}**"
