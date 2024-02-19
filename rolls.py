@@ -9,7 +9,6 @@ apologize_message = (
     "Po wiecej informacji i pomoc napisz komendę *help*"
 )
 
-
 def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None, bonus=None, dice_type=None):
     if total_sum is not None:
         # If total sum exists and there is an equation - Rolls with modifiers
@@ -85,8 +84,17 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
 
 
 def roll_dnd_stat_block(author: object) -> str:
-    rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3])
-                   for _ in range(6)], reverse=True)
+    while True:
+        rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3])
+                        for _ in range(6)], reverse=True)
+        if max(rolls) == 13:
+            print("Dokonano Rerollu bo statystyki nie spełniały minimalnych wymagań")
+            continue  # Restart the loop if conditions are met
+        elif sum(rolls) <= 60:
+            print("Dokonano Rerollu bo statystyki nie spełniały minimalnych wymagań")
+            continue  # Restart the loop if conditions are met            
+        else:
+            break  # Exit the loop if conditions are not met
     dice_type = "Rzuty na statystyki D&D"
     return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
