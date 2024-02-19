@@ -50,6 +50,8 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         global auto_test_task
+        #if msg.author == client.user or msg.author == "@MinonBot":
+            #return
         print(f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} ")
         if msg.content == bot_self_mention_string+" autotest":
         # Cancel the existing autotest task, if any running to avoid parallelization
