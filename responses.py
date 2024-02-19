@@ -85,13 +85,13 @@ def handle_response(msg, author, author_id) -> str:
     if roll_response is not None and roll_response != sorry_response:
         return roll_response
     elif msg == "help":
-        return f"{author.mention}\n" + help_response
+        return help_response
     elif msg == "statystyki_dnd":
         roll_response = roll_dnd_stat_block(author)
         return roll_response
     #Return Sorry message on error or when roll response is set to None
     elif roll_response is None:
-        return f"{author.mention}\n" + sorry_response
+        return sorry_response
     else:
         pass #do nothing if previous conditions did not match
     
@@ -99,4 +99,4 @@ def handle_name_response(name_msg,bot_self_mention_string, author) -> str:
     if name_msg == bot_self_mention_string +" znikaj":
         sys.exit()
     else:
-        return f"{author.mention}\n"+sorry_response
+        return sorry_response
