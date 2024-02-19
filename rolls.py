@@ -13,10 +13,10 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None,
     if total_sum is not None:
         # If total sum exists and there is an equation - Rolls with modifiers
         if equation is not None:
-            return f"({author.mention} k{dice}): **{rolls} | Wynik: {total_sum}**"
+            return f"({author.mention} k{dice}) | Wynik: {total_sum} | **{rolls}**"
         # If total sum exists and there is no equation - Rolls with modifiers
         else:
-            return f"({author.mention} k{dice}): **{rolls} | Suma: {total_sum}**"
+            return f"({author.mention} k{dice}) | Suma: {total_sum} | **{rolls}**"
     elif dice_type is not None:
         if bonus in ("p", "k"):
             return f"({author.mention} [k{dice}, {dice_type}]): **{rolls}**"
