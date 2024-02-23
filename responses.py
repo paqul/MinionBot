@@ -7,17 +7,19 @@ sorry_response = (
 "Po więcej informacji i pomoc, napisz komendę ***help***."
 )    
 help_response = (
-    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość kości>k<ilość ściań kości>*** (np. *1k100, 3k20, 2k10* itp.)\n"
+    "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość kości>k<ilość ściań kości>*** (np. *1k100, 3k20, 2k10* itp.).\n"
     "Obecnie wspierane kości ***" + dices_imported + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
-    "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry ;)\n"
-    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***\n"
-    "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***\n"
-    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***\n"
-    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności)\n"
-    "- Rzut na zestw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy\n"
-    "- Pomoc: komenda ***help***"
+    "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry.\n"
+    "  Nie zapominaj o kolejności wykonywania działań. ;)\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***.\n"
+    "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***.\n"
+    "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
+    "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności).\n"
+    "- Rzut na zestaw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy.\n"
+    "  Przerzuca cały zestaw jeżeli suma modyfikatorów wynosi 0 lub gdy najwyższy rzut to 13\n"
+    "- Pomoc: komenda ***help***."
 )
 character_limit_response = (
 "- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
@@ -94,7 +96,7 @@ def handle_response(msg, author, author_id) -> str:
     else:
         pass #do nothing if previous conditions did not match
     
-def handle_name_response(name_msg,bot_self_mention_string) -> str:
+def handle_name_response(name_msg,bot_self_mention_string, author) -> str:
     if name_msg == bot_self_mention_string +" znikaj":
         sys.exit()
     else:
