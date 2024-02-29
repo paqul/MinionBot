@@ -36,7 +36,8 @@ def handle_response(msg, author, author_id) -> str:
         if dice == 66:
             roll_response = morkborg_roll(author, amount_of_rolls, dice)
         else:
-            roll_response = roll(author, amount_of_rolls, dice)
+            print("TEST ROLL")
+            roll_response = roll(author, amount_of_rolls, dice) #CLEAR ROLL
     #Roll with Modifier
     modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
