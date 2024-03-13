@@ -39,7 +39,6 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
         return apologize_message
     rolls = [r(1, dice) for _ in range(amount_of_rolls)]
-    print("TEST ROLL")
     if str(author.name) in sorted_authors:
        rolls.sort()
     total_sum = None if amount_of_rolls == 1 else f"{sum(rolls)}"
