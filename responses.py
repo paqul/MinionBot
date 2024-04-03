@@ -40,14 +40,13 @@ def handle_response(msg, author, author_id) -> str:
         else:
             roll_response = roll(author, amount_of_rolls, dice)
     #Roll with Modifier
-    modifier_roll_pattern = r'(\d+)[kd](\d+)([ad]?)([\+\-\*])(.*)'
+    modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
     if modifier_roll_pattern_match:
         amount_of_rolls = int(modifier_roll_pattern_match.group(1))
         dice = int(modifier_roll_pattern_match.group(2))
-        bonus = modifier_roll_pattern_match.group(3)
-        operator = modifier_roll_pattern_match.group(4)
-        equation = modifier_roll_pattern_match.group(5)
+        operator = modifier_roll_pattern_match.group(3)
+        equation = modifier_roll_pattern_match.group(4)
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
     #Advantage/Disadvantage Roll Matching
     dnd5_ad_roll_pattern = r'(\d+)[kd](20)([ad])$'
