@@ -49,13 +49,15 @@ def handle_response(msg, author, author_id) -> str:
         equation = modifier_roll_pattern_match.group(4)
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
     #Advantage/Disadvantage Roll Matching
-    dnd5_ad_roll_pattern = r'(\d+)[kd](20)([ad])$'
+    dnd5_ad_roll_pattern = r'(\d+)[kd](20)(?:([ad])([\+\-\*\/])(.*))?'
     dnd5_ad_roll_pattern_match = re.match(dnd5_ad_roll_pattern, msg)
     if dnd5_ad_roll_pattern_match:
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
-        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus)
+        operator = dnd5_ad_roll_pattern_match.group(4) if dnd5_ad_roll_pattern_match.group(4) else ''
+        equation = dnd5_ad_roll_pattern_match.group(5) if dnd5_ad_roll_pattern_match.group(5) else ''
+        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus,operator, equation)
     #MorkBorg k66 
     morkborg_roll_pattern = r'(\d+)[kd](66)$'
     morkborg_roll_pattern_match = re.match(morkborg_roll_pattern, msg)
