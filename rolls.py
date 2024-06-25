@@ -53,19 +53,31 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     return format_response_msg(author, rolls, modified_sum, dice=dice, equation=equation)
 
 
-def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str) -> str:
+def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, operator: str, equation: str) -> str:
     if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
         return apologize_message
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
     internal_rolls = [[r(1, dice) for _ in range(2)]
                       for _ in range(amount_of_rolls)]
-    if bonus == "a":
+    # Evaluate each roll in sublist with the operator and equation
+    if operator and equation:
+        evaluated_rolls = []
         for sublist in internal_rolls:
+            evaluated_sublist = []
+            for roll in sublist:
+                evaluated_roll = eval(f"{roll}{operator}{equation}")
+                roll = evaluated_roll
+                evaluated_sublist.append(evaluated_roll)
+            evaluated_rolls.append(evaluated_sublist)
+    else:
+        evaluated_rolls = internal_rolls
+    if bonus == "a":
+        for sublist in evaluated_rolls:
             sublist.sort(reverse=True)
     else:
-        for sublist in internal_rolls:
+        for sublist in evaluated_rolls:
             sublist.sort()
-    rolls = ", ".join(str(roll) for roll in internal_rolls)
+    rolls = ", ".join(str(roll) for roll in evaluated_rolls)
     return format_response_msg(author, rolls=rolls, dice_type=dice_type)
 
 
