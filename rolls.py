@@ -1,5 +1,5 @@
 from random import randint as r
-# from members import sorted_authors
+from members import sorted_authors
 
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
@@ -35,8 +35,8 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
         return apologize_message
     rolls = [r(1, dice) for _ in range(amount_of_rolls)]
-    # if str(author.name) in sorted_authors:
-    #    rolls.sort()
+    if str(author.name) in sorted_authors:
+       rolls.sort()
     total_sum = None if amount_of_rolls == 1 else f"{sum(rolls)}"
     return format_response_msg(author, rolls, total_sum, dice=dice)
 
