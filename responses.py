@@ -13,7 +13,7 @@ help_response = (
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
     "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry.\n"
     "  Nie zapominaj o kolejności wykonywania działań. ;)\n"
-    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***.\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***. Również z modyfikatorem\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***.\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
     "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności).\n"
