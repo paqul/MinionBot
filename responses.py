@@ -8,6 +8,7 @@ sorry_response = (
 )    
 help_response = (
     "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość kości>k<ilość ściań kości>*** (np. *1k100, 3k20, 2k10* itp.).\n"
+    "Maksymalna <ilość kości> to 9999.\n"
     "Obecnie wspierane kości ***" + dices_imported + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
@@ -31,7 +32,7 @@ def handle_response(msg, author, author_id) -> str:
     roll_response = sorry_response
 
     #Regular Roll Pattern
-    regular_roll_pattern = r'(\d+)[kd](\d+)$'
+    regular_roll_pattern = r'([1-9]\d{0,3})[kd](\d+)$'
     regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
     if regular_roll_pattern_match:
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
@@ -42,8 +43,8 @@ def handle_response(msg, author, author_id) -> str:
             roll_response = roll(author, amount_of_rolls, dice)
 
     #Roll with Modifier
-    elif re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg):
-        modifier_roll_pattern_match = re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg)
+    elif re.match(r'([1-9]\d{0,3})[kd](\d+)([\+\-\*])(.*)', msg):
+        modifier_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](\d+)([\+\-\*])(.*)', msg)
         amount_of_rolls = int(modifier_roll_pattern_match.group(1))
         dice = int(modifier_roll_pattern_match.group(2))
         operator = modifier_roll_pattern_match.group(3)
@@ -51,8 +52,8 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
 
     #Advantage/Disadvantage Roll Matching
-    elif re.match(r'(\d+)[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg):
-        dnd5_ad_roll_pattern_match = re.match(r'(\d+)[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg)
+    elif re.match(r'([1-9]\d{0,3})[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg):
+        dnd5_ad_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg)
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
@@ -61,15 +62,15 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus, operator, equation)
 
     #MorkBorg k66 
-    elif re.match(r'(\d+)[kd](66)$', msg):
-        morkborg_roll_pattern_match = re.match(r'(\d+)[kd](66)$', msg)
+    elif re.match(r'([1-9]\d{0,3})[kd](66)$', msg):
+        morkborg_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](66)$', msg)
         amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
         dice = int(morkborg_roll_pattern_match.group(2))
         roll_response = morkborg_roll(author, amount_of_rolls, dice)             
 
     # Call of Cthulu BonusPenalty Dice
-    elif re.match(r'(\d+)([kd])(\d+)([kp])([kp]?)$', msg):
-        callofcthulu_kp_roll_pattern_match = re.match(r'(\d+)([kd])(\d+)([kp])([kp]?)$', msg)
+    elif re.match(r'([1-9]\d{0,3})([kd])(\d+)([kp])([kp]?)$', msg):
+        callofcthulu_kp_roll_pattern_match = re.match(r'([1-9]\d{0,3})([kd])(\d+)([kp])([kp]?)$', msg)
         amount_of_rolls = int(callofcthulu_kp_roll_pattern_match.group(1))
         dice = int(callofcthulu_kp_roll_pattern_match.group(3))
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
