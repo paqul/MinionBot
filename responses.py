@@ -40,7 +40,7 @@ def handle_response(msg, author, author_id) -> str:
         else:
             roll_response = roll(author, amount_of_rolls, dice)
     #Roll with Modifier
-    modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*])(.*)'
+    modifier_roll_pattern = r'(\d+)[kd](\d+)([\+\-\*\/])(.*)'
     modifier_roll_pattern_match = re.match(modifier_roll_pattern, msg)
     if modifier_roll_pattern_match:
         amount_of_rolls = int(modifier_roll_pattern_match.group(1))
