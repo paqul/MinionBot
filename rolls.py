@@ -4,6 +4,7 @@ from members import sorted_authors
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
 dnd_dis_advantage_dice = [20]
+morkborg_dice = [66]
 apologize_message = (
     "Bardzo mi przykro ale nie posiadam takiej kostki\n"
     "Po wiecej informacji i pomoc napisz komendę *help*"
@@ -92,7 +93,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         rolls.append(int(str(roll1) + str(roll2)))
     if amount_of_rolls > 1:
         total_sum = sum(rolls)
-    return (rolls, total_sum) if total_sum is not None else format_response_msg(author, rolls=rolls, total_sum=total_sum, dice=dice)
+    return format_response_msg(author, rolls=rolls, total_sum=total_sum, dice=dice)
 
 
 def roll_dnd_stat_block(author: object) -> str:

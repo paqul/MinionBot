@@ -31,16 +31,19 @@ def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     roll_response = sorry_response
 
-    #Regular Roll Pattern
-    regular_roll_pattern = r'([1-9]\d{0,3})[kd](\d+)$'
-    regular_roll_pattern_match = re.match(regular_roll_pattern, msg)
-    if regular_roll_pattern_match:
+    #MorkBorg k66 (This needs to be first as its the most specific roll and otherwise would be caught incorrectly by regular roll pattern)
+    if re.match(r'([1-9]\d{0,3})[kd](66)$', msg): 
+        morkborg_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](66)$', msg)
+        amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
+        dice = int(morkborg_roll_pattern_match.group(2))
+        roll_response = morkborg_roll(author, amount_of_rolls, dice)    
+    
+    #Regular Roll Pattern (Keep this after the Mork Borg check to avoid misassignment to this function for morkborg rolls)
+    elif re.match(r'([1-9]\d{0,3})[kd](\d+)$', msg):
+        regular_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](\d+)$', msg)
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
         dice = int(regular_roll_pattern_match.group(2))
-        if dice == 66:
-            roll_response = morkborg_roll(author, amount_of_rolls, dice)
-        else:
-            roll_response = roll(author, amount_of_rolls, dice)
+        roll_response = roll(author, amount_of_rolls, dice)
 
     #Roll with Modifier
     elif re.match(r'([1-9]\d{0,3})[kd](\d+)([\+\-\*])(.*)', msg):
@@ -59,14 +62,7 @@ def handle_response(msg, author, author_id) -> str:
         bonus = dnd5_ad_roll_pattern_match.group(3)
         operator = dnd5_ad_roll_pattern_match.group(4) if dnd5_ad_roll_pattern_match.group(4) else ''
         equation = dnd5_ad_roll_pattern_match.group(5) if dnd5_ad_roll_pattern_match.group(5) else ''
-        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus, operator, equation)
-
-    #MorkBorg k66 
-    elif re.match(r'([1-9]\d{0,3})[kd](66)$', msg):
-        morkborg_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](66)$', msg)
-        amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
-        dice = int(morkborg_roll_pattern_match.group(2))
-        roll_response = morkborg_roll(author, amount_of_rolls, dice)             
+        roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus, operator, equation)          
 
     # Call of Cthulu BonusPenalty Dice
     elif re.match(r'([1-9]\d{0,3})([kd])(\d+)([kp])([kp]?)$', msg):
