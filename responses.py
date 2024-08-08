@@ -60,8 +60,8 @@ def handle_response(msg, author, author_id) -> str:
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
-        operator = dnd5_ad_roll_pattern_match.group(4) if dnd5_ad_roll_pattern_match.group(4) else ''
-        equation = dnd5_ad_roll_pattern_match.group(5) if dnd5_ad_roll_pattern_match.group(5) else ''
+        operator = dnd5_ad_roll_pattern_match.group(4) if dnd5_ad_roll_pattern_match.group(4) else None
+        equation = dnd5_ad_roll_pattern_match.group(5) if dnd5_ad_roll_pattern_match.group(5) else None
         roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus, operator, equation)          
 
     # Call of Cthulu BonusPenalty Dice

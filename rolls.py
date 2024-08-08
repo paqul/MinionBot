@@ -4,7 +4,6 @@ from members import sorted_authors
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
 dnd_dis_advantage_dice = [20]
-morkborg_dice = [66]
 apologize_message = (
     "Bardzo mi przykro ale nie posiadam takiej kostki\n"
     "Po wiecej informacji i pomoc napisz komendę *help*"
@@ -45,8 +44,6 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
         return apologize_message
-    if dice == 66:
-        rolls, total_sum = morkborg_roll(author, amount_of_rolls, dice)
     else:
         rolls = [r(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
@@ -55,8 +52,6 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
 
 
 def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, operator: str, equation: str) -> str:
-    if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
-        return apologize_message
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
     internal_rolls = [[r(1, dice) for _ in range(2)]
                       for _ in range(amount_of_rolls)]
