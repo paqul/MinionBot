@@ -44,8 +44,6 @@ def roll(author, amount_of_rolls: int, dice: int) -> str:
 def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, equation: str) -> str:
     if dice not in dices:
         return apologize_message
-    if dice == 66:
-        rolls, total_sum = morkborg_roll(author, amount_of_rolls, dice)
     else:
         rolls = [r(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
@@ -54,8 +52,6 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
 
 
 def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, operator: str, equation: str) -> str:
-    if bonus not in ("a", "d") or dice not in dnd_dis_advantage_dice:
-        return apologize_message
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
     internal_rolls = [[r(1, dice) for _ in range(2)]
                       for _ in range(amount_of_rolls)]
@@ -92,7 +88,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
         rolls.append(int(str(roll1) + str(roll2)))
     if amount_of_rolls > 1:
         total_sum = sum(rolls)
-    return (rolls, total_sum) if total_sum is not None else format_response_msg(author, rolls=rolls, total_sum=total_sum, dice=dice)
+    return format_response_msg(author, rolls=rolls, total_sum=total_sum, dice=dice)
 
 
 def roll_dnd_stat_block(author: object) -> str:
