@@ -52,7 +52,6 @@ def handle_response(msg, author, author_id) -> str:
             return max_amountofrolls_message
         dice = int(regular_roll_pattern_match.group(2))
         roll_response = roll(author, amount_of_rolls, dice)
-
     #Roll with Modifier
     elif re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg):
         modifier_roll_pattern_match = re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg)
