@@ -26,38 +26,50 @@ character_limit_response = (
 "- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
 "Spróbuj zmniejszyć ilość rzutów." + "**"
 )
+max_amountofrolls_message = (
+"Maksymalna <ilość kości> to 9999.\n"
+"Po więcej informacji i pomoc, napisz komendę ***help***."
+)
 
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower()
     roll_response = sorry_response
 
     #MorkBorg k66 (This needs to be first as its the most specific roll and otherwise would be caught incorrectly by regular roll pattern)
-    if re.match(r'([1-9]\d{0,3})[kd](66)$', msg): 
-        morkborg_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](66)$', msg)
+    if re.match(r'(\d+)[kd](66)$', msg): 
+        morkborg_roll_pattern_match = re.match(r'(\d+)[kd](66)$', msg)
         amount_of_rolls = int(morkborg_roll_pattern_match.group(1))
+        if amount_of_rolls > 9999:
+            return max_amountofrolls_message
         dice = int(morkborg_roll_pattern_match.group(2))
         roll_response = morkborg_roll(author, amount_of_rolls, dice)    
     
     #Regular Roll Pattern (Keep this after the Mork Borg check to avoid misassignment to this function for morkborg rolls)
-    elif re.match(r'([1-9]\d{0,3})[kd](\d+)$', msg):
-        regular_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](\d+)$', msg)
+    elif re.match(r'(\d+)[kd](\d+)$', msg):
+        regular_roll_pattern_match = re.match(r'(\d+)[kd](\d+)$', msg)
         amount_of_rolls = int(regular_roll_pattern_match.group(1))
+        if amount_of_rolls > 9999:
+            return max_amountofrolls_message
         dice = int(regular_roll_pattern_match.group(2))
         roll_response = roll(author, amount_of_rolls, dice)
 
     #Roll with Modifier
-    elif re.match(r'([1-9]\d{0,3})[kd](\d+)([\+\-\*])(.*)', msg):
-        modifier_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](\d+)([\+\-\*])(.*)', msg)
+    elif re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg):
+        modifier_roll_pattern_match = re.match(r'(\d+)[kd](\d+)([\+\-\*])(.*)', msg)
         amount_of_rolls = int(modifier_roll_pattern_match.group(1))
+        if amount_of_rolls > 9999:
+            return max_amountofrolls_message
         dice = int(modifier_roll_pattern_match.group(2))
         operator = modifier_roll_pattern_match.group(3)
         equation = modifier_roll_pattern_match.group(4)
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
 
     #Advantage/Disadvantage Roll Matching
-    elif re.match(r'([1-9]\d{0,3})[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg):
-        dnd5_ad_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg)
+    elif re.match(r'(\d+)[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg):
+        dnd5_ad_roll_pattern_match = re.match(r'(\d+)[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg)
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
+        if amount_of_rolls > 9999:
+            return max_amountofrolls_message
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
         operator = dnd5_ad_roll_pattern_match.group(4) if dnd5_ad_roll_pattern_match.group(4) else None
@@ -65,9 +77,11 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = dis_advantage_dnd_roll(author, amount_of_rolls, dice, bonus, operator, equation)          
 
     # Call of Cthulu BonusPenalty Dice
-    elif re.match(r'([1-9]\d{0,3})([kd])(\d+)([kp])([kp]?)$', msg):
-        callofcthulu_kp_roll_pattern_match = re.match(r'([1-9]\d{0,3})([kd])(\d+)([kp])([kp]?)$', msg)
+    elif re.match(r'(\d+)([kd])(\d+)([kp])([kp]?)$', msg):
+        callofcthulu_kp_roll_pattern_match = re.match(r'(\d+)([kd])(\d+)([kp])([kp]?)$', msg)
         amount_of_rolls = int(callofcthulu_kp_roll_pattern_match.group(1))
+        if amount_of_rolls > 9999:
+            return max_amountofrolls_message
         dice = int(callofcthulu_kp_roll_pattern_match.group(3))
         bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(4)
         double_bonus_or_penalty = callofcthulu_kp_roll_pattern_match.group(5)
