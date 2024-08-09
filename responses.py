@@ -55,8 +55,8 @@ def handle_response(msg, author, author_id) -> str:
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
 
     #Advantage/Disadvantage Roll Matching
-    elif re.match(r'([1-9]\d{0,3})[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg):
-        dnd5_ad_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](20)(?:([ad])([\+\-\*\/])(.*))?', msg)
+    elif re.match(r'([1-9]\d{0,3})[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg):
+        dnd5_ad_roll_pattern_match = re.match(r'([1-9]\d{0,3})[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg)
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         dice = int(dnd5_ad_roll_pattern_match.group(2))
         bonus = dnd5_ad_roll_pattern_match.group(3)
