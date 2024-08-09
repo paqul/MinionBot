@@ -47,7 +47,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     else:
         rolls = [r(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
-    modified_sum = eval(f"{total_sum} {operator} {equation}")
+    modified_sum = eval(f"{total_sum}{operator}{equation}")
     return format_response_msg(author, rolls, modified_sum, dice=dice, equation=equation)
 
 
