@@ -27,10 +27,10 @@ python main.py
 
 ## Structure Overview
 
-bot_config.py: Sets up the Discord bot and handles message events.
-responses.py: Processes user messages and determines appropriate responses by passing to `rolls.py`.
-rolls.py: Contains the logic for various dice rolling functions and formatting response messages.
-roles.py: Handles role assignments for new members (customizable).
+`bot_config.py`: Sets up the Discord bot and handles message events.
+`responses.py`: Processes user messages and determines appropriate responses by passing to `rolls.py`.
+`rolls.py`: Contains the logic for various dice rolling functions and formatting response messages.
+`roles.py`: Handles role assignments for new members (customizable).
 
 The bot also includes an auto-test feature that can be triggered with the command `@BotName autotest`. This runs through a series of predefined rolls to ensure all functionalities are working correctly.
 
