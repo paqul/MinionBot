@@ -7,6 +7,7 @@ import roles
 import members
 from params import token
 import threading
+import os
 import io
 import asyncio
 import sys
@@ -101,7 +102,7 @@ async def send_private(member, msg):
         print(E)
 
 
-async def send_msg(msg, user_msg,bot_self_mention_string, private):
+async def send_msg(msg, user_msg, bot_self_mention_string, private):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
@@ -116,7 +117,14 @@ async def send_msg(msg, user_msg,bot_self_mention_string, private):
         else:
             try:
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
-                if resp:
+                if type(resp) is io.TextIOWrapper:
+                    file = discord.File(os.path.join(os.getcwd(), resp.name)) #do zmiany na ogolna sciezke
+                    print("PLIK", file.filename)
+                    # del file
+                    await msg.channel.send(file=file)
+                # else:
+                #     await msg.author.send(file=discord.File(resp)) if private else await msg.channel.send(resp)
+                else:
                     await msg.author.send(resp) if private else await msg.channel.send(resp)
             except Exception as E:
                 print(E)

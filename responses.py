@@ -1,3 +1,5 @@
+from typing import TextIO
+
 from rolls import roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices
 import sys, re
 #MSG Variables
@@ -127,7 +129,7 @@ def handle_response(msg, author, author_id) -> TextIO:
         if msg.endswith(ose_file_names[0]):
             data_stats = generate_hero(ose_file_names[0])
             file_path_name = "OSE//cleric.csv"
-            print("CLERIC")
+            print("cleric")
         elif msg.endswith(ose_file_names[1]):
             data_stats = generate_hero(ose_file_names[1])
             file_path_name = "OSE//fighter.csv"
