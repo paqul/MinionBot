@@ -92,6 +92,7 @@ def setup_bot():
     client.run(token)
     # bot.run(token)
 
+
 async def send_private(member, msg):
     try:
         response = responses.handle_response(msg, member.name, member.id)
@@ -120,6 +121,7 @@ async def send_msg(msg, user_msg,bot_self_mention_string, private):
             except Exception as E:
                 print(E)
 
+
 async def get_role(member):
     try:
         role_name = roles.handle_roles(member)
@@ -127,6 +129,7 @@ async def get_role(member):
         await member.add_roles(role)
     except Exception as E:
         print(E)
+
 
 async def auto_test(msg):
     # Predefined lists of amount of rolls and dice

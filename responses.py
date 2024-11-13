@@ -45,7 +45,7 @@ list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
 
-def handle_response(msg, author, author_id) -> str:
+def handle_response(msg, author, author_id) -> TextIO:
     msg = msg.lower()
     roll_response = sorry_response
 

@@ -215,6 +215,7 @@ def randomize_fantasy_name():
     selected_name = (f"{first_name} {last_name}")
     return selected_name
 
+
 if __name__ == "__main__":
     name = randomize_fantasy_name()
     print(name)
