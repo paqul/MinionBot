@@ -129,19 +129,19 @@ def handle_response(msg, author, author_id) -> TextIO:
         if msg.endswith(ose_file_names[0]):
             data_stats = generate_hero(ose_file_names[0])
             file_path_name = "OSE//cleric.csv"
-            print("cleric")
-        elif msg.endswith(ose_file_names[1]):
-            data_stats = generate_hero(ose_file_names[1])
-            file_path_name = "OSE//fighter.csv"
-            print("fighter")
-        elif msg.endswith(ose_file_names[2]):
-            data_stats = generate_hero(ose_file_names[2])
-            file_path_name = "OSE//magic_user.csv"
-            print("magicuser")
-        elif msg.endswith(ose_file_names[3]):
-            data_stats = generate_hero(ose_file_names[3])
-            file_path_name = "OSE//thief.csv"
-            print("thief")
+            print("character")
+        # elif msg.endswith(ose_file_names[1]):
+        #     data_stats = generate_hero(ose_file_names[1])
+        #     file_path_name = "OSE//fighter.csv"
+        #     print("fighter")
+        # elif msg.endswith(ose_file_names[2]):
+        #     data_stats = generate_hero(ose_file_names[2])
+        #     file_path_name = "OSE//magic_user.csv"
+        #     print("magicuser")
+        # elif msg.endswith(ose_file_names[3]):
+        #     data_stats = generate_hero(ose_file_names[3])
+        #     file_path_name = "OSE//thief.csv"
+        #     print("thief")
         with open(file_path_name, "a+", encoding="utf-8") as file:
             for text in data_stats:
                 file.write(str(text)+"\n")

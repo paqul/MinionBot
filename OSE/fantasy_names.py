@@ -212,7 +212,7 @@ last_names = [
 def randomize_fantasy_name():
     first_name = first_names[r(0, len(first_names)-1)]
     last_name = last_names[r(0, len(last_names)-1)]
-    selected_name = (f"{first_name} {last_name}")
+    selected_name = f"{first_name} {last_name}"
     return selected_name
 
 

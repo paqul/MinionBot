@@ -1,13 +1,14 @@
 from OSE.character_classes import *
 
 
-def generate_hero(character_class: str):
+def generate_hero():
     hero = []
     data = []
-    if character_class == "fighter":
-        hero = Fighter()
-    elif character_class == "cleric":
-        hero = Cleric()
+    hero = Fighter()
+    # if character_class == "fighter":
+    #     hero = Fighter()
+    # elif character_class == "cleric":
+    #     hero = Cleric()
     # elif character_class == "thief":
     #     hero = Thief()
     # elif character_class == "magic_user":
