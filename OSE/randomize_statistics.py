@@ -24,6 +24,19 @@ def randomize_all_statistics():
     return str_, int_, wis_, dex_, con_, cha_, alg_#, pr_
 
 
+def class_selection_based_on_stats():
+    STR, INT, WIS, DEX, CON, CHA, ALG = randomize_all_statistics()
+    print(STR)
+    print(STR.name_of_trait)
+    print(STR.value)
+    print(INT.value)
+    print(WIS.value)
+    print(DEX.value)
+    print(CON.value)
+    print(CHA.value)
+
+
+class_selection_based_on_stats()
 # x = randomize_all_statistics()
 # print(x[0])
 # print(x[1])
