@@ -1,4 +1,4 @@
-from rolls import r
+from rolls import roll_dice
 
 first_names = [
     "Kaelen",
@@ -210,8 +210,8 @@ last_names = [
 
 
 def randomize_fantasy_name():
-    first_name = first_names[r(0, len(first_names)-1)]
-    last_name = last_names[r(0, len(last_names)-1)]
+    first_name = first_names[roll_dice(0, len(first_names)-1)]
+    last_name = last_names[roll_dice(0, len(last_names)-1)]
     selected_name = f"{first_name} {last_name}"
     return selected_name
 

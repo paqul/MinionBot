@@ -168,12 +168,11 @@ class PrimeRequisite(object):
 
 class Alignment(object):
     def __init__(self):
-        self.name_of_trait = None
-        name_of_trait = "Charakter"
+        self.name_of_trait = "Charakter"
         # alignment = ["Law", "Neutral", "Chaotic"]
         alignment = ["Praworządny", "Neutralny", "Chaotyczny"]
         alignment_selected = roll_dice(0, 2)
-        self.alignment = [alignment[alignment_selected]]
+        self.alignment = alignment[alignment_selected]
 
     def __str__(self):
         return f"{self.name_of_trait}: {self.alignment}."

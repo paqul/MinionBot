@@ -1,4 +1,4 @@
-from OSE.character_classes import *
+from OSE.Fighter import Fighter
 
 
 def generate_hero():
@@ -18,12 +18,18 @@ def generate_hero():
     data.append(hero.alignment)
     data.append(hero.level)
     data.append("###################################")
-    data.append(hero.STR.value)
-    data.append(hero.INT.value)
-    data.append(hero.WIS.value)
-    data.append(hero.DEX.value)
-    data.append(hero.CON.value)
-    data.append(hero.CHA.value)
+    # data.append(hero.STR.value)
+    # data.append(hero.INT.value)
+    # data.append(hero.WIS.value)
+    # data.append(hero.DEX.value)
+    # data.append(hero.CON.value)
+    # data.append(hero.CHA.value)
+    data.append(str(hero.STR))
+    data.append(str(hero.INT))
+    data.append(str(hero.WIS))
+    data.append(str(hero.DEX))
+    data.append(str(hero.CON))
+    data.append(str(hero.CHA))
     data.append("###################################")
     data.append(hero.death_poison)
     data.append(hero.magic_wands)
