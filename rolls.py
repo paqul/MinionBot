@@ -1,4 +1,4 @@
-from random import randint as r
+from random import randint as roll_dice
 from members import sorted_authors
 
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
@@ -8,6 +8,7 @@ apologize_message = (
     "Bardzo mi przykro ale nie posiadam takiej kostki\n"
     "Po wiecej informacji i pomoc napisz komendę *help*"
 )
+
 
 def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None, bonus=None, dice_type=None):
     if total_sum is not None:
@@ -34,7 +35,7 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None,
 def roll(author, amount_of_rolls: int, dice: int) -> str:
     if dice not in dices:
         return apologize_message
-    rolls = [r(1, dice) for _ in range(amount_of_rolls)]
+    rolls = [roll_dice(1, dice) for _ in range(amount_of_rolls)]
     if str(author.name) in sorted_authors:
        rolls.sort()
     total_sum = None if amount_of_rolls == 1 else f"{sum(rolls)}"
@@ -45,7 +46,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
     if dice not in dices:
         return apologize_message
     else:
-        rolls = [r(1, dice) for _ in range(amount_of_rolls)]
+        rolls = [roll_dice(1, dice) for _ in range(amount_of_rolls)]
         total_sum = sum(rolls)
     modified_sum = eval(f"{total_sum}{operator}{equation}")
     return format_response_msg(author, rolls, modified_sum, dice=dice, equation=equation)
@@ -53,7 +54,7 @@ def roll_with_modifier(author, amount_of_rolls: int, dice: int, operator: str, e
 
 def dis_advantage_dnd_roll(author: object, amount_of_rolls: int, dice: int, bonus: str, operator: str, equation: str) -> str:
     dice_type = "Ułatwienie / Advantage" if bonus == "a" else "Utrudnienie / Disadvantage"
-    internal_rolls = [[r(1, dice) for _ in range(2)]
+    internal_rolls = [[roll_dice(1, dice) for _ in range(2)]
                       for _ in range(amount_of_rolls)]
     # Evaluate each roll in sublist with the operator and equation
     if operator and equation:
@@ -83,8 +84,8 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
     rolls = []
     total_sum = None
     for _ in range(amount_of_rolls):
-        roll1 = r(1, 6)
-        roll2 = r(1, 6)
+        roll1 = roll_dice(1, 6)
+        roll2 = roll_dice(1, 6)
         rolls.append(int(str(roll1) + str(roll2)))
     if amount_of_rolls > 1:
         total_sum = sum(rolls)
@@ -93,7 +94,7 @@ def morkborg_roll(author, amount_of_rolls: int, dice: int) -> str:
 
 def roll_dnd_stat_block(author: object) -> str:
     while True:
-        rolls = sorted([sum(sorted([r(1, 6) for _ in range(4)], reverse=True)[:3])
+        rolls = sorted([sum(sorted([roll_dice(1, 6) for _ in range(4)], reverse=True)[:3])
                         for _ in range(6)], reverse=True)
         if max(rolls) == 13:
             print("Dokonano Rerollu bo statystyki nie spełniały minimalnych wymagań")
@@ -116,12 +117,12 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     #Generate Rolls
     list_of_internal_rolls = []
     for _ in range(amount_of_rolls):
-        starting_regular_roll = r(1, dice)  
+        starting_regular_roll = roll_dice(1, dice)
         internal_rolls = [starting_regular_roll] 
         units_digit_of_starting_roll = starting_regular_roll % 10
         #Loop for 2 if twice or 1 if not
         for _ in range(2 if twice else 1):
-            tens_digit_of_bonus_penalty_roll = r(0, 9)
+            tens_digit_of_bonus_penalty_roll = roll_dice(0, 9)
             compound_penalty_bonus_roll = int(f"{tens_digit_of_bonus_penalty_roll}{units_digit_of_starting_roll}")
             if  compound_penalty_bonus_roll == 0:
                 compound_penalty_bonus_roll = 100
