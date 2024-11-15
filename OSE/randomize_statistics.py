@@ -1,5 +1,6 @@
 from OSE.statistics import *
 from OSE.fantasy_names import *
+from OSE.minimum_class_requirement import MinRequirements
 
 
 def roll_dices(dices_phrase: str):
@@ -25,6 +26,7 @@ def randomize_all_statistics():
 
 
 def class_selection_based_on_stats():
+
     STR, INT, WIS, DEX, CON, CHA, ALG = randomize_all_statistics()
     print(STR)
     print(STR.name_of_trait)
@@ -34,6 +36,14 @@ def class_selection_based_on_stats():
     print(DEX.value)
     print(CON.value)
     print(CHA.value)
+
+    MinRequirements.duergar()
+    print(MinRequirements.str, MinRequirements.int, MinRequirements.wis, MinRequirements.dex, MinRequirements.con, MinRequirements.cha)
+    z = [x for x in MinRequirements.__dict__ if not x.startswith('_')]
+    print(z)
+
+
+
 
 
 class_selection_based_on_stats()
