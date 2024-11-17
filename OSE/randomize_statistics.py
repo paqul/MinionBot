@@ -25,28 +25,35 @@ def randomize_all_statistics():
     return str_, int_, wis_, dex_, con_, cha_, alg_#, pr_
 
 
-def class_selection_based_on_stats():
-
+def class_selection_based_on_stats(debug: bool = False):
     STR, INT, WIS, DEX, CON, CHA, ALG = randomize_all_statistics()
-    print(STR)
-    print(STR.name_of_trait)
-    print(STR.value)
-    print(INT.value)
-    print(WIS.value)
-    print(DEX.value)
-    print(CON.value)
-    print(CHA.value)
+    if debug:
+        print(STR.name_of_trait, STR.value)
+        print(INT.name_of_trait, INT.value)
+        print(WIS.name_of_trait, WIS.value)
+        print(DEX.name_of_trait, DEX.value)
+        print(CON.name_of_trait, CON.value)
+        print(CHA.name_of_trait, CHA.value)
+    list_of_available_class = []
+    for i in dir(MinRequirements):
+        if callable(getattr(MinRequirements, i)) and not i.startswith("_") and len(i) != 3:
+            if debug:
+                print(i)
+            getattr(MinRequirements, i)()
+            if STR.value >= MinRequirements.str and INT.value >= MinRequirements.int and\
+                    WIS.value >= MinRequirements.wis and DEX.value >= MinRequirements.dex and\
+                    CON.value >= MinRequirements.con and CHA.value >= MinRequirements.cha:
+                if debug:
+                    print("PASS - moze byc ten char")
+                list_of_available_class.append(str(i))
+            else:
+                if debug:
+                    print("FAIL - ten char nie moze byc")
 
-    MinRequirements.duergar()
-    print(MinRequirements.str, MinRequirements.int, MinRequirements.wis, MinRequirements.dex, MinRequirements.con, MinRequirements.cha)
-    z = [x for x in MinRequirements.__dict__ if not x.startswith('_')]
-    print(z)
+    print(list_of_available_class)
 
 
-
-
-
-class_selection_based_on_stats()
+class_selection_based_on_stats(True)
 # x = randomize_all_statistics()
 # print(x[0])
 # print(x[1])

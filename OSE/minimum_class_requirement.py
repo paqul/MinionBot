@@ -7,7 +7,7 @@ class ZeroRequirements:
     CHA = 3
 
     @classmethod
-    def get_requirements(cls):
+    def _get_requirements(cls):
         return cls.STR, cls.INT, cls.WIS, cls.DEX, cls.CON, cls.CHA
 
 
@@ -21,122 +21,122 @@ class MinRequirements(ZeroRequirements):
     str = None
 
     @classmethod
-    def get_requirements(cls):
-        requirements = super().get_requirements()
+    def __get_requirements(cls):
+        requirements = super()._get_requirements()
         return requirements
 
     @classmethod
     def acrobat(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
 
     @classmethod
     def assassin(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
     
     @classmethod
     def barbarian(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
 
     @classmethod
     def bard(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
         cls.dex = 9
 
     @classmethod
     def cleric(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
     
     @classmethod
     def drow(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
 
     @classmethod
     def druid(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
 
     @classmethod
     def duergar(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
         cls.con = 9
 
     @classmethod
     def dwarf(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
     
     @classmethod
     def elf(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
 
     @classmethod
     def fighter(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
 
     @classmethod
     def gnome(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
 
     @classmethod
     def halfelf(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
         cls.cha = 9
 
     @classmethod
     def halfling(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
         cls.con = 9
 
     @classmethod
     def halforc(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
 
     @classmethod
     def illusionist(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
 
     @classmethod
     def knight(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
         cls.con = 9
 
     @classmethod
     def magicuser(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
 
     @classmethod
     def paladin(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.cha = 9
 
     @classmethod
     def ranger(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.wis = 9
         cls.con = 9
 
     @classmethod
     def svirfneblin(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
 
     @classmethod
     def thief(cls):
-        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.get_requirements()
+        cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         pass
 
     @classmethod
@@ -145,14 +145,14 @@ class MinRequirements(ZeroRequirements):
                 f"Min Zręczność {cls.dex}, Min Kondycja {cls.con}, Min Charyzma {cls.cha}")
 
 
-print("TEST1")
-MinRequirements.acrobat()
-print(MinRequirements.str)
-print(MinRequirements.int)
-print(MinRequirements.wis)
-print(MinRequirements.dex)
-print(MinRequirements.con)
-print(MinRequirements.cha)
+# print("TEST1")
+# MinRequirements.acrobat()
+# print(MinRequirements.str)
+# print(MinRequirements.int)
+# print(MinRequirements.wis)
+# print(MinRequirements.dex)
+# print(MinRequirements.con)
+# print(MinRequirements.cha)
 #
 # print("TEST2")
 # MinRequirements.bard()
@@ -173,3 +173,4 @@ print(MinRequirements.cha)
 # print(MinRequirements.dex)
 # print(MinRequirements.con)
 # print(MinRequirements.cha)
+print("#####################")
