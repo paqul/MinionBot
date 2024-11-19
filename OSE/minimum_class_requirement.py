@@ -28,116 +28,140 @@ class MinRequirements(ZeroRequirements):
     @classmethod
     def acrobat(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
+        cls.prime_req = "Zręczność"
 
     @classmethod
     def assassin(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
+        cls.prime_req = "Zręczność"
     
     @classmethod
     def barbarian(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
+        cls.prime_req = "Kondycja"
+        cls.prime_req = "Siła"
 
     @classmethod
     def bard(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
         cls.dex = 9
+        cls.prime_req = "Charyzma"
 
     @classmethod
     def cleric(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Mądrość"
     
     @classmethod
     def drow(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
+        cls.prime_req = "Siła"
+        cls.prime_req = "Mądrość"
 
     @classmethod
     def druid(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Mądrość"
 
     @classmethod
     def duergar(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
         cls.con = 9
+        cls.prime_req = "Siła"
 
     @classmethod
     def dwarf(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
+        cls.prime_req = "Siła"
     
     @classmethod
     def elf(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.int = 9
+        cls.prime_req = "Inteligencja"
+        cls.prime_req = "Siła"
 
     @classmethod
     def fighter(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Siła"
 
     @classmethod
     def gnome(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
+        cls.prime_req = "Zręczność"
+        cls.prime_req = "Inteligencja"
 
     @classmethod
     def halfelf(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
         cls.cha = 9
+        cls.prime_req = "Inteligencja"
+        cls.prime_req = "Siła"
 
     @classmethod
     def halfling(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
         cls.con = 9
+        cls.prime_req = "Zręczność"
+        cls.prime_req = "Siła"
 
     @classmethod
     def halforc(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Zręczność"
+        cls.prime_req = "Siła"
 
     @classmethod
     def illusionist(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
+        cls.prime_req = "Inteligencja"
 
     @classmethod
     def knight(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.dex = 9
         cls.con = 9
+        cls.prime_req = "Siła"
 
     @classmethod
     def magicuser(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Inteligencja"
 
     @classmethod
     def paladin(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.cha = 9
+        cls.prime_req = "Siła"
+        cls.prime_req = "Mądrość"
 
     @classmethod
     def ranger(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.wis = 9
         cls.con = 9
+        cls.prime_req = "Siła"
 
     @classmethod
     def svirfneblin(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
         cls.con = 9
+        cls.prime_req = "Siła"
 
     @classmethod
     def thief(cls):
         cls.str, cls.int, cls.wis, cls.dex, cls.con, cls.cha = cls.__get_requirements()
-        pass
+        cls.prime_req = "Zręczność"
 
     @classmethod
     def __str__(cls):

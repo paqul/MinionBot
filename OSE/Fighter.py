@@ -1,4 +1,4 @@
-from OSE.randomize_statistics import randomize_all_statistics, roll_dices
+from OSE.randomize_statistics import generate_all_features, roll_dices
 from OSE.fantasy_names import randomize_fantasy_name
 from OSE.statistics import PrimeRequisite
 
@@ -14,7 +14,7 @@ class Fighter(object):
         Weapons: Any
         Languages: Alignment, Common
         """
-        self.STR, self.INT, self.WIS, self.DEX, self.CON, self.CHA, self.ALG = randomize_all_statistics()
+        self.STR, self.INT, self.WIS, self.DEX, self.CON, self.CHA, self.ALG = generate_all_features()
         print(self.STR)
         self.character_name = randomize_fantasy_name()
         self.character_class = "Fighter"

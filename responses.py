@@ -130,6 +130,8 @@ def handle_response(msg, author, author_id) -> TextIO:
         print("Generating...")  # start generating
         if msg.endswith(ose_file_names[0]):
             data_stats = generate_hero()
+            # import OSE.randomize_statistics
+            # data_stats = OSE.randomize_statistics.generate_full_character()
             file_path_name = "OSE//char_card.csv"
             print("character")
         # elif msg.endswith(ose_file_names[1]):
