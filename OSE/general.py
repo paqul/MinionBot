@@ -1,4 +1,18 @@
+from OSE.randomize_statistics import generate_base_characteristic_to_class
 from OSE.Fighter import Fighter
+
+dictionary_of_class_collection = {'acrobat': Fighter, 'assassin': Fighter, 'barbarian': Fighter,
+                                  'bard': Fighter, 'cleric': Fighter, 'drow': Fighter, 'druid': Fighter,
+                                  'duergar': Fighter, 'dwarf': Fighter, 'elf': Fighter, 'fighter': Fighter,
+                                  'gnome': Fighter, 'halfelf': Fighter, 'halfling': Fighter,
+                                  'halforc': Fighter, 'illusionist': Fighter, 'knight': Fighter,
+                                  'magicuser': Fighter, 'paladin': Fighter, 'ranger': Fighter,
+                                  'svirfneblin': Fighter, 'thief': Fighter}
+
+klasa_bohatera = generate_base_characteristic_to_class()
+print("KLASA BOHATERA", klasa_bohatera)
+hero = (dictionary_of_class_collection[klasa_bohatera])()
+print(hero)
 
 
 def generate_hero():
