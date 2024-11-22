@@ -3,11 +3,14 @@ from OSE.fantasy_names import *
 from OSE.minimum_class_requirement import MinRequirements
 
 
-def roll_dices(dices_phrase: str):
+def roll_dices(dices_phrase: str, debug: bool = False):
     """
 
     :param dices_phrase: e.g. 1d4 or 1d8 or 1d6
-    :return:
+    debug: bool: default False
+
+    :return: int hit points
+
     """
     results = []
     hp = 0
@@ -15,6 +18,8 @@ def roll_dices(dices_phrase: str):
         dice = roll_dice(1, int(dices_phrase[-1]))
         results.append(dice)
         hp = sum(results)
+    if debug:
+        print(f"Rezultat rzutu na punkty życia: {results}")
     return hp
 
 

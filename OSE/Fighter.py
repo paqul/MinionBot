@@ -1,4 +1,4 @@
-from OSE.randomize_statistics import generate_all_features, roll_dices
+from OSE.randomize_statistics import roll_dices
 from OSE.fantasy_names import randomize_fantasy_name
 from OSE.statistics import PrimeRequisite
 import OSE.statistics
@@ -26,7 +26,7 @@ class Fighter(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Fighter"
+        self.character_class = "Wojownik"
         self.level = 1
         self.hit_points = 0
         self.requirements = None
@@ -77,6 +77,7 @@ class Fighter(object):
         while True:
             if self.hit_points <= 0:
                 self.hit_points = roll_dices(
-                    self.fighter_statistics[self.level][1]) + self.CON.modifier_hit_points  # roll for hitpoints +/- mods
+                    self.fighter_statistics[self.level][1]) + self.CON.modifier_hit_points
+                # roll for hitpoints +/- mods
             else:
                 break
