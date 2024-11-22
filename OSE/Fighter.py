@@ -1,10 +1,14 @@
 from OSE.randomize_statistics import generate_all_features, roll_dices
 from OSE.fantasy_names import randomize_fantasy_name
 from OSE.statistics import PrimeRequisite
+import OSE.statistics
 
 
 class Fighter(object):
-    def __init__(self):
+    def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
+                 wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
+                 constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
+                 alignment: OSE.statistics.Alignment, debug: bool = False):
         """
         Requirements: None
         Prime requisite: STR
@@ -14,8 +18,13 @@ class Fighter(object):
         Weapons: Any
         Languages: Alignment, Common
         """
-        self.STR, self.INT, self.WIS, self.DEX, self.CON, self.CHA, self.ALG = generate_all_features()
-        print(self.STR)
+        self.STR = strength
+        self.INT = intelligence
+        self.WIS = wisdom
+        self.DEX = dexterity
+        self.CON = constitution
+        self.CHA = charisma
+        self.ALG = alignment
         self.character_name = randomize_fantasy_name()
         self.character_class = "Fighter"
         self.level = 1

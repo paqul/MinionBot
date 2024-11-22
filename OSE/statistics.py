@@ -152,6 +152,18 @@ class Charisma(object):
                 f"Reakcje NPC: {self.NPC_reactions}")
 
 
+class Alignment(object):
+    def __init__(self):
+        self.name_of_trait = "Charakter"
+        # alignment = ["Law", "Neutral", "Chaotic"]
+        alignment = ["Praworządny", "Neutralny", "Chaotyczny"]
+        alignment_selected = roll_dice(0, 2)
+        self.alignment = alignment[alignment_selected]
+
+    def __str__(self):
+        return f"{self.name_of_trait}: {self.alignment}."
+
+
 class PrimeRequisite(object):
     def __init__(self, input_value: int):
         self.name_of_trait = "Modyfikator XP"
@@ -164,15 +176,3 @@ class PrimeRequisite(object):
     def __str__(self):
         return (f"{self.name_of_trait} dla wartośći {self.value}, "
                 f" Mnożnik punktów doświadczenia {self.modifier_xp_modifiers} ")
-
-
-class Alignment(object):
-    def __init__(self):
-        self.name_of_trait = "Charakter"
-        # alignment = ["Law", "Neutral", "Chaotic"]
-        alignment = ["Praworządny", "Neutralny", "Chaotyczny"]
-        alignment_selected = roll_dice(0, 2)
-        self.alignment = alignment[alignment_selected]
-
-    def __str__(self):
-        return f"{self.name_of_trait}: {self.alignment}."

@@ -106,11 +106,15 @@ def class_selection(list_of_best_class: list, debug: bool = False):
     return selected_class
 
 
-def generate_base_characteristic_to_class():
+def generate_base_characteristic_to_class(debug: bool = False):
+    if debug:
+        flag = True
+    else:
+        flag = False
     strength, intelligence, wisdom, dexterity, constitution, charisma, alignment = generate_all_features()
     list_of_available_class = class_minimal_req_check(strength, intelligence, wisdom, dexterity,
-                                                      constitution, charisma, False)
+                                                      constitution, charisma, flag)
     list_of_best_class = check_best_class(strength, intelligence, wisdom, dexterity, constitution, charisma,
-                                          list_of_available_class, False)
-    name_of_class = class_selection(list_of_best_class, False)
-    return name_of_class
+                                          list_of_available_class, flag)
+    name_of_class = class_selection(list_of_best_class, flag)
+    return name_of_class, strength, intelligence, wisdom, dexterity, constitution, charisma, alignment

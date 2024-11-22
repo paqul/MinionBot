@@ -9,24 +9,34 @@ dictionary_of_class_collection = {'acrobat': Fighter, 'assassin': Fighter, 'barb
                                   'magicuser': Fighter, 'paladin': Fighter, 'ranger': Fighter,
                                   'svirfneblin': Fighter, 'thief': Fighter}
 
-klasa_bohatera = generate_base_characteristic_to_class()
-print("KLASA BOHATERA", klasa_bohatera)
-hero = (dictionary_of_class_collection[klasa_bohatera])()
-print(hero)
 
+def generate_hero(debug: bool = False):
+    if debug:
+        flag = True
+    else:
+        flag = False
+    name_of_class, strength, intelligence, wisdom, dexterity, constitution, charisma, alignment \
+        = generate_base_characteristic_to_class(flag)
+    if debug:
+        print("KLASA BOHATERA", name_of_class)
+        print("SILA:", strength.value)
+        print("INTELIGENCJA:", intelligence.value)
+        print("MĄDROŚĆ:", wisdom.value)
+        print("ZRĘCZNOŚĆ", dexterity.value)
+        print("BUDOWA CIAŁA", constitution.value)
+        print("CHARYZMA", charisma.value)
+        print("CHARAKTER", alignment.alignment)
 
-def generate_hero():
-    hero = []
+    hero = (dictionary_of_class_collection[name_of_class])(strength, intelligence, wisdom, dexterity, constitution,
+                                                           charisma, alignment, False)
+
+    print(hero.character_name)
+    print(hero.character_class)
+    print(hero.alignment)
+    print(hero.level)
+
     data = []
-    hero = Fighter()
-    # if character_class == "fighter":
-    #     hero = Fighter()
-    # elif character_class == "cleric":
-    #     hero = Cleric()
-    # elif character_class == "thief":
-    #     hero = Thief()
-    # elif character_class == "magic_user":
-    #     hero = MaticUser()
+
     data.append(hero.character_name)
     data.append(hero.character_class)
     data.append(hero.alignment)
@@ -86,3 +96,6 @@ def generate_hero():
     # print(hero.hit_points)
     # print(hero.languages)
     return data
+
+
+generate_hero(True)
