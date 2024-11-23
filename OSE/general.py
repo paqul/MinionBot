@@ -1,9 +1,11 @@
 from OSE.randomize_statistics import generate_base_characteristic_to_class
-from OSE.Fighter import Fighter
-from OSE.Acrobat import Acrobat
+from OSE.character_classes.Fighter import Fighter
+from OSE.character_classes.Acrobat import Acrobat
+from OSE.character_classes.Assassin import Assassin
+from OSE.character_classes.Barbarian import Barbarian
 
 #ZROBIC BIBLIOTEKE DO PDF MOZE?!
-dictionary_of_class_collection = {'acrobat': Acrobat, 'assassin': Fighter, 'barbarian': Fighter,
+dictionary_of_class_collection = {'acrobat': Acrobat, 'assassin': Assassin, 'barbarian': Barbarian,
                                   'bard': Fighter, 'cleric': Fighter, 'drow': Fighter, 'druid': Fighter,
                                   'duergar': Fighter, 'dwarf': Fighter, 'elf': Fighter, 'fighter': Fighter,
                                   'gnome': Fighter, 'halfelf': Fighter, 'halfling': Fighter,
