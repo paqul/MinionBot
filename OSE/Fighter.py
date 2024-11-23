@@ -1,4 +1,4 @@
-from OSE.randomize_statistics import roll_dices
+from OSE.randomize_statistics import roll_dices, randomize_languages
 from OSE.fantasy_names import randomize_fantasy_name
 from OSE.statistics import PrimeRequisite
 import OSE.statistics
@@ -32,7 +32,7 @@ class Fighter(object):
         self.requirements = None
         self.prime_requisite = PrimeRequisite(self.STR.value)
         self.max_lvl = 14
-        self.languages = "Common "+self.INT.values_spoken_language
+        self.languages = randomize_languages(self.INT.values_spoken_language)
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S

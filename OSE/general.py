@@ -84,4 +84,4 @@ def generate_hero(debug: bool = False):
     return data
 
 
-generate_hero(False)
+generate_hero(True)

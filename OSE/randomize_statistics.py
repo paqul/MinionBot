@@ -6,8 +6,9 @@ from OSE.minimum_class_requirement import MinRequirements
 def roll_dices(dices_phrase: str, debug: bool = False):
     """
 
+
     :param dices_phrase: e.g. 1d4 or 1d8 or 1d6
-    debug: bool: default False
+    :param debug:  bool: default False
 
     :return: int hit points
 
@@ -21,6 +22,20 @@ def roll_dices(dices_phrase: str, debug: bool = False):
     if debug:
         print(f"Rezultat rzutu na punkty życia: {results}")
     return hp
+
+
+def randomize_languages(number_of_languages: int, debug: bool = False):
+    dictionary_languages = {1: "Bugbear", 2: "Doppelganger", 3: "Dragon", 4: "Dwarvish", 5: "Elvish", 6: "Gargoyle",
+                            7: "Gnoll", 8: "Gnomish", 9: "Goblin", 10: "Halfling", 11: "Harpy", 12: "Hobogoblin",
+                            13: "Kobold", 14: "Lizardman", 15: "Medusa", 16: "Minotaur", 17: "Orge", 18: "Orcish",
+                            19: "Pixie", 20: "Human dialect"}
+    languages = ["Common"]
+    while number_of_languages > 0:
+        dice_result = roll_dice(1, 20)
+        if dictionary_languages[dice_result] not in languages:
+            languages.append(dictionary_languages[dice_result])
+            number_of_languages -= 1
+    return languages
 
 
 def generate_all_features():

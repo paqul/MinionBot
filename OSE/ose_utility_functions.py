@@ -1,5 +1,5 @@
 # ose_file_names = ["cleric", "fighter", "magic_user", "thief"]
-ose_file_names = ["class"]
+ose_file_names = ["class", "char_card"]
 
 
 def check_if_file_exist(file_name: str):

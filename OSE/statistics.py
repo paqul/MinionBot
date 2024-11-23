@@ -34,11 +34,13 @@ class Intelligence(object):
                            9: "Literate", 10: "Literate", 11: "Literate", 12: "Literate",
                            13: "Literate", 14: "Literate", 15: "Literate", 16: "Literate",
                            17: "Literate", 18: "Literate"}
-        values_spoken_language = {3: "Native (Broken Speach)",
-                                  4: "Native", 5: "Native", 6: "Native", 7: "Native", 8: "Native",
-                                  9: "Native", 10: "Native", 11: "Native", 12: "Native",
-                                  13: "Native +1 additional", 14: "Native +1 additional", 15: "Native +1 additional",
-                                  16: "Native +2 additional", 17: "Native +2 additional", 18: "Native +3 additional"}
+        # values_spoken_language = {3: "Native (Broken Speach)",
+        #                           4: "Native", 5: "Native", 6: "Native", 7: "Native", 8: "Native",
+        #                           9: "Native", 10: "Native", 11: "Native", 12: "Native",
+        #                           13: "Native +1 additional", 14: "Native +1 additional", 15: "Native +1 additional",
+        #                           16: "Native +2 additional", 17: "Native +2 additional", 18: "Native +3 additional"}
+        values_spoken_language = {3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 1, 14: 1, 15: 1,
+                                  16: 2, 17: 2, 18: 3}
         results = []
         for result in range(3):
             dice = roll_dice(1, 6)
