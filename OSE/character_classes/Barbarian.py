@@ -2,7 +2,6 @@ from OSE.randomize_statistics import roll_dices, randomize_languages
 from OSE.fantasy_names import randomize_fantasy_name
 from OSE.statistics import PrimeRequisite
 import OSE.statistics
-from OSE.character_tables import martial_statistics
 
 
 class Fighter(object):
@@ -11,11 +10,11 @@ class Fighter(object):
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
                  alignment: OSE.statistics.Alignment, debug: bool = False):
         """
-        Requirements: None
-        Prime requisite: STR
+        Requirements: Minimum DEX 9
+        Prime requisite: CON and STR
         HitDice: 1d8
         Maximum level: 14
-        Armour: Any, including shields
+        Armour: Leather, chainmail, shields
         Weapons: Any
         Languages: Alignment, Common
         """
@@ -27,7 +26,7 @@ class Fighter(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Wojownik"
+        self.character_class = "Barbarzyńca"
         self.level = 1
         self.hit_points = 0
         self.requirements = None
@@ -37,20 +36,20 @@ class Fighter(object):
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.martial_statistics = {1:  [     0, "1d8", 0, 12, 13, 14, 15, 16],
-                                   2:  [  1200, "2d8", 0, 12, 13, 14, 15, 16],
-                                   3:  [  2400, "3d8", 0, 12, 13, 14, 15, 16],
-                                   4:  [  4800, "4d8", 2, 10, 11, 12, 13, 14],
-                                   5:  [  9600, "5d8", 2, 10, 11, 12, 13, 14],
-                                   6:  [ 20000, "6d8", 2, 10, 11, 12, 13, 14],
-                                   7:  [ 40000, "7d8", 5,  8,  9, 10, 11, 12],
-                                   8:  [ 80000, "8d8", 5,  8,  9, 10, 11, 12],
-                                   9:  [160000, "9d8", 5,  8,  9, 10, 11, 12],
-                                   10: [280000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   11: [400000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   12: [520000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   13: [640000, "9d8", 9,  4,  5,  6,  5, 8],
-                                   14: [760000, "9d8", 9,  4,  5,  6,  5, 8]
+        self.martial_statistics = {1:  [     0, "1d8", 0, 10, 13, 12, 15, 16],
+                                   2:  [  2500, "2d8", 0, 10, 13, 12, 15, 16],
+                                   3:  [  5000, "3d8", 0, 10, 13, 12, 15, 16],
+                                   4:  [ 10000, "4d8", 2,  8, 11, 10, 13, 13],
+                                   5:  [ 18500, "5d8", 2,  8, 11, 10, 13, 13],
+                                   6:  [ 37000, "6d8", 2,  8, 11, 10, 13, 13],
+                                   7:  [ 85000, "7d8", 5,  6,  9,  8, 10, 10],
+                                   8:  [140000, "8d8", 5,  6,  9,  8, 10, 10],
+                                   9:  [270000, "9d8", 5,  6,  9,  8, 10, 10],
+                                   10: [400000, "9d8", 7,  4,  7,  6,  8,  7],
+                                   11: [530000, "9d8", 7,  4,  7,  6,  8,  7],
+                                   12: [660000, "9d8", 7,  4,  7,  6,  8,  7],
+                                   13: [790000, "9d8", 9,  3,  5,  4,  5,  5],
+                                   14: [920000, "9d8", 9,  3,  5,  4,  5,  5]
                                    }
         self.special_skills = None
         self.experience = self.martial_statistics[self.level][0]  # First level character

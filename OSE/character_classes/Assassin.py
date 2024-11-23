@@ -4,7 +4,7 @@ from OSE.statistics import PrimeRequisite
 import OSE.statistics
 
 
-class Acrobat(object):
+class Assassin(object):
     def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
                  wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
