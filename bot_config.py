@@ -16,7 +16,7 @@ import time
 # import audio
 
 key = token
-channels_on = ["gra-u-szadka", "testy", "DD", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
+channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
