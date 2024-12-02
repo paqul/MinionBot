@@ -1,7 +1,9 @@
 from typing import TextIO
 
-from rolls import roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices
+from rolls import roll, sorted_roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices
 import sys, re
+
+sorted_channels = ["GRA", "CYKLE"]
 #MSG Variables
 dices_imported = str(dices)
 sorry_response = (
@@ -47,7 +49,7 @@ list_of_dices = list(range(1, 100))
 dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
 
 
-def handle_response(msg, author, author_id) -> TextIO:
+def handle_response(msg, author, channel) -> TextIO:
     msg = msg.lower()
     roll_response = sorry_response
 
@@ -67,7 +69,11 @@ def handle_response(msg, author, author_id) -> TextIO:
         if amount_of_rolls > 9999:
             return max_amountofrolls_message
         dice = int(regular_roll_pattern_match.group(2))
-        roll_response = roll(author, amount_of_rolls, dice)
+        if channel.name in sorted_channels:
+            roll_response = sorted_roll(author, amount_of_rolls, dice)
+        else:
+            roll_response = roll(author, amount_of_rolls, dice)
+
     #Roll with Modifier
     elif re.match(r'(\d+)[kd](\d+)([\+\-\*\/])(.*)', msg):
         modifier_roll_pattern_match = re.match(r'(\d+)[kd](\d+)([\+\-\*\/])(.*)', msg)
@@ -172,6 +178,7 @@ def handle_response(msg, author, author_id) -> TextIO:
         return sorry_response
     else:
         pass #do nothing if previous conditions did not match
+
 
 def handle_name_response(name_msg,bot_self_mention_string, author) -> str:
     if name_msg == bot_self_mention_string +" znikaj":

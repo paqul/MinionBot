@@ -16,9 +16,7 @@ import time
 # import audio
 
 key = token
-channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy",
-               "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima",
-               "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA", "DCC", "OSE",
+channels_on = ["gra-u-szadka", "testy", "DD", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat"]
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
@@ -116,7 +114,7 @@ async def send_msg(msg, user_msg, bot_self_mention_string, private):
                 print(E)
         else:
             try:
-                resp = responses.handle_response(user_msg, msg.author, msg.author.id)
+                resp = responses.handle_response(user_msg, msg.author, msg.channel)
                 if type(resp) is io.TextIOWrapper:
                     file = discord.File(os.path.join(os.getcwd(), resp.name)) #do zmiany na ogolna sciezke
                     print("PLIK", file.filename)
