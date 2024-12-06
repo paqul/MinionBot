@@ -4,19 +4,19 @@ from OSE.statistics import PrimeRequisite
 import OSE.statistics
 
 
-class Barbarian(object):
+class Drow(object):
     def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
                  wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
                  alignment: OSE.statistics.Alignment, debug: bool = False):
         """
-        Requirements: Minimum DEX 9
-        Prime requisite: CON and STR
-        HitDice: 1d8
-        Maximum level: 14
-        Armour: Leather, chainmail, shields
+        Requirements: Minimum INT 9
+        Prime requisite: STR and WIS
+        HitDice: 1d6
+        Maximum level: 10
+        Armour: Any including shields
         Weapons: Any
-        Languages: Alignment, Common
+        Languages: Alignment, Common, Deepcommon, Elvish, Gnomish, the secret language of spiders
         """
         self.STR = strength
         self.INT = intelligence
@@ -26,30 +26,26 @@ class Barbarian(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Barbarzyńca"
+        self.character_class = "Drow"
         self.level = 1
         self.hit_points = 0
         self.requirements = None
-        self.prime_requisite = PrimeRequisite(self.STR.value)
-        self.max_lvl = 14
+        self.prime_requisite = PrimeRequisite(self.WIS.value)
+        self.max_lvl = 10
         self.languages = randomize_languages(self.INT.values_spoken_language)
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.level_progression = {1:  [     0, "1d8", 0, 10, 13, 12, 15, 16],
-                                  2:  [  2500, "2d8", 0, 10, 13, 12, 15, 16],
-                                  3:  [  5000, "3d8", 0, 10, 13, 12, 15, 16],
-                                  4:  [ 10000, "4d8", 2,  8, 11, 10, 13, 13],
-                                  5:  [ 18500, "5d8", 2,  8, 11, 10, 13, 13],
-                                  6:  [ 37000, "6d8", 2,  8, 11, 10, 13, 13],
-                                  7:  [ 85000, "7d8", 5,  6,  9,  8, 10, 10],
-                                  8:  [140000, "8d8", 5,  6,  9,  8, 10, 10],
-                                  9:  [270000, "9d8", 5,  6,  9,  8, 10, 10],
-                                  10: [400000, "9d8", 7,  4,  7,  6,  8,  7],
-                                  11: [530000, "9d8", 7,  4,  7,  6,  8,  7],
-                                  12: [660000, "9d8", 7,  4,  7,  6,  8,  7],
-                                  13: [790000, "9d8", 9,  3,  5,  4,  5,  5],
-                                  14: [920000, "9d8", 9,  3,  5,  4,  5,  5]
+        self.level_progression = {1:  [     0, "1d6", 0, 12, 13, 13, 15, 12],
+                                  2:  [  4000, "2d6", 0, 12, 13, 13, 15, 12],
+                                  3:  [  8000, "3d6", 0, 12, 13, 13, 15, 12],
+                                  4:  [ 16000, "4d6", 2, 10, 11, 11, 13, 10],
+                                  5:  [ 32000, "5d6", 2, 10, 11, 11, 13, 10],
+                                  6:  [ 64000, "6d6", 2, 10, 11, 11, 13, 10],
+                                  7:  [120000, "7d6", 5,  8,  9,  9, 10,  8],
+                                  8:  [250000, "8d6", 5,  8,  9,  9, 10,  8],
+                                  9:  [400000, "9d6", 5,  8,  9,  9, 10,  8],
+                                  10: [600000, "9d6", 7,  6,  7,  8,  8,  6],
                                   }
         self.special_skills = None
         self.experience = self.level_progression[self.level][0]  # First level character
@@ -64,7 +60,7 @@ class Barbarian(object):
         self.melee = self.thac0+self.STR.melee_modifier
         self.missile = self.thac0+self.DEX.missile_modifier
         self.initiative = self.DEX.initiative_modifier
-        self.listen_at_door = "1-to-6"
+        self.listen_at_door = "2-to-6"
         self.open_door = self.STR.values_open_in_doors
         self.find_secret_door = "1-to-6"
         self.find_room_trap = "1-to-6"

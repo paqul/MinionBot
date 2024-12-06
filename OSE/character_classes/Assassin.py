@@ -36,31 +36,31 @@ class Assassin(object):
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.semimartial_statistics = {1:  [     0, "1d4", 0, 13, 14, 13, 16, 15],
-                                       2:  [  1500, "2d4", 0, 13, 14, 13, 16, 15],
-                                       3:  [  3000, "3d4", 0, 13, 14, 13, 16, 15],
-                                       4:  [  4800, "4d4", 0, 13, 14, 13, 16, 15],
-                                       5:  [  9600, "5d4", 2, 12, 13, 11, 14, 13],
-                                       6:  [ 20000, "6d4", 2, 12, 13, 11, 14, 13],
-                                       7:  [ 40000, "7d4", 2, 12, 13, 11, 14, 13],
-                                       8:  [ 80000, "8d4", 2, 12, 13, 11, 14, 13],
-                                       9:  [160000, "9d4", 5, 10, 11,  9, 12, 10],
-                                       10: [280000, "9d4", 5, 10, 11,  9, 12, 10],
-                                       11: [400000, "9d4", 5, 10, 11,  9, 12, 10],
-                                       12: [520000, "9d4", 5, 10, 11,  9, 12, 10],
-                                       13: [640000, "9d4", 7,  8,  9,  7, 10, 8],
-                                       14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
-                                       }
+        self.level_progression = {1:  [     0, "1d4", 0, 13, 14, 13, 16, 15],
+                                  2:  [  1500, "2d4", 0, 13, 14, 13, 16, 15],
+                                  3:  [  3000, "3d4", 0, 13, 14, 13, 16, 15],
+                                  4:  [  4800, "4d4", 0, 13, 14, 13, 16, 15],
+                                  5:  [  9600, "5d4", 2, 12, 13, 11, 14, 13],
+                                  6:  [ 20000, "6d4", 2, 12, 13, 11, 14, 13],
+                                  7:  [ 40000, "7d4", 2, 12, 13, 11, 14, 13],
+                                  8:  [ 80000, "8d4", 2, 12, 13, 11, 14, 13],
+                                  9:  [160000, "9d4", 5, 10, 11,  9, 12, 10],
+                                  10: [280000, "9d4", 5, 10, 11,  9, 12, 10],
+                                  11: [400000, "9d4", 5, 10, 11,  9, 12, 10],
+                                  12: [520000, "9d4", 5, 10, 11,  9, 12, 10],
+                                  13: [640000, "9d4", 7,  8,  9,  7, 10, 8],
+                                  14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
+                                  }
         self.special_skills = None
-        self.experience = self.semimartial_statistics[self.level][0]  # First level character
+        self.experience = self.level_progression[self.level][0]  # First level character
         self.roll_hp()
-        self.thac0 = self.semimartial_statistics[self.level][2]  # Method of Ascending AC
+        self.thac0 = self.level_progression[self.level][2]  # Method of Ascending AC
         self.armour_class = 10+self.DEX.ac_modifier
-        self.death_poison = self.semimartial_statistics[self.level][3]-self.WIS.modifier_magic_saves
-        self.magic_wands = self.semimartial_statistics[self.level][4]-self.WIS.modifier_magic_saves
-        self.paralysis_petrify = self.semimartial_statistics[self.level][5]-self.WIS.modifier_magic_saves
-        self.breath_attacks = self.semimartial_statistics[self.level][6]-self.WIS.modifier_magic_saves
-        self.spells_staves_rods = self.semimartial_statistics[self.level][7]-self.WIS.modifier_magic_saves
+        self.death_poison = self.level_progression[self.level][3]-self.WIS.modifier_magic_saves
+        self.magic_wands = self.level_progression[self.level][4]-self.WIS.modifier_magic_saves
+        self.paralysis_petrify = self.level_progression[self.level][5]-self.WIS.modifier_magic_saves
+        self.breath_attacks = self.level_progression[self.level][6]-self.WIS.modifier_magic_saves
+        self.spells_staves_rods = self.level_progression[self.level][7]-self.WIS.modifier_magic_saves
         self.melee = self.thac0+self.STR.melee_modifier
         self.missile = self.thac0+self.DEX.missile_modifier
         self.initiative = self.DEX.initiative_modifier
@@ -77,7 +77,7 @@ class Assassin(object):
         while True:
             if self.hit_points <= 0:
                 self.hit_points = roll_dices(
-                    self.semimartial_statistics[self.level][1]) + self.CON.modifier_hit_points
+                    self.level_progression[self.level][1]) + self.CON.modifier_hit_points
                 # roll for hitpoints +/- mods
             else:
                 break

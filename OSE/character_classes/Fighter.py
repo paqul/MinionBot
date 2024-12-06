@@ -36,31 +36,31 @@ class Fighter(object):
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.martial_statistics = {1:  [     0, "1d8", 0, 12, 13, 14, 15, 16],
-                                   2:  [  1200, "2d8", 0, 12, 13, 14, 15, 16],
-                                   3:  [  2400, "3d8", 0, 12, 13, 14, 15, 16],
-                                   4:  [  4800, "4d8", 2, 10, 11, 12, 13, 14],
-                                   5:  [  9600, "5d8", 2, 10, 11, 12, 13, 14],
-                                   6:  [ 20000, "6d8", 2, 10, 11, 12, 13, 14],
-                                   7:  [ 40000, "7d8", 5,  8,  9, 10, 11, 12],
-                                   8:  [ 80000, "8d8", 5,  8,  9, 10, 11, 12],
-                                   9:  [160000, "9d8", 5,  8,  9, 10, 11, 12],
-                                   10: [280000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   11: [400000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   12: [520000, "9d8", 7,  6,  7,  8,  8, 10],
-                                   13: [640000, "9d8", 9,  4,  5,  6,  5, 8],
-                                   14: [760000, "9d8", 9,  4,  5,  6,  5, 8]
-                                   }
+        self.level_progression = {1:  [     0, "1d8", 0, 12, 13, 14, 15, 16],
+                                  2:  [  1200, "2d8", 0, 12, 13, 14, 15, 16],
+                                  3:  [  2400, "3d8", 0, 12, 13, 14, 15, 16],
+                                  4:  [  4800, "4d8", 2, 10, 11, 12, 13, 14],
+                                  5:  [  9600, "5d8", 2, 10, 11, 12, 13, 14],
+                                  6:  [ 20000, "6d8", 2, 10, 11, 12, 13, 14],
+                                  7:  [ 40000, "7d8", 5,  8,  9, 10, 11, 12],
+                                  8:  [ 80000, "8d8", 5,  8,  9, 10, 11, 12],
+                                  9:  [160000, "9d8", 5,  8,  9, 10, 11, 12],
+                                  10: [280000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  11: [400000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  12: [520000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  13: [640000, "9d8", 9,  4,  5,  6,  5, 8],
+                                  14: [760000, "9d8", 9,  4,  5,  6,  5, 8]
+                                  }
         self.special_skills = None
-        self.experience = self.martial_statistics[self.level][0]  # First level character
+        self.experience = self.level_progression[self.level][0]  # First level character
         self.roll_hp()
-        self.thac0 = self.martial_statistics[self.level][2]  # Method of Ascending AC
+        self.thac0 = self.level_progression[self.level][2]  # Method of Ascending AC
         self.armour_class = 10+self.DEX.ac_modifier
-        self.death_poison = self.martial_statistics[self.level][3]-self.WIS.modifier_magic_saves
-        self.magic_wands = self.martial_statistics[self.level][4]-self.WIS.modifier_magic_saves
-        self.paralysis_petrify = self.martial_statistics[self.level][5]-self.WIS.modifier_magic_saves
-        self.breath_attacks = self.martial_statistics[self.level][6]-self.WIS.modifier_magic_saves
-        self.spells_staves_rods = self.martial_statistics[self.level][7]-self.WIS.modifier_magic_saves
+        self.death_poison = self.level_progression[self.level][3]-self.WIS.modifier_magic_saves
+        self.magic_wands = self.level_progression[self.level][4]-self.WIS.modifier_magic_saves
+        self.paralysis_petrify = self.level_progression[self.level][5]-self.WIS.modifier_magic_saves
+        self.breath_attacks = self.level_progression[self.level][6]-self.WIS.modifier_magic_saves
+        self.spells_staves_rods = self.level_progression[self.level][7]-self.WIS.modifier_magic_saves
         self.melee = self.thac0+self.STR.melee_modifier
         self.missile = self.thac0+self.DEX.missile_modifier
         self.initiative = self.DEX.initiative_modifier
@@ -77,7 +77,7 @@ class Fighter(object):
         while True:
             if self.hit_points <= 0:
                 self.hit_points = roll_dices(
-                    self.martial_statistics[self.level][1]) + self.CON.modifier_hit_points
+                    self.level_progression[self.level][1]) + self.CON.modifier_hit_points
                 # roll for hitpoints +/- mods
             else:
                 break
