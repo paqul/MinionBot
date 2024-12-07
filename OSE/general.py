@@ -1,17 +1,35 @@
 from OSE.randomize_statistics import generate_base_characteristic_to_class
-from OSE.character_classes.Fighter import Fighter
 from OSE.character_classes.Acrobat import Acrobat
 from OSE.character_classes.Assassin import Assassin
 from OSE.character_classes.Barbarian import Barbarian
+from OSE.character_classes.Bard import Bard
+from OSE.character_classes.Cleric import Cleric
+from OSE.character_classes.Drow import Drow
+from OSE.character_classes.Druid import Druid
+from OSE.character_classes.Duergar import Duergar
+from OSE.character_classes.Dwarf import Dwarf
+from OSE.character_classes.Elf import Elf
+from OSE.character_classes.Fighter import Fighter
+from OSE.character_classes.Gnome import Gnome
+from OSE.character_classes.Halfelf import Halfelf
+from OSE.character_classes.Halfling import Halfling
+from OSE.character_classes.Halforc import Halforc
+from OSE.character_classes.Illusionist import Illusionist
+from OSE.character_classes.Knight import Knight
+from OSE.character_classes.Magicuser import MagicUser
+from OSE.character_classes.Paladin import Paladin
+from OSE.character_classes.Ranger import Ranger
+from OSE.character_classes.Svirfneblin import Svirfneblin
+from OSE.character_classes.Thief import Thief
 
 #ZROBIC BIBLIOTEKE DO PDF MOZE?!
 dictionary_of_class_collection = {'acrobat': Acrobat, 'assassin': Assassin, 'barbarian': Barbarian,
-                                  'bard': Fighter, 'cleric': Fighter, 'drow': Fighter, 'druid': Fighter,
-                                  'duergar': Fighter, 'dwarf': Fighter, 'elf': Fighter, 'fighter': Fighter,
-                                  'gnome': Fighter, 'halfelf': Fighter, 'halfling': Fighter,
-                                  'halforc': Fighter, 'illusionist': Fighter, 'knight': Fighter,
-                                  'magicuser': Fighter, 'paladin': Fighter, 'ranger': Fighter,
-                                  'svirfneblin': Fighter, 'thief': Fighter}
+                                  'bard': Bard, 'cleric': Cleric, 'drow': Drow, 'druid': Druid,
+                                  'duergar': Duergar, 'dwarf': Dwarf, 'elf': Elf, 'fighter': Fighter,
+                                  'gnome': Gnome, 'halfelf': Halfelf, 'halfling': Halfling,
+                                  'halforc': Halforc, 'illusionist': Illusionist, 'knight': Knight,
+                                  'magicuser': MagicUser, 'paladin': Paladin, 'ranger': Ranger,
+                                  'svirfneblin': Svirfneblin, 'thief': Thief}
 
 
 def generate_hero(debug: bool = False):
