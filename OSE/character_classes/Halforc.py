@@ -66,6 +66,8 @@ class Halforc(object):
         self.gold = roll_dices("3d6")  # roll for gold pieces
         self.armours = None
         self.weapons = None
+        self.encumbrance = 0
+        self.max_encumbrance = 1600
 
     def roll_hp(self):
         while True:

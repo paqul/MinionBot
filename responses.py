@@ -120,20 +120,19 @@ def handle_response(msg, author, author_id) -> TextIO:
         data_stats = []
         file_path_name = None
         files_in_ose = os.listdir(os.path.join(os.getcwd(), "OSE"))
-        print("FILES:::::", files_in_ose)
         #### Cearfully to check - sometimes deletes .py_files
         for file_name in files_in_ose:
             name_to_delete = check_if_file_exist(file_name)
             if name_to_delete in files_in_ose:
                 os.remove(os.path.join(os.getcwd(), "OSE", name_to_delete))
         ######################################################
-        print("Generating...")  # start generating
+        # print("Generating...")  # start generating
         if msg.endswith(ose_file_names[0]):
             data_stats = generate_hero()
             # import OSE.randomize_statistics
             # data_stats = OSE.randomize_statistics.generate_full_character()
             file_path_name = "OSE//char_card.csv"
-            print("character")
+            # print("character")
 
         # elif msg.endswith(ose_file_names[1]):
         #     data_stats = generate_hero(ose_file_names[1])
