@@ -4,7 +4,7 @@ from OSE.statistics import PrimeRequisite
 import OSE.statistics
 
 
-class Acrobat(object):
+class Thief(object):
     def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
                  wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
@@ -15,7 +15,7 @@ class Acrobat(object):
         HitDice: 1d4
         Maximum level: 14
         Armour: Leather, no shields
-        Weapons: Missiles weapon, dagger, sword, short sword, pole arm, spear, staff
+        Weapons: Any
         Languages: Alignment, Common
         """
         self.STR = strength
@@ -26,7 +26,7 @@ class Acrobat(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Akrobata"
+        self.character_class = "Złodziej"
         self.level = 1
         self.hit_points = 0
         self.requirements = None

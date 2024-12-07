@@ -4,19 +4,19 @@ from OSE.statistics import PrimeRequisite
 import OSE.statistics
 
 
-class Acrobat(object):
+class Dwarf(object):
     def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
                  wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
                  alignment: OSE.statistics.Alignment, debug: bool = False):
         """
-        Requirements: None
-        Prime requisite: DEX
-        HitDice: 1d4
-        Maximum level: 14
-        Armour: Leather, no shields
-        Weapons: Missiles weapon, dagger, sword, short sword, pole arm, spear, staff
-        Languages: Alignment, Common
+        Requirements: Minimum CON 9
+        Prime requisite: STR
+        HitDice: 1d8
+        Maximum level: 12
+        Armour: Any, including shields
+        Weapons: Small or normal size
+        Languages: Alignment, Common, Dwarvish, Gnomish, Goblin, Kobold
         """
         self.STR = strength
         self.INT = intelligence
@@ -26,30 +26,28 @@ class Acrobat(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Akrobata"
+        self.character_class = "Krasnolud"
         self.level = 1
         self.hit_points = 0
         self.requirements = None
-        self.prime_requisite = PrimeRequisite(self.DEX.value)
-        self.max_lvl = 14
+        self.prime_requisite = PrimeRequisite(self.STR.value)
+        self.max_lvl = 12
         self.languages = randomize_languages(self.INT.values_spoken_language)
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.level_progression = {1:  [     0, "1d4", 0, 13, 14, 13, 16, 15],
-                                  2:  [  1200, "2d4", 0, 13, 14, 13, 16, 15],
-                                  3:  [  2400, "3d4", 0, 13, 14, 13, 16, 15],
-                                  4:  [  4800, "4d4", 0, 13, 14, 13, 16, 15],
-                                  5:  [  9600, "5d4", 2, 12, 13, 11, 14, 13],
-                                  6:  [ 20000, "6d4", 2, 12, 13, 11, 14, 13],
-                                  7:  [ 40000, "7d4", 2, 12, 13, 11, 14, 13],
-                                  8:  [ 80000, "8d4", 2, 12, 13, 11, 14, 13],
-                                  9:  [160000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  10: [280000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  11: [400000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  12: [520000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  13: [640000, "9d4", 7,  8,  9,  7, 10, 8],
-                                  14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
+        self.level_progression = {1:  [     0, "1d8", 0, 8, 9, 10, 13, 12],
+                                  2:  [  2200, "2d8", 0, 8, 9, 10, 13, 12],
+                                  3:  [  4400, "3d8", 0, 8, 9, 10, 13, 12],
+                                  4:  [  8800, "4d8", 2, 6, 7,  8, 10, 10],
+                                  5:  [ 17000, "5d8", 2, 6, 7,  8, 10, 10],
+                                  6:  [ 35000, "6d8", 2, 6, 7,  8, 10, 10],
+                                  7:  [ 70000, "7d8", 5, 4, 5,  6,  7,  8],
+                                  8:  [140000, "8d8", 5, 4, 5,  6,  7,  8],
+                                  9:  [270000, "9d8", 5, 4, 5,  6,  7,  8],
+                                  10: [400000, "9d8", 7, 2, 3,  4,  4,  6],
+                                  11: [530000, "9d8", 7, 2, 3,  4,  4,  6],
+                                  12: [660000, "9d8", 7, 2, 3,  4,  4,  6],
                                   }
         self.special_skills = None
         self.experience = self.level_progression[self.level][0]  # First level character
@@ -64,10 +62,10 @@ class Acrobat(object):
         self.melee = self.thac0+self.STR.melee_modifier
         self.missile = self.thac0+self.DEX.missile_modifier
         self.initiative = self.DEX.initiative_modifier
-        self.listen_at_door = "1-to-6"
+        self.listen_at_door = "2-to-6"
         self.open_door = self.STR.values_open_in_doors
-        self.find_secret_door = "1-to-6"
-        self.find_room_trap = "1-to-6"
+        self.find_secret_door = "2-to-6"
+        self.find_room_trap = "2-to-6"
 
         self.gold = roll_dices("3d6")  # roll for gold pieces
         self.armours = None

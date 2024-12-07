@@ -4,18 +4,18 @@ from OSE.statistics import PrimeRequisite
 import OSE.statistics
 
 
-class Acrobat(object):
+class Ranger(object):
     def __init__(self, strength: OSE.statistics.Strength, intelligence: OSE.statistics.Intelligence,
                  wisdom: OSE.statistics.Wisdom, dexterity: OSE.statistics.Dexterity,
                  constitution: OSE.statistics.Constitution, charisma: OSE.statistics.Charisma,
                  alignment: OSE.statistics.Alignment, debug: bool = False):
         """
-        Requirements: None
-        Prime requisite: DEX
-        HitDice: 1d4
+        Requirements: Minimum CON 9, Minimum WIS 9
+        Prime requisite: STR
+        HitDice: 1d8
         Maximum level: 14
-        Armour: Leather, no shields
-        Weapons: Missiles weapon, dagger, sword, short sword, pole arm, spear, staff
+        Armour: Leather, Chainmail, shields
+        Weapons: Any
         Languages: Alignment, Common
         """
         self.STR = strength
@@ -26,30 +26,30 @@ class Acrobat(object):
         self.CHA = charisma
         self.ALG = alignment
         self.character_name = randomize_fantasy_name()
-        self.character_class = "Akrobata"
+        self.character_class = "Tropiciel"
         self.level = 1
         self.hit_points = 0
         self.requirements = None
-        self.prime_requisite = PrimeRequisite(self.DEX.value)
+        self.prime_requisite = PrimeRequisite(self.STR.value)
         self.max_lvl = 14
         self.languages = randomize_languages(self.INT.values_spoken_language)
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
-        self.level_progression = {1:  [     0, "1d4", 0, 13, 14, 13, 16, 15],
-                                  2:  [  1200, "2d4", 0, 13, 14, 13, 16, 15],
-                                  3:  [  2400, "3d4", 0, 13, 14, 13, 16, 15],
-                                  4:  [  4800, "4d4", 0, 13, 14, 13, 16, 15],
-                                  5:  [  9600, "5d4", 2, 12, 13, 11, 14, 13],
-                                  6:  [ 20000, "6d4", 2, 12, 13, 11, 14, 13],
-                                  7:  [ 40000, "7d4", 2, 12, 13, 11, 14, 13],
-                                  8:  [ 80000, "8d4", 2, 12, 13, 11, 14, 13],
-                                  9:  [160000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  10: [280000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  11: [400000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  12: [520000, "9d4", 5, 10, 11,  9, 12, 10],
-                                  13: [640000, "9d4", 7,  8,  9,  7, 10, 8],
-                                  14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
+        self.level_progression = {1:  [     0, "1d8", 0, 12, 13, 14, 15, 16],
+                                  2:  [  2250, "2d8", 0, 12, 13, 14, 15, 16],
+                                  3:  [  4500, "3d8", 0, 12, 13, 14, 15, 16],
+                                  4:  [ 10000, "4d8", 2, 10, 11, 12, 13, 14],
+                                  5:  [ 20000, "5d8", 2, 10, 11, 12, 13, 14],
+                                  6:  [ 40000, "6d8", 2, 10, 11, 12, 13, 14],
+                                  7:  [ 90000, "7d8", 5,  8,  9, 10, 10, 12],
+                                  8:  [150000, "8d8", 5,  8,  9, 10, 10, 12],
+                                  9:  [300000, "9d8", 5,  8,  9, 10, 10, 12],
+                                  10: [425000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  11: [550000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  12: [675000, "9d8", 7,  6,  7,  8,  8, 10],
+                                  13: [800000, "9d8", 9,  4,  5,  6,  5, 8],
+                                  14: [925000, "9d8", 9,  4,  5,  6,  5, 8]
                                   }
         self.special_skills = None
         self.experience = self.level_progression[self.level][0]  # First level character
