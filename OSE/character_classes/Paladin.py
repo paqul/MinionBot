@@ -51,7 +51,27 @@ class Paladin(object):
                                   13: [950000, "9d8", 9,  2,  3,  4,  3,  6],
                                   14: [1100000, "9d8", 9,  2,  3,  4,  3,  6]
                                   }
-        self.special_skills = None
+        self.spells = None
+        self.special_skills_names = ["", "", "", "", "", "", "", ""]
+        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+
+        # Level | x | x | x | x | x
+        # | x | x | x
+        self.special_skills = {1: [10, 10, 10, 10, 10],
+                               2: [10, 10, 10, 10, 10],
+                               3: [10, 10, 10, 10, 10],
+                               4: [10, 10, 10, 10, 10],
+                               5: [10, 10, 10, 10, 10],
+                               6: [10, 10, 10, 10, 10],
+                               7: [10, 10, 10, 10, 10],
+                               8: [10, 10, 10, 10, 10],
+                               9: [10, 10, 10, 10, 10],
+                               10: [10, 10, 10, 10, 10],
+                               11: [10, 10, 10, 10, 10],
+                               12: [10, 10, 10, 10, 10],
+                               13: [10, 10, 10, 10, 10],
+                               14: [10, 10, 10, 10, 10]
+                               }
         self.experience = self.level_progression[self.level][0]  # First level character
         self.roll_hp()
         self.thac0 = self.level_progression[self.level][2]  # Method of Ascending AC
