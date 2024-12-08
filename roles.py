@@ -1,4 +1,4 @@
-roles_list = ["Gracz", "Dyrekcja"]
+roles_list = ["Gracz", "Jednostrzały"]
 role_list_test = ["Test pierwszy", "test drugi", "Trzeci Test", "cos"]
 
 
@@ -8,4 +8,4 @@ def handle_roles(member) -> str:
     # if member.id == 608017745346560000:
     #     return roles_list[1]
     # else:
-    return roles_list[0]
+    return roles_list
