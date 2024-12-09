@@ -131,12 +131,8 @@ async def send_msg(msg, user_msg, bot_self_mention_string, private):
 async def get_role(member):
     try:
         role_name = roles.handle_roles(member)
-        print(role_name)
-        role1 = discord.utils.get(member.guild.roles, name=role_name)
-        print(type(role1))
-        print(role1)
-        # role2 = discord.utils.get(member.guild.roles, name=role_name[1])
-        await member.add_roles(*role1)
+        role = discord.utils.get(member.guild.roles, name=role_name[0])
+        await member.add_roles(role)
     except Exception as E:
         print(E)
 
