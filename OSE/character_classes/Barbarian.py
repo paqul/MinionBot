@@ -52,25 +52,49 @@ class Barbarian(object):
                                   14: [920000, "9d8", 9,  3,  5,  4,  5,  5]
                                   }
         self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+        self.special_skills_names = ["Zwinna walka", "Wspinaczka po pionowej powierzchni", "Ukrywanie się w zaroślach",
+                                     "Ciche poruszanie", "Leczenie trucizn", "Strach przed magią",
+                                     "Zbieractwo i łowiectwo", "Uderzenie w niezniszczalne potwory"]
 
-        # Level | x | x | x | x | x
-        # | x | x | x
-        self.special_skills = {1: [10, 10, 10, 10, 10],
-                               2: [10, 10, 10, 10, 10],
-                               3: [10, 10, 10, 10, 10],
-                               4: [10, 10, 10, 10, 10],
-                               5: [10, 10, 10, 10, 10],
-                               6: [10, 10, 10, 10, 10],
-                               7: [10, 10, 10, 10, 10],
-                               8: [10, 10, 10, 10, 10],
-                               9: [10, 10, 10, 10, 10],
-                               10: [10, 10, 10, 10, 10],
-                               11: [10, 10, 10, 10, 10],
-                               12: [10, 10, 10, 10, 10],
-                               13: [10, 10, 10, 10, 10],
-                               14: [10, 10, 10, 10, 10]
+        self.special_skills_description = ["Po uzyskaniu 4 poziomu, barbarzyńca dostaje bonus +1 do Klasy Pancerza."
+                                           " Dostaje bonus +2 do Klasy Pancerza na poziomie 6,"
+                                           " bonus +3 do Klasy Pancerza na poziomie 8 i"
+                                           " bonus +4 do Klasy Pancerza na poziomie 10",
+                                           "Dotyczy tylko powierzchni naturalnych (np. pnie drzew, naturalne clify), "
+                                           "Na każde 100 stóp wspinaczki wymagany jest jeden rzut."
+                                           " Jeśli rzut się nie powiedzie, skrytobójca spada o połowe drogi,"
+                                           " doznając obrażeń od upadku.",
+                                           "Barbarzyńca musi być nieruchomy – "
+                                           "atakowanie lub poruszanie się z ukrycia nie jest możliwe"
+                                           "Barbarzyńca może próbować przemknąć obok wrogów niezauważony",
+                                           "Na pustkowiu barbarzyńca może zbierać zioła, aby sporządzić odtrutkę na"
+                                           " naturalne trucizny. Wyleczenie zajmuje jedną turę na postać."
+                                           " Każdy podmiot może wykonać drugi rzut obronny przeciwko truciźnie,"
+                                           " aby zakończyć efekty.",
+                                           "Barbarzyńcy nie ufają magii i odmawiają świadomego używania lub poddawania"
+                                           " się wpływowi zaklęć lub magicznych przedmiotów. Barbarzyńcy akceptują"
+                                           " boską magię związaną z religią plemienną.",
+                                           "Drużyna z barbarzyńcą odnosi sukces w zbieractwie z szansą 2 na 6 i"
+                                           " znajduje ofiarę podczas polowania z szansą 5 na 6",
+                                           "Barbarzyńca 4. poziomu lub wyższego jest w stanie uderzyć potwory,"
+                                           " które normalnie można zranić tylko magią"]
+
+        # Level | Agile Fighting | Climb sheer surface | Hide in undergrowth | Move silently
+        # | Cure Poison | Fear of Magic | Foraging and Hunting | Strike Invulnerable Monsters
+        self.special_skills = {1:  [0, 87, 10, 20],
+                               2:  [0, 88, 15, 25],
+                               3:  [0, 89, 20, 30],
+                               4:  [1, 90, 25, 35],
+                               5:  [1, 91, 30, 37],
+                               6:  [2, 92, 33, 40],
+                               7:  [2, 93, 36, 42],
+                               8:  [3, 94, 40, 44],
+                               9:  [3, 95, 43, 46],
+                               10: [4, 96, 46, 48],
+                               11: [4, 97, 50, 50],
+                               12: [4, 98, 53, 50],
+                               13: [4, 99, 56, 50],
+                               14: [4, 99, 60, 50]
                                }
         self.experience = self.level_progression[self.level][0]  # First level character
         self.roll_hp()

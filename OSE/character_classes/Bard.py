@@ -51,12 +51,72 @@ class Bard(object):
                                   13: [720000, "9d6", 7,  8,  9,  7, 10, 8],
                                   14: [840000, "9d6", 7,  8,  9,  7, 10, 8]
                                   }
-        self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+
+        # Level Divine Magic | 1 | 2 | 3 | 4 |
+        self.spells = {1: [0, 0, 0, 0],
+                       2: [1, 0, 0, 0],
+                       3: [2, 0, 0, 0],
+                       4: [3, 0, 0, 0],
+                       5: [3, 1, 0, 0],
+                       6: [3, 2, 0, 0],
+                       7: [3, 3, 0, 0],
+                       8: [3, 3, 1, 0],
+                       9: [3, 3, 2, 0],
+                       10: [3, 3, 3, 0],
+                       11: [3, 3, 3, 1],
+                       12: [3, 3, 3, 2],
+                       13: [3, 3, 3, 3],
+                       14: [4, 4, 3, 3]
+                       }
+        self.special_skills_names = ["Anty urok", "Boska magia", "Używanie przedmiotów magicznych", "Zachwyt", "Języki",
+                                     "Wiedza"]
+        self.special_skills_description = ["Podczas gdy bard gra muzykę i śpiewa, sojusznicy w promieniu 30 stóp są"
+                                           " odporni na magiczne efekty pieśni i zwodnicze moce leśnych stworzeń"
+                                           " lub wróżek. Sojusznicy, którzy są już pod wpływem takiej magii,"
+                                           " mogą wykonać kolejny rzut obronny z premią +4",
+                                           "Niełaska bóstwa: Bardowie muszą być wierni zasadom swojego usposobienia i"
+                                           " religii. Bardowie, którzy nie popadną w łaskę swojego bóstwa, mogą ponieść"
+                                           " kary Rzucanie czarów: Gdy bard udowodni swoją wiarę (od 2. poziomu),"
+                                           " postać może modlić się o otrzymanie czarów. Moc i liczba czarów dostępnych"
+                                           " dla barda są określane przez poziom doświadczenia. Lista czarów dostępnych"
+                                           " dla bardów jest taka sama jak dla druidów.",
+                                           "Jako rzucający czary, bardowie mogą używać magicznych zwojów czarów ze"
+                                           " swojej listy czarów. Mogą również używać dowolnych przedmiotów,"
+                                           " których mogą używać tylko druidzi.",
+                                           "Grając muzykę i śpiewając, bard może fascynować poddanych w promieniu"
+                                           " 30 stóp. Ta umiejętność nie działa w walce. Liczba poddanych: "
+                                           "Do 2HD stworzeń na poziom barda jest dotkniętych. Bard może wybrać"
+                                           " konkretną osobę lub grupę (w takim przypadku dotknięte osoby są określane"
+                                           " losowo)\nRodzaje poddanych: Na 1. poziomie bard może fascynować osoby. "
+                                           "Na 4. poziomie zwierzęta również mogą być dotknięte. Na 7. poziomie potwory"
+                                           " mogą być dotknięte. \nEfekt: Każdy poddany musi rzucić rzut obronny"
+                                           " przeciwko czarom lub zostanie zafascynowany, w następujący sposób: "
+                                           "\nPochłonięty: Uwaga zafascynowanych poddanych jest w pełni skupiona"
+                                           " na występie barda, dopóki trwa on. \nPodążanie: Bard może chodzić podczas"
+                                           " gry. Zafascynowane poddane będą podążać za nim. \nPrzerwania: Jeśli występ"
+                                           " zostanie przerwany (np. przez głośny hałas lub przemoc), fascynacja"
+                                           " natychmiast się kończy. \nZaczarowane Poddane: Jeśli bard występuje przez"
+                                           " co najmniej jedną turę i występ kończy się bez przerwy, zafascynowane"
+                                           " poddane mogą zostać objęte głębszym urokiem. Każdy Poddany musi wykonać"
+                                           " kolejny rzut obronny przeciwko czarom (z premią +2) lub zostać zaczarowany"
+                                           " przez jedną turę na każdy poziom u Barda: \nPrzyjaźń: Oczarowani poddani"
+                                           " uważają Barda za zaufanego przyjaciela i sojusznika i staną w jego obronie"
+                                           "\nRozkazy: Jeśli dzielą ten sam język, zaczarowane Poddane będą wykonywać"
+                                           " polecenia Barda. \nCharakter: Polecenia, które są sprzeczne z naturą"
+                                           " lub charakterem zaczarowanego stworzenia, mogą zostać zignorowane. \n"
+                                           "Rozkazy samobójcze: Zaczarowane Poddane nigdy nie wykonują rozkazów"
+                                           " samobójczych lub ewidentnie szkodliwych.",
+                                           "Bardowie uczą się nowych języków w miarę awansu na kolejne poziomy. Na"
+                                           " każdym parzystym poziomie powyżej 3. (tj. 4., 6., 8. itd.) gracz może"
+                                           " wybrać dodatkowy język. W ten sposób bardowie mogą nauczyć się tajnego"
+                                           " języka druidów.",
+                                           "Od 2. poziomu bard ma 2-do-6 szans na poznanie wiedzy o potworach,"
+                                           " magicznych przedmiotach lub bohaterach baśni ludowych lub legend."
+                                           " Ta umiejętność może być używana do identyfikacji natury i"
+                                           " mocy magicznych przedmiotów"]
 
         # Level | x | x | x | x | x
-        # | x | x | x
+        # | Anti-Charm | Divine Magic | Using Magic Items | Enchantment | Languages | Lore
         self.special_skills = {1: [10, 10, 10, 10, 10],
                                2: [10, 10, 10, 10, 10],
                                3: [10, 10, 10, 10, 10],

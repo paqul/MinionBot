@@ -52,7 +52,7 @@ class Acrobat(object):
                                   14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
                                   }
         self.spells = None
-        self.special_skills_names = ["Wspinaczka po pionowej powierzchni", "Spadanie", "Ukrycie w Cieniu",
+        self.special_skills_names = ["Wspinaczka po pionowej powierzchni", "Spadanie", "Ukrycie w cieniu",
                                      "Ciche poruszanie", "Chodzenie po linie", "Uchylanie sie", "Skakanie",
                                      "Atak z przewrotem"]
         self.special_skills_description = ["Na każde 100 stóp wspinaczki wymagany jest jeden rzut."

@@ -52,25 +52,57 @@ class Assassin(object):
                                   14: [760000, "9d4", 7,  8,  9,  7, 10, 8]
                                   }
         self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+        self.special_skills_names = ["Skrytobójstwo", "Wspinaczka po pionowej powierzchni", "Nasłuchiwanie",
+                                     "Ukrycie w Cieniu", "Ciche poruszanie", "Przebieranie się", "Najemnicy",
+                                     "Zatruwanie"]
+        self.special_skills_description = ["Podczas ataku na nieświadomego humanoida od tyłu, skrytobójca otrzymuje"
+                                           " premię +4 do trafienia. Jeśli atak się powiedzie, ofiara musi wykonać rzut"
+                                           " obronny przeciwko śmierci z karą zależną od poziomu skrytobójcy. Jeśli"
+                                           " rzut obronny się nie powiedzie, ofiara zostaje natychmiast zabita,"
+                                           " w przeciwnym razie atak skrytobójcy zadaje normalne obrażenia."
+                                           "Kto może zostać zamordowany? - ludzie / półludzie każdego poziomu oraz"
+                                           " humanoidalne potwory o maksymalnej wartości "
+                                           "HD 4+1 (istoty nieożywione są odporne).",
+                                           "Na każde 100 stóp wspinaczki wymagany jest jeden rzut."
+                                           " Jeśli rzut się nie powiedzie, skrytobójca spada o połowe drogi,"
+                                           " doznając obrażeń od upadku.",
+                                           "W cichym otoczeniu (np. poza walką) skrytobójca może próbować podsłuchiwać"
+                                           " przy drzwiach lub słyszeć dźwięki czegoś zbliżającego się"
+                                           " (np. wędrującego potwora).",
+                                           "Skrytobójca musi być nieruchomy – "
+                                           "atakowanie lub poruszanie się z ukrycia nie jest możliwe",
+                                           "Skrytobójca może próbować przemknąć obok wrogów niezauważony",
+                                           "Postacie dowolnej klasy mogą się przebierać, ale skrytobójcy są mistrzami"
+                                           " w tej sztuce - potrafią tworzyć przebrania, które przechodzą nawet przez"
+                                           " wnikliwą kontrolę. Szansa na wykrycie: Każdy, kogo skrytobójca spotka,"
+                                           " ma 2% szansy na zauważenie przebrania. Ten rzut powtarza się raz na każdy"
+                                           " kolejny dzień spotkania. Pozowanie jako inna klasa, rasa lub płeć: "
+                                           "Zwiększa szansę na wykrycie o 2% za każdą zmianę. Wzrost i waga: Przebranie"
+                                           " może zmieniać wzrost (do 3 stóp niższy lub 5 stóp wyższy) lub wagę"
+                                           " (nieco szczuplejszy, znacznie bardziej masywny)",
+                                           "Skrytobójcy 1-3 poziomu nie mogą zatrudniać wasali, najemników ani "
+                                           "specjalistów. Od 4 poziomu skrytobójca może zatrudniać innych skrytobójców"
+                                           " niższego poziomu. Od 8 poziomu skrytobójca może zatrudniać złodziei,"
+                                           " a od 12 poziomu dowolny typ postaci.",
+                                           "Ofiary otrucia przez skrytobójce otrzymują karę -2 do rzutu obronnego."
+                                           ]
 
-        # Level | x | x | x | x | x
-        # | x | x | x
-        self.special_skills = {1: [10, 10, 10, 10, 10],
-                               2: [10, 10, 10, 10, 10],
-                               3: [10, 10, 10, 10, 10],
-                               4: [10, 10, 10, 10, 10],
-                               5: [10, 10, 10, 10, 10],
-                               6: [10, 10, 10, 10, 10],
-                               7: [10, 10, 10, 10, 10],
-                               8: [10, 10, 10, 10, 10],
-                               9: [10, 10, 10, 10, 10],
-                               10: [10, 10, 10, 10, 10],
-                               11: [10, 10, 10, 10, 10],
-                               12: [10, 10, 10, 10, 10],
-                               13: [10, 10, 10, 10, 10],
-                               14: [10, 10, 10, 10, 10]
+        # Level | Assassination | Climb sheer surface | Hear noise | Hide in shadows | Move silently
+        # | Disguise | Hirelings | Poison
+        self.special_skills = {1:  [ 0, 87, "2-in-6", 10, 20],
+                               2:  [ 0, 88, "2-in-6", 15, 25],
+                               3:  [ 0, 89, "3-in-6", 20, 30],
+                               4:  [-1, 90, "3-in-6", 25, 35],
+                               5:  [-1, 91, "3-in-6", 30, 40],
+                               6:  [-2, 92, "3-in-6", 33, 43],
+                               7:  [-2, 93, "4-in-6", 36, 46],
+                               8:  [-3, 94, "4-in-6", 40, 50],
+                               9:  [-3, 95, "4-in-6", 43, 53],
+                               10: [-4, 96, "4-in-6", 46, 56],
+                               11: [-4, 97, "5-in-6", 50, 60],
+                               12: [-5, 98, "5-in-6", 53, 63],
+                               13: [-5, 99, "5-in-6", 56, 66],
+                               14: [-6, 99, "5-in-6", 60, 70]
                                }
 
         self.experience = self.level_progression[self.level][0]  # First level character
@@ -85,7 +117,7 @@ class Assassin(object):
         self.melee = self.thac0+self.STR.melee_modifier
         self.missile = self.thac0+self.DEX.missile_modifier
         self.initiative = self.DEX.initiative_modifier
-        self.listen_at_door = "1-to-6"
+        self.listen_at_door = self.special_skills[self.level][2]
         self.open_door = self.STR.values_open_in_doors
         self.find_secret_door = "1-to-6"
         self.find_room_trap = "1-to-6"
