@@ -80,7 +80,9 @@ def generate_hero(debug: bool = False):
             "###################################\n", f"Nasłuchiwanie przy drzwiach: {hero.listen_at_door}",
             f"Wywarzanie drzwi: {hero.open_door}", f"Znajdowanie sekretnytch drzwi: {hero.find_secret_door}",
             f"Wykrywanie Pułapek w pokojach:  {hero.find_room_trap}\n", "###################################\n",
-            f"Aktualne złoto: {hero.gold}", f"Znnane języki: {hero.languages}"]
+            f"Aktualne złoto: {hero.gold}", f"Znnane języki: {hero.languages}\n",
+            "###################################\n", f"Specjalne umiejętności:\n {hero.special_skills_names}\n",
+            f"Opis specjalnych umiejętności:\n {hero.special_skills_description}\n"]
 
     ############################# HERE FINISH CHARACTER CLASS GOES TO TEXT FILE ########################################
     return data

@@ -51,26 +51,70 @@ class Cleric(object):
                                   13: [600000, "9d6", 7,  3,  5,  7,  8,  7],
                                   14: [700000, "9d6", 7,  3,  5,  7,  8,  7]
                                   }
-        self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
 
-        # Level | x | x | x | x | x
-        # | x | x | x
-        self.special_skills = {1: [10, 10, 10, 10, 10],
-                               2: [10, 10, 10, 10, 10],
-                               3: [10, 10, 10, 10, 10],
-                               4: [10, 10, 10, 10, 10],
-                               5: [10, 10, 10, 10, 10],
-                               6: [10, 10, 10, 10, 10],
-                               7: [10, 10, 10, 10, 10],
-                               8: [10, 10, 10, 10, 10],
-                               9: [10, 10, 10, 10, 10],
-                               10: [10, 10, 10, 10, 10],
-                               11: [10, 10, 10, 10, 10],
-                               12: [10, 10, 10, 10, 10],
-                               13: [10, 10, 10, 10, 10],
-                               14: [10, 10, 10, 10, 10]
+        # Level Divine Magic | 1 | 2 | 3 | 4 | 5
+        self.spells = {1:  [0, 0, 0, 0, 0],
+                       2:  [1, 0, 0, 0, 0],
+                       3:  [2, 0, 0, 0, 0],
+                       4:  [2, 1, 0, 0, 0],
+                       5:  [2, 2, 0, 0, 0],
+                       6:  [2, 2, 1, 1, 0],
+                       7:  [2, 2, 2, 1, 1],
+                       8:  [3, 3, 2, 2, 1],
+                       9:  [3, 3, 3, 2, 2],
+                       10: [4, 4, 3, 3, 2],
+                       11: [4, 4, 4, 3, 3],
+                       12: [5, 5, 4, 4, 3],
+                       13: [5, 5, 5, 4, 4],
+                       14: [6, 5, 5, 5, 4]
+                       }
+        self.special_skills_names = ["Boska magia", "Używanie przedmiotów magicznych", "Magiczne badania",
+                                     "Odesłanie nieumarłych", "", "", "", ""]
+        self.special_skills_description = ["Niełaska bóstwa: Kapłani muszą być wierni zasadom swojego usposobienia i"
+                                           " religii. Kapłani, którzy nie popadną w łaskę swojego bóstwa, mogą ponieść"
+                                           " kary Rzucanie czarów: Gdy kapłan udowodni swoją wiarę (od 2. poziomu),"
+                                           " postać może modlić się o otrzymanie czarów. Moc i liczba czarów dostępnych"
+                                           " dla kapłana są określane przez poziom doświadczenia."
+                                           " Lista czarów dostępnych dla kapłanów jest dostępna na stronie 128. \n "
+                                           "Kapłan musi nieść/posiadać święty symbol bóstwa",
+                                           "Jako rzucający czary, kapłani mogą używać magicznych zwojów czarów ze"
+                                           " swojej listy czarów. Mogą używać przedmiotów, których mogą używać jedynie"
+                                           " osoby rzucające czary boskie (np. niektóre magiczne kostury)",
+                                           "Kapłan dowolnego poziomu może poświęcić czas i pieniądze na badania"
+                                           " magiczne. Pozwala im to tworzyć nowe zaklęcia lub inne magiczne efekty"
+                                           " związane z ich bóstwem. Kiedy kapłan osiągnie 9. poziom, może również"
+                                           " tworzyć magiczne przedmioty.",
+                                           "Kapłani mogą przywołać moc swojego bóstwa, aby odeprzeć napotkane nieumarłe"
+                                           " potwory. Aby odwrócić nieumarłych, gracz rzuca 2k6. Mistrz Gry następnie"
+                                           " konsultuje tabelę odpędzania nieumarłych, porównując rzut z HD typu"
+                                           " nieumarłych potworów, na które został skierowany. Jeśli próba odpędzenia"
+                                           " się powiedzie, gracz musi rzucić 2k6 ponownie, aby określić liczbę"
+                                           " dotkniętych HD (odpędzonych lub zniszczonych). \nOdpędzony nieumarły:"
+                                           " Opuści obszar, jeśli to możliwe, i nie skrzywdzi ani nie nawiąże"
+                                           " kontaktu z kapłanem. \nZniszczony nieumarły: Zostają natychmiast i"
+                                           " trwale unicestwieni. \nNadmiar: Rzucone Kostki Życia, które nie są"
+                                           " wystarczające, aby wpłynąć na potwora, zostają zmarnowane. \nMinimalny"
+                                           " efekt: Przynajmniej jeden nieumarły potwór zawsze zostanie dotknięty po"
+                                           " udanym odpędzaniu. \n Mieszane grupy: Jeśli odpędzanie nieumarłych "
+                                           "zostanie użyte przeciwko mieszanej grupie nieumarłych potworów różnych"
+                                           " typów, te z najniższym HD zostaną dotknięte",]
+
+        # Level | 1 | 2 | 2* | 3 | 4 | 5 | 6 | 7-9
+        # | Divine Magic | Using Magic Items | Magical Research | Turning the Undead
+        self.special_skills = {1:  [7, 9, 11, None, None, None, None, None],
+                               2:  ["T", 7, 9, 11, None, None, None, None],
+                               3:  ["T", "T", 7, 9, 11, None, None, None],
+                               4:  ["D", "T", "T", 7, 9, 11, None, None],
+                               5:  ["D", "D", "T", "T", 7, 9, 11, None],
+                               6:  ["D", "D", "D", "T", "T", 7, 9, 11],
+                               7:  ["D", "D", "D", "D", "T", "T", 7, 9],
+                               8:  ["D", "D", "D", "D", "D", "T", "T", 7],
+                               9:  ["D", "D", "D", "D", "D", "D", "T", "T"],
+                               10: ["D", "D", "D", "D", "D", "D", "D", "T"],
+                               11: ["D", "D", "D", "D", "D", "D", "D", "D"],
+                               12: ["D", "D", "D", "D", "D", "D", "D", "D"],
+                               13: ["D", "D", "D", "D", "D", "D", "D", "D"],
+                               14: ["D", "D", "D", "D", "D", "D", "D", "D"]
                                }
         self.experience = self.level_progression[self.level][0]  # First level character
         self.roll_hp()
