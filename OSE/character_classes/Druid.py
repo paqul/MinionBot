@@ -33,7 +33,7 @@ class Druid(object):
         self.prime_requisite = PrimeRequisite(self.WIS.value)
         self.max_lvl = 14
         self.languages = randomize_languages(self.INT.values_spoken_language)
-        self.alignment = self.ALG
+        self.alignment = "Neutralny"
 
         #Level XP HD THAC0 D W P B S
         self.level_progression = {1:  [     0, "1d6", 0, 11, 12, 14, 16, 15],
@@ -51,12 +51,64 @@ class Druid(object):
                                   13: [750000, "9d6", 7,  3,  5,  7,  8,  7],
                                   14: [1500000, "9d6", 7,  3,  5,  7,  8,  7]
                                   }
-        self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+        # Level Divine Magic | 1 | 2 | 3 | 4 | 5
+        self.spells = {1:  [1, 0, 0, 0, 0],
+                       2:  [2, 0, 0, 0, 0],
+                       3:  [2, 1, 0, 0, 0],
+                       4:  [2, 2, 0, 0, 0],
+                       5:  [2, 2, 1, 1, 0],
+                       6:  [2, 2, 2, 1, 1],
+                       7:  [3, 3, 2, 2, 1],
+                       8:  [3, 3, 3, 2, 2],
+                       9:  [4, 4, 3, 3, 2],
+                       10: [4, 4, 4, 3, 3],
+                       11: [5, 5, 4, 4, 3],
+                       12: [5, 5, 5, 4, 4],
+                       13: [6, 5, 5, 5, 4],
+                       14: [6, 6, 5, 5, 5]
+                       }
+        self.special_skills_names = ["Niewrażliwość na urok", "Boska magia", "Używanie przedmiotów magicznych",
+                                     "Magiczne badania", "Odporność na energie", "Identyfikacja", "Języki",
+                                     "Przejście bez śladu", "Znajdowanie ścieżek ", "Zmiana kształtu"]
+        self.special_skills_description = ["Druidzi 7. poziomu i wyżej są odporni na uroki wróżek i stworzeń leśnych"
+                                           " (np. driad, rusałek)\n",
+                                           "Niełaska bóstwa: Druidzi muszą być wierni zasadom swojego usposobienia i"
+                                           " religii. Druidzi, którzy nie popadną w łaskę swojego bóstwa, mogą ponieść"
+                                           " kary Rzucanie czarów: Druid może modlić się o otrzymanie czarów z natury."
+                                           " Moc i liczba czarów dostępnych dla druida są określane przez poziom"
+                                           " doświadczenia postaci. Lista czarów dostępnych dla druidów znajduje"
+                                           " się na stronie 129. \n"
+                                           "Druid musi nieść/posiadać święty symbol bóstwa - gałązka jemioły,"
+                                           " którą postać musi zebrać\n",
+                                           "Jako rzucający czary, druidzi mogą używać magicznych zwojów czarów ze"
+                                           " swojej listy czarów. Mogą używać przedmiotów, których mogą używać jedynie"
+                                           " osoby rzucające czary boskie (np. niektóre magiczne kostury), Druidzi"
+                                           " nie mogą używać magicznych ksiąg ani tomów \n",
+                                           "Druid dowolnego poziomu może poświęcić czas i pieniądze na badania"
+                                           " magiczne. Pozwala im to tworzyć nowe zaklęcia lub inne magiczne efekty"
+                                           " związane z ich bóstwem. Kiedy druid osiągnie 9. poziom, może również"
+                                           " tworzyć magiczne przedmioty.\n",
+                                           "Druidzi zyskują premię +2 do rzutów obronnych przeciwko"
+                                           " elektryczności (błyskawicom) i ogniowi.\n",
+                                           "Druidzi mogą identyfikować wszystkie rośliny i zwierzęta oraz potrafi"
+                                           " rozpoznać/odróżnić czystą wodę\n",
+                                           "Druidzi mówią tajemnym językiem znanym tylko ich sekcie. Na każdym poziomie"
+                                           " powyżej 2 druid uczy się także języka używanego przez stworzenia"
+                                           " lasów Sylvan (np. driady, zielone smoki, chochliki, treanty)\n",
+                                           "Od 3 poziomu druid może przechodzić przez naturalne środowiska bez"
+                                           " pozostawiania śladów. Postać jest również w stanie poruszać się przez"
+                                           " zarośnięte obszary z normalną prędkością bez przeszkód.\n",
+                                           "W drużynie z druidem szansa na zgubienie się w lesie wynosi tylko 1 do 6\n",
+                                           "Na 7 poziomie druid zyskuje moc zmiany w formę gada, ptaka i ssaka"
+                                           " (raz dziennie każde). Zwierzę może mieć dowolny rozmiar, do około"
+                                           " dwukrotności wielkości normalnej formy druida. Jeśli druid stracił punkty"
+                                           " życia, odzyskuje 1k4 punktów życia na poziom po zmianie w zwierzę."
+                                           " Cały ekwipunek noszony przez druida zostaje wchłonięty do formy"
+                                           " zwierzęcia i pojawia się ponownie, gdy druid zmienia się z powrotem."]
 
         # Level | x | x | x | x | x
-        # | x | x | x
+        # | Charm Immunity | Divine Magic | Energy Resistance | Identification | Languages | Pass Without Trace |
+        # Path-finding | Shape Change
         self.special_skills = {1: [10, 10, 10, 10, 10],
                                2: [10, 10, 10, 10, 10],
                                3: [10, 10, 10, 10, 10],

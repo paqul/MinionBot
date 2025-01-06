@@ -23,13 +23,21 @@ from OSE.character_classes.Svirfneblin import Svirfneblin
 from OSE.character_classes.Thief import Thief
 
 #ZROBIC BIBLIOTEKE DO PDF MOZE?!
-dictionary_of_class_collection = {'acrobat': Acrobat, 'assassin': Assassin, 'barbarian': Barbarian,
-                                  'bard': Bard, 'cleric': Cleric, 'drow': Drow, 'druid': Druid,
-                                  'duergar': Duergar, 'dwarf': Dwarf, 'elf': Elf, 'fighter': Fighter,
-                                  'gnome': Gnome, 'halfelf': Halfelf, 'halfling': Halfling,
-                                  'halforc': Halforc, 'illusionist': Illusionist, 'knight': Knight,
-                                  'magicuser': MagicUser, 'paladin': Paladin, 'ranger': Ranger,
-                                  'svirfneblin': Svirfneblin, 'thief': Thief}
+# dictionary_of_class_collection = {'acrobat': Acrobat, 'assassin': Assassin, 'barbarian': Barbarian,
+#                                   'bard': Bard, 'cleric': Cleric, 'drow': Drow, 'druid': Druid,
+#                                   'duergar': Duergar, 'dwarf': Dwarf, 'elf': Elf, 'fighter': Fighter,
+#                                   'gnome': Gnome, 'halfelf': Halfelf, 'halfling': Halfling,
+#                                   'halforc': Halforc, 'illusionist': Illusionist, 'knight': Knight,
+#                                   'magicuser': MagicUser, 'paladin': Paladin, 'ranger': Ranger,
+#                                   'svirfneblin': Svirfneblin, 'thief': Thief}
+
+dictionary_of_class_collection = {'acrobat': Drow, 'assassin': Drow, 'barbarian': Drow,
+                                  'bard': Drow, 'cleric': Drow, 'drow': Drow, 'druid': Drow,
+                                  'duergar': Drow, 'dwarf': Drow, 'elf': Elf, 'fighter': Drow,
+                                  'gnome': Drow, 'halfelf': Drow, 'halfling': Drow,
+                                  'halforc': Drow, 'illusionist': Drow, 'knight': Drow,
+                                  'magicuser': Drow, 'paladin': Drow, 'ranger': Drow,
+                                  'svirfneblin': Drow, 'thief': Drow}
 
 
 def generate_hero(debug: bool = False):

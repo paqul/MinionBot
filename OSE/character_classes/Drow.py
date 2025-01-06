@@ -33,6 +33,7 @@ class Drow(object):
         self.prime_requisite = PrimeRequisite(self.WIS.value)
         self.max_lvl = 10
         self.languages = randomize_languages(self.INT.values_spoken_language)
+        self.languages.extend(["Deepcommon", "Elvish", "Gnomish", "the secret language of spiders"])
         self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
@@ -47,12 +48,52 @@ class Drow(object):
                                   9:  [400000, "9d6", 5,  8,  9,  9, 10,  8],
                                   10: [600000, "9d6", 7,  6,  7,  8,  8,  6],
                                   }
-        self.spells = None
-        self.special_skills_names = ["", "", "", "", "", "", "", ""]
-        self.special_skills_description = ["", "", "", "", "", "", "", ""]
+        # Level Divine Magic | 1 | 2 | 3 | 4 | 5
+        self.spells = {1:  [1, 0, 0, 0, 0],
+                       2:  [2, 0, 0, 0, 0],
+                       3:  [2, 1, 0, 0, 0],
+                       4:  [2, 2, 0, 0, 0],
+                       5:  [2, 2, 1, 0, 0],
+                       6:  [2, 2, 2, 1, 0],
+                       7:  [3, 3, 2, 2, 1],
+                       8:  [3, 3, 3, 2, 2],
+                       9:  [4, 4, 3, 3, 2],
+                       10: [4, 4, 4, 3, 3]
+                       }
+        self.special_skills_names = ["Wykrywanie sekretnych drzwi/przejść", "Boska magia",
+                                     "Używanie przedmiotów magicznych", "Magiczne badania",
+                                     "Niewrażliwość na paraliż ghoula", "Wrażliwość na światło",
+                                     "Nasłuchiwanie przy drzwiach", "Pajęcze powinowactwo"]
+        self.special_skills_description = ["Drowy mają bystre oczy, które pozwalają im podczas aktywnych poszukiwań"
+                                           " wykrywać ukryte i tajne drzwi z prawdopodobieństwem 2 na 6.\n",
+                                           "Niełaska bóstwa: Drowy muszą być wierni zasadom swojego usposobienia i"
+                                           " religii. Drowy, którzy nie popadną w łaskę swojego bóstwa, mogą ponieść"
+                                           " kary Rzucanie czarów: Drow może modlić się o otrzymanie zaklęć od swojego"
+                                           " bóstwa. Moc i liczba zaklęć dostępnych dla drowa są określane przez poziom"
+                                           " doświadczenia postaci. Drow rzuca czar z listy kleryków. Na 1. poziomie"
+                                           " drow może modlić się tylko o czar światła (ciemności), ale od 2. poziomu"
+                                           " postać może modlić się o dowolny czar z listy czarów. Drowy mogą również"
+                                           " modlić się o czar sieć z 3 poziomu użytkownika magii\n "
+                                           "Drow musi nieść/posiadać święty symbol bóstwa\n",
+                                           "Jako rzucający czary, drowy mogą używać magicznych zwojów czarów ze"
+                                           " swojej listy czarów. Mogą używać przedmiotów, których mogą używać jedynie"
+                                           " osoby rzucające czary boskie (np. niektóre magiczne kostury)\n",
+                                           "Drow dowolnego poziomu może poświęcić czas i pieniądze na badania"
+                                           " magiczne. Pozwala im to tworzyć nowe zaklęcia lub inne magiczne efekty"
+                                           " związane z ich bóstwem. Kiedy drow osiągnie 9. poziom, może również"
+                                           " tworzyć magiczne przedmioty.\n",
+                                           "Drowowie są całkowicie odporni na paraliż, który mogą wywołać ghule.\n",
+                                           "Drow ma infrawizje na 90 stóp\n",
+                                           "W jasnym świetle (światło dzienne, światło ciągłe) drowy otrzymują karę -2"
+                                           " do rzutów ataku i karę -1 do klasy pancerza.\n",
+                                           "Drowy mają 2 na 6 szans na usłyszenie dźwięków\n",
+                                           "Drow żyje obok wielu różnych gatunków pająków, w tym gigantycznych pająków."
+                                           " Potrafią mówić tajnym językiem pająków i zyskują premię +1 do rzutu"
+                                           " reakcji, gdy spotykają pająki"]
 
         # Level | x | x | x | x | x
-        # | x | x | x
+        # | Detect Secret Doors | Divine Magic | Immunity to Ghoul Paralysis | Infravision | Light Sensitivity |
+        # Listening at Door | Spider Affinity
         self.special_skills = {1: [10, 10, 10, 10, 10],
                                2: [10, 10, 10, 10, 10],
                                3: [10, 10, 10, 10, 10],
@@ -82,7 +123,7 @@ class Drow(object):
         self.initiative = self.DEX.initiative_modifier
         self.listen_at_door = "2-to-6"
         self.open_door = self.STR.values_open_in_doors
-        self.find_secret_door = "1-to-6"
+        self.find_secret_door = "2-to-6"
         self.find_room_trap = "1-to-6"
 
         self.gold = roll_dices("3d6")  # roll for gold pieces
@@ -99,3 +140,4 @@ class Drow(object):
                 # roll for hitpoints +/- mods
             else:
                 break
+
