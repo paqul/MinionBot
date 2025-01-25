@@ -33,7 +33,7 @@ class Druid(object):
         self.prime_requisite = PrimeRequisite(self.WIS.value)
         self.max_lvl = 14
         self.languages = randomize_languages(self.INT.values_spoken_language)
-        self.alignment = "Neutralny"
+        self.alignment = self.ALG
 
         #Level XP HD THAC0 D W P B S
         self.level_progression = {1:  [     0, "1d6", 0, 11, 12, 14, 16, 15],

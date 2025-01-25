@@ -33,7 +33,7 @@ from OSE.character_classes.Thief import Thief
 
 dictionary_of_class_collection = {'acrobat': Drow, 'assassin': Drow, 'barbarian': Drow,
                                   'bard': Drow, 'cleric': Drow, 'drow': Drow, 'druid': Drow,
-                                  'duergar': Drow, 'dwarf': Drow, 'elf': Elf, 'fighter': Drow,
+                                  'duergar': Drow, 'dwarf': Drow, 'elf': Drow, 'fighter': Drow,
                                   'gnome': Drow, 'halfelf': Drow, 'halfling': Drow,
                                   'halforc': Drow, 'illusionist': Drow, 'knight': Drow,
                                   'magicuser': Drow, 'paladin': Drow, 'ranger': Drow,
