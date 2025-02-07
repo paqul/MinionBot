@@ -18,7 +18,7 @@ import time
 key = token
 channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat",
-               "DELTA GREEN",
+               "DELTA GREEN", "Mothership", "Traveller",
                #DPS REQUIREMENT
                "Tajemnice Pętli", "Never going home", "Delta Green", "Słowianie", "Warhammer"]
                #END OF DPS REQUIREMENT
