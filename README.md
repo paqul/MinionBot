@@ -40,8 +40,8 @@ Once the bot is running and added to your Discord server, you can use the follow
 
 - Roll dice: XdY (e.g., 1d20, 3d6)
 - Roll with modifier: XdY+Z (e.g., 1d20+5)
-- Advantage roll (D&D 5e): XdYa (e.g., 1d20a, 1d20a+5)
-- Disadvantage roll (D&D 5e): XdYd (e.g., 1d20d, 1d20d+5)
+- Advantage roll (D&D 5e (d20) & Mothership (d100)): XdYa (e.g., 1d20a, 1d20a+5)
+- Disadvantage roll (D&D 5e (d20) & Mothership (d100)): XdYd (e.g., 1d20d, 1d20d+5)
 - Bonus die & double bonus die(Call of Cthulhu): XdYp (e.g., 1d100p, 1d100pp)
 - Penalty die & double penalty die (Call of Cthulhu): XdYk (e.g., 1d100k, 1d100kk)
 - Mork Borg special roll: Xd66 (e.g., 1d66)
