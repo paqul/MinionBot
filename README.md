@@ -1,11 +1,11 @@
-# Discord RPG Dice Bot a.k.a. **MinionBot**
+# Discord RPG Dice Bot aka **MinionBot**
 
 This Discord bot is designed to facilitate dice rolling for various tabletop role-playing games (RPGs). It supports a wide range of dice types and special rolling mechanics for games like Dungeons & Dragons, Call of Cthulhu, and Mork Borg.
 Currently it returns messages only in Polish language.
 
 ## Features
 
-- Standard dice rolling (d2, d3, d4, d6, d8, d10, d12, d16, d20, d24, d30, d66, d100, d1000)
+- Standard dice rolling (d2, d3, d4, d5, d6, d8, d10, d12, d16, d20, d24, d30, d66, d100, d1000)
 - Rolls with modifiers (e.g., 1d20+5)
 - Advantage/Disadvantage rolls for D&D 5e
 - Bonus/Penalty dice for Call of Cthulhu
@@ -40,8 +40,8 @@ Once the bot is running and added to your Discord server, you can use the follow
 
 - Roll dice: XdY (e.g., 1d20, 3d6)
 - Roll with modifier: XdY+Z (e.g., 1d20+5)
-- Advantage roll (D&D 5e): XdYa (e.g., 1d20a, 1d20a+5)
-- Disadvantage roll (D&D 5e): XdYd (e.g., 1d20d, 1d20d+5)
+- Advantage roll (D&D 5e (d20) & Mothership (d100): XdYa (e.g., 1d20a, 1d20a+5)
+- Disadvantage roll (D&D 5e (d20) & Mothership (d100): XdYd (e.g., 1d20d, 1d20d+5)
 - Bonus die & double bonus die(Call of Cthulhu): XdYp (e.g., 1d100p, 1d100pp)
 - Penalty die & double penalty die (Call of Cthulhu): XdYk (e.g., 1d100k, 1d100kk)
 - Mork Borg special roll: Xd66 (e.g., 1d66)
@@ -63,7 +63,7 @@ Supported dice types in rolls.py
 
 ## Contributing
 
-Contributions are welcome! If you plan to contribute back to this repo, please fork & create the PR against the dev branch.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
