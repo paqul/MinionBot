@@ -1,7 +1,7 @@
 from random import randint as r
 from members import sorted_authors
 
-dices = [2, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
+dices = [2, 4, 5, 6, 8, 10, 12, 16, 20, 100, 1000]
 penalty_bonus_dices = [100]
 apologize_message = "Bardzo mi przykro ale nie posiadam takiej kostki"
 
