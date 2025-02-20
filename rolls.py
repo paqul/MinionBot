@@ -1,7 +1,7 @@
 from random import randint as roll_dice
 from members import sorted_authors
 
-dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
+dices = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
 dnd_dis_advantage_dice = [20]
 apologize_message = (
