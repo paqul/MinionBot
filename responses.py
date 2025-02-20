@@ -87,7 +87,7 @@ def handle_response(msg, author, channel) -> TextIO:
 
     #Advantage/Disadvantage Roll Matching
     elif re.match(r'(\d+)[kd](20|100)([ad])(?:([\+\-\*\/])(.*))?', msg):
-        dnd5_ad_roll_pattern_match = re.match(r'(\d+)[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg)
+        dnd5_ad_roll_pattern_match = re.match(r'(\d+)[kd](20|100)([ad])(?:([\+\-\*\/])(.*))?', msg)
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         if amount_of_rolls > 9999:
             return max_amountofrolls_message
