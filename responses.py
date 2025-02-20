@@ -46,7 +46,7 @@ from OSE.general import *
 from OSE.ose_utility_functions import *
 
 list_of_dices = list(range(1, 100))
-dices = [2, 3, 4, 6, 8, 10, 12, 16, 20, 100, 1000]
+dices = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 100, 1000]
 
 
 def handle_response(msg, author, channel) -> TextIO:
