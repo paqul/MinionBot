@@ -14,8 +14,12 @@ import time
 # import audio
 
 key = token
-channels_on = ["sala_spotkań", "dział_techcznicny", "warhammer", "darkheresy", "gra", "gra-u-szadka", "dungeonsanddragons", "neuroshima", "zew", "rzuty-w-trakcie-sesji", "testy", "DD", "ZEW", "WARHAMMER", "GRA", "DCC", "OSE", "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat"]
-channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
+               "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat",
+               "DELTA GREEN", "Mothership", "Traveller",
+               #DPS REQUIREMENT
+               "Tajemnice Pętli", "Never going home", "Delta Green", "Słowianie", "Warhammer"]
+               #END OF DPS REQUIREMENTchannels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
 auto_test_task = None  # Define the auto_test_task variable globally
 
