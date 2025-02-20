@@ -18,7 +18,7 @@ help_response = (
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
     "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry.\n"
     "  Nie zapominaj o kolejności wykonywania działań. ;)\n"
-    "- Rzut Przewaga/Utrudnienie D&D 5e: ***1k20a*** lub ***1k20d***. Działa również z modyfikatorem.\n"
+    "- Rzut Przewaga/Utrudnienie D&D 5e(d20) i Mothership(d100): ***1k20a*** lub ***1k20d***. Działa również z modyfikatorem.\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***.\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
     "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności).\n"
@@ -86,7 +86,7 @@ def handle_response(msg, author, channel) -> TextIO:
         roll_response = roll_with_modifier(author, amount_of_rolls, dice, operator, equation)
 
     #Advantage/Disadvantage Roll Matching
-    elif re.match(r'(\d+)[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg):
+    elif re.match(r'(\d+)[kd](20|100)([ad])(?:([\+\-\*\/])(.*))?', msg):
         dnd5_ad_roll_pattern_match = re.match(r'(\d+)[kd](20)([ad])(?:([\+\-\*\/])(.*))?', msg)
         amount_of_rolls = int(dnd5_ad_roll_pattern_match.group(1))
         if amount_of_rolls > 9999:
