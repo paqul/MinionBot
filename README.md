@@ -5,7 +5,7 @@ Currently it returns messages only in Polish language.
 
 ## Features
 
-- Standard dice rolling (d2, d3, d4, d6, d8, d10, d12, d16, d20, d24, d30, d66, d100, d1000)
+- Standard dice rolling (d2, d3, d4, d5, d6, d8, d10, d12, d16, d20, d24, d30, d66, d100, d1000)
 - Rolls with modifiers (e.g., 1d20+5)
 - Advantage/Disadvantage rolls for D&D 5e
 - Bonus/Penalty dice for Call of Cthulhu
