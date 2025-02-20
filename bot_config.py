@@ -19,7 +19,8 @@ channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYK
                "DELTA GREEN", "Mothership", "Traveller",
                #DPS REQUIREMENT
                "Tajemnice Pętli", "Never going home", "Delta Green", "Słowianie", "Warhammer"]
-               #END OF DPS REQUIREMENTchannels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
+               #END OF DPS REQUIREMENT
+channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
 auto_test_task = None  # Define the auto_test_task variable globally
 
