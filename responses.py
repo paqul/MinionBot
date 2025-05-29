@@ -1,6 +1,6 @@
 from typing import TextIO
 
-from rolls import roll, sorted_roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices
+from rolls import roll, cop_roll, sorted_roll, bonus_penalty_callofcthulu_roll, dis_advantage_dnd_roll, roll_dnd_stat_block, roll_with_modifier,morkborg_roll , dices
 import sys, re
 
 sorted_channels = ["GRA", "CYKLE"]
@@ -113,6 +113,11 @@ def handle_response(msg, author, channel) -> TextIO:
             roll_response = bonus_penalty_callofcthulu_roll(author, amount_of_rolls, dice, bonus_or_penalty, twice)
         else:
             roll_response = None
+
+    #Regular Roll Pattern (Pattern to COP RPG game)
+    elif re.match(r'gl', msg):
+        regular_roll_pattern_match = re.match(r'gl', msg)
+        roll_response = cop_roll(author, 2)
 
     # Truncate if response exceeds character limit
     if roll_response and len(roll_response) > 1999:

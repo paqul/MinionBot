@@ -21,6 +21,8 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None,
     elif dice_type is not None:
         if bonus in ("p", "k"):
             return f"({author.mention} [k{dice}, *{dice_type}*]): **{rolls}**"
+        elif bonus == "gl":
+            return f"({author.mention} [k6]): **{rolls[0]}** vs [2k10]: **{rolls[1]}**, **{rolls[2]}** -> *{dice_type}*"
         else:
             # Default format for other cases of dice_type
             return f"({author.mention} [*{dice_type}*]): **{rolls}**"
@@ -146,3 +148,20 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     #format rolls for final response msg
     rolls = ", ".join(str(element) for element in list_of_internal_rolls)
     return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
+
+def cop_roll(author, amount_of_rolls: int) -> str:
+    bonus = "gl"
+    rolls = []
+    rolls1k6 = roll_dice(1, 6)
+    rolls2k10 = [roll_dice(1, 10) for _ in range(2)]
+    rolls.append(rolls1k6)
+    rolls.extend(rolls2k10)
+    if rolls1k6 > rolls2k10[0] and rolls1k6 > rolls2k10[1]:
+        dice_type = "Triumf"
+    elif rolls2k10[0] < rolls1k6 <= rolls2k10[1]:
+        dice_type = "Fuks - pierwszy"
+    elif rolls2k10[1] < rolls1k6 <= rolls2k10[0]:
+        dice_type = "Fuks - drugi"
+    else:
+        dice_type = "Skucha"
+    return format_response_msg(author, rolls, total_sum=None, dice=None, equation=None, bonus=bonus, dice_type=dice_type)
