@@ -154,6 +154,10 @@ async def auto_test(msg):
     # Send a final message indicating the completion of the auto test
     await msg.channel.send("statystyki_dnd")
     await asyncio.sleep(2.5)
+    await msg.channel.send("gl")
+    await asyncio.sleep(2.5)
+    await msg.channel.send("gl+3")
+    await asyncio.sleep(2.5)
     await msg.channel.send("help")
     await asyncio.sleep(2.5)
     await msg.channel.send("# ***Zakończono Autotest.***")
