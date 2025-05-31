@@ -15,6 +15,9 @@ def format_response_msg(author, rolls, total_sum=None, dice=None, equation=None,
         # If total sum exists and there is an equation - Rolls with modifiers
         if equation is not None:
             return f"({author.mention} k{dice}) | ***Wynik: {total_sum}***  | **Rzuty: {rolls}**"
+        # If bonus exist as "gl" to COP RPG game
+        elif bonus == "gl":
+            return f"({author.mention} [k6]): **{rolls[0]}** | **Wynik: {total_sum}** vs [2k10]: **{rolls[1]}**, **{rolls[2]}** -> *{dice_type}*"
         # If total sum exists and there is no equation - Rolls with modifiers
         else:
             return f"({author.mention} k{dice}) | ***Suma: {total_sum}***  | **Rzuty: {rolls}**"
@@ -149,19 +152,36 @@ def bonus_penalty_callofcthulu_roll(author: object, amount_of_rolls: int, dice: 
     rolls = ", ".join(str(element) for element in list_of_internal_rolls)
     return format_response_msg(author, rolls=rolls, dice=dice, dice_type=dice_type, bonus=bonus)
 
-def cop_roll(author, amount_of_rolls: int) -> str:
+def cop_roll(author, amount_of_rolls: int, operator, equation) -> str:
     bonus = "gl"
     rolls = []
-    rolls1k6 = roll_dice(1, 6)
-    rolls2k10 = [roll_dice(1, 10) for _ in range(2)]
-    rolls.append(rolls1k6)
-    rolls.extend(rolls2k10)
-    if rolls1k6 > rolls2k10[0] and rolls1k6 > rolls2k10[1]:
-        dice_type = "Triumf"
-    elif rolls2k10[0] < rolls1k6 <= rolls2k10[1]:
-        dice_type = "Fuks - pierwszy"
-    elif rolls2k10[1] < rolls1k6 <= rolls2k10[0]:
-        dice_type = "Fuks - drugi"
+    if amount_of_rolls is None:
+        rolls1k6 = roll_dice(1, 6)
+        total_sum = eval(f'{rolls1k6}{operator}{int(equation)}')
+        rolls2k10 = [roll_dice(1, 10) for _ in range(2)]
+        rolls.append(rolls1k6)
+        rolls.extend(rolls2k10)
+        if total_sum > rolls2k10[0] and total_sum > rolls2k10[1]:
+            dice_type = "Triumf"
+        elif rolls2k10[0] < total_sum <= rolls2k10[1]:
+            dice_type = "Fuks - pierwszy"
+        elif rolls2k10[1] < total_sum <= rolls2k10[0]:
+            dice_type = "Fuks - drugi"
+        else:
+            dice_type = "Skucha"
+        return format_response_msg(author, rolls, total_sum=total_sum, dice=None, equation=None, bonus=bonus, dice_type=dice_type)
     else:
-        dice_type = "Skucha"
-    return format_response_msg(author, rolls, total_sum=None, dice=None, equation=None, bonus=bonus, dice_type=dice_type)
+        rolls1k6 = roll_dice(1, 6)
+        rolls2k10 = [roll_dice(1, 10) for _ in range(2)]
+        rolls.append(rolls1k6)
+        rolls.extend(rolls2k10)
+        if rolls1k6 > rolls2k10[0] and rolls1k6 > rolls2k10[1]:
+            dice_type = "Triumf"
+        elif rolls2k10[0] < rolls1k6 <= rolls2k10[1]:
+            dice_type = "Fuks - pierwszy"
+        elif rolls2k10[1] < rolls1k6 <= rolls2k10[0]:
+            dice_type = "Fuks - drugi"
+        else:
+            dice_type = "Skucha"
+        return format_response_msg(author, rolls, total_sum=None, dice=None, equation=None, bonus=bonus,
+                                   dice_type=dice_type)

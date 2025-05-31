@@ -114,10 +114,17 @@ def handle_response(msg, author, channel) -> TextIO:
         else:
             roll_response = None
 
-    #Regular Roll Pattern (Pattern to COP RPG game)
+    #Cop RPG Game Roll Pattern with modifier
+    elif re.match(r'gl([\+\-\*\/])(.*)', msg):
+        regular_roll_pattern_match = re.match(r'gl([\+\-\*\/])(.*)', msg)
+        operator = regular_roll_pattern_match.group(1)
+        equation = regular_roll_pattern_match.group(2)
+        roll_response = cop_roll(author, None, operator, equation)
+
+    #Cop RPG Game Roll Pattern with modifier
     elif re.match(r'gl', msg):
         regular_roll_pattern_match = re.match(r'gl', msg)
-        roll_response = cop_roll(author, 2)
+        roll_response = cop_roll(author, True, None, None)
 
     # Truncate if response exceeds character limit
     if roll_response and len(roll_response) > 1999:
