@@ -158,6 +158,10 @@ def cop_roll(author, amount_of_rolls: int, operator, equation) -> str:
     if amount_of_rolls is None:
         rolls1k6 = roll_dice(1, 6)
         total_sum = eval(f'{rolls1k6}{operator}{int(equation)}')
+        if total_sum > 10:
+            total_sum = 10
+        elif total_sum < 1:
+            total_sum = 1
         rolls2k10 = [roll_dice(1, 10) for _ in range(2)]
         rolls.append(rolls1k6)
         rolls.extend(rolls2k10)
