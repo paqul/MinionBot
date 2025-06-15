@@ -25,6 +25,14 @@ token = "YOUR_DISCORD_BOT_TOKEN"
 4. Run the bot: 
 python main.py
 
+## Set up auto_wake_up bot after crash/disconnection/down
+
+1. On your linux server in /etc/systemd/system copy file MinionBot.service from linux_server folder
+2. Change "User" and "WorkingDirectory" according your will (e.g. User=user1, WorkingDirectory=/home/user1/MinionBot)
+3. In terminal use command systemctl enable Minionbot.service 
+4. In terminal use command systemctl start Minionbot.service
+5. After using this setup don't use point 4 from chapter "How to Deploy" because command "python main.py" is in file MinionBot.service.txt
+
 ## Structure Overview
 
 - `bot_config.py`: Sets up the Discord bot and handles message events.

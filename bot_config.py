@@ -18,10 +18,13 @@ import time
 key = token
 channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat",
-               "DELTA GREEN", "Mothership", "Traveller",
+               "DELTA GREEN", "Mothership", "Traveller", "cp", "dd",
                #DPS REQUIREMENT
-               "Tajemnice Pętli", "Never going home", "Delta Green", "Słowianie", "Warhammer"]
+               "Off", "Tomas_DPS", "Basia_DPS", "Mirko", "Inne", "Paqul", "Kot", "Stream", "dyskusje", "Coen"
                #END OF DPS REQUIREMENT
+               #COENCAVE REQUIREMENT
+               "Sesja-Coena", "Pogaduszki", "grane-w-gre"]
+               #END OF COENCAVE REQUIREMENT
 channels_on_test = ["sala_spotkań", "dział_techcznicny", "general"]
 bot_self_mention_string = ""
 auto_test_task = None  # Define the auto_test_task variable globally

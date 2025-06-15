@@ -1,0 +1,20 @@
+[Unit]
+Description=MinionStart service
+After=network.target
+Before=shutdown.target
+
+[Service]
+ExecStart=python main.py
+ExecStop=/bin/kill -s QUIT $MAINPID
+WorkingDirectory=/home/minion/MinionBotProd
+Restart=on-failure
+RemainAfterExit=no
+User=minion
+StandardOutput=journal
+StandardError=journal
+TimeoutStartSec=60
+KillMode=process
+Singleton=true
+
+[Install]
+WantedBy=multi-user.target
