@@ -22,8 +22,25 @@ pip install discord.py
 ```python
 token = "YOUR_DISCORD_BOT_TOKEN"
 ```
-4. Run the bot: 
+4. Run the bot manually: 
 python main.py
+5. (Optional) Setup a service so your bot will automatically start with the machine and restart on crash. For Instructions refer to next section
+
+## Setting Up Auto-Restart with systemd (Linux)
+
+To ensure MinionBot automatically restarts after a reboot, crash, disconnection, or downtime, follow these steps:
+
+1. Copy the `MinionBot.service` file from the `linux_server` folder to `/etc/systemd/system` on your Linux server.
+2. Edit the `MinionBot.service` file and update the `User` and `WorkingDirectory` fields to match your setup (e.g., `User=user1`, `WorkingDirectory=/home/user1/MinionBot`).
+3. Enable the service by running:
+   ```
+   sudo systemctl enable MinionBot.service
+   ```
+4. Start the service with:
+   ```
+   sudo systemctl start MinionBot.service
+   ```
+5. **Note:** After setting up systemd, do not manually run `python main.py` as described in the "How to Deploy" section. The systemd service will handle starting the bot.
 
 ## Structure Overview
 
