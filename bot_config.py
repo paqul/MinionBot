@@ -3,17 +3,45 @@
 import discord
 from discord.ext import tasks, commands
 import responses
-import members
 from params import token
 import asyncio
 import sys
 import time
+from pathlib import Path
+
+from admin_commands import handle_admin_mention_command
+from autotest import build_summary_message, run_legacy_autotest, run_summary_autotest
 from channels_whitelist import channels_on, channels_on_test
+from whitelist_storage import ChannelWhitelistStore
+
 key = token
 channels_on = channels_on #Imports Withelist from channels_whitelist.py
 channels_on_test = channels_on_test #Imports Withelist on test from channels_whitelist.py
 bot_self_mention_string = ""
 auto_test_task = None  # Define the auto_test_task variable globally
+
+# Hardcoded user IDs allowed to modify channel whitelist through mention commands.
+ALLOWED_ADMIN_USER_IDS = {
+    608017745346560000,
+    179152462232551424,
+}
+
+whitelist_store = ChannelWhitelistStore(
+    Path(__file__).resolve().parent / "config" / "channel_whitelist.json",
+    channels_on,
+)
+
+
+def _extract_mention_body(message_content: str, bot_user_id: int) -> str | None:
+    prefixes = (f"<@{bot_user_id}>", f"<@!{bot_user_id}>")
+    for prefix in prefixes:
+        if message_content.startswith(prefix):
+            return message_content[len(prefix):].strip()
+    return None
+
+
+def _is_admin_user(user_id: int) -> bool:
+    return user_id in ALLOWED_ADMIN_USER_IDS
 
 # msg.author - uzytkownik ktory pisze do bota
 # msg.content - zawartosc wiadomosci np "Hej to ja"
@@ -36,23 +64,58 @@ def setup_bot():
     @client.event
     async def on_message(msg):
         global auto_test_task
+        if msg.author == client.user:
+            return
+
         # if msg.author == client.user or msg.author == "@MinonBot":
         # return
         print(
             f"{msg.author} powiedzial '{msg.content}' ({msg.channel}) || {client.user} "
         )
-        if msg.content == bot_self_mention_string + " autotest":
-            # Cancel the existing autotest task, if any running to avoid parallelization
-            if auto_test_task and not auto_test_task.done():
-                auto_test_task.cancel()
-            # Create an asyncio task and invoke autotest func
-            auto_test_task = asyncio.create_task(auto_test(msg))
+        mention_body = _extract_mention_body(msg.content, client.user.id)
+
+        if mention_body and mention_body.lower().startswith("autotest"):
+            if not _is_admin_user(msg.author.id):
+                await msg.channel.send("Nie masz uprawnien do uruchamiania autotestu.")
+                return
+
+            mode = "summary"
+            parts = mention_body.split(maxsplit=1)
+            if len(parts) > 1:
+                requested_mode = parts[1].strip().lower()
+                if requested_mode in {"legacy", "summary"}:
+                    mode = requested_mode
+
+            if mode == "legacy":
+                if auto_test_task and not auto_test_task.done():
+                    auto_test_task.cancel()
+                auto_test_task = asyncio.create_task(run_legacy_autotest(msg))
+                return
+
+            results, duration = run_summary_autotest(msg.author)
+            await msg.channel.send(build_summary_message(results, duration))
+            return
+
         # Cancel the auto_test task if stop msg received
-        elif msg.content == bot_self_mention_string + " stop":
+        elif mention_body and mention_body.lower() == "stop":
+            if not _is_admin_user(msg.author.id):
+                await msg.channel.send("Nie masz uprawnien do zatrzymania autotestu.")
+                return
+
             await msg.channel.send("# ***Przerywam Autotest.***")
             if auto_test_task and not auto_test_task.done():
                 auto_test_task.cancel()
         else:
+            admin_command_response = handle_admin_mention_command(
+                msg,
+                client.user.id,
+                ALLOWED_ADMIN_USER_IDS,
+                whitelist_store,
+            )
+            if admin_command_response:
+                await msg.channel.send(admin_command_response)
+                return
+
             await send_msg(msg, msg.content, bot_self_mention_string, private=False)
 
     client.run(token)
@@ -71,11 +134,11 @@ async def send_msg(msg, user_msg, bot_self_mention_string, private):
     # print(msg.channel.name)
     # print(msg)
     # print(msg.channel)
-    if msg.channel.name in channels_on:
+    if whitelist_store.is_allowed(msg.channel.id, msg.channel.name):
         if msg.content.startswith(bot_self_mention_string):
             try:
                 resp_name = responses.handle_name_response(
-                    user_msg, bot_self_mention_string
+                    user_msg, bot_self_mention_string, msg.author
                 )
                 if resp_name:
                     await msg.channel.send(resp_name)
@@ -92,54 +155,6 @@ async def send_msg(msg, user_msg, bot_self_mention_string, private):
                     )
             except Exception as E:
                 print(E)
-
-
-async def auto_test(msg):
-    # Predefined lists of amount of rolls and dice
-    rolls = [1, 10, 1000, 99999]  # Example rolls
-    dice = [
-        "2",
-        "3",
-        "4",
-        "6",
-        "8",
-        "10",
-        "11",
-        "12",
-        "16",
-        "20",
-        "24",
-        "30",
-        "66",
-        "100",
-        "1000",
-        "20a",
-        "20d",
-        "100kk",
-        "100pp",
-        "100kp",
-        "100pk",
-        "100k",
-        "100p",
-        "20*2",
-        "20+2",
-        "20-2",
-        "10+2+2+5-3*2",
-        "20a+100",
-        "20d+100",
-    ]  # Example dice
-    # Iterate through the lists
-    for roll in rolls:
-        for die in dice:
-            await msg.channel.send(f"{roll}d{die}")
-            # Delay to avoid rate limiting by Discord
-            await asyncio.sleep(2.5)
-    # Send a final message indicating the completion of the auto test
-    await msg.channel.send("statystyki_dnd")
-    await asyncio.sleep(2.5)
-    await msg.channel.send("help")
-    await asyncio.sleep(2.5)
-    await msg.channel.send("# ***Zakończono Autotest.***")
 
 
 # asyncio.run(debug_console())

@@ -12,6 +12,7 @@ Currently it returns messages only in Polish language.
 - Special d66 roll for Mork Borg
 - D&D stat block generation
 - Auto-test functionality
+- Dynamic channel whitelist updates via mention command (authorized users [by user id] only Friik, Paqul)
 
 ## How to Deploy
 
@@ -49,7 +50,9 @@ To ensure MinionBot automatically restarts after a reboot, crash, disconnection,
 - `rolls.py`: Contains the logic for various dice rolling functions and formatting response messages.
 - `roles.py`: Handles role assignments for new members (customizable).
 
-The bot also includes an auto-test feature that can be triggered with the command `@BotName autotest`. This runs through a series of predefined rolls to ensure all functionalities are working correctly.
+The bot also includes an auto-test feature for admins from the hardcoded user ID list.
+Use `@BotName autotest` (or `@BotName autotest summary`) to run dynamic tests and get one summary message.
+Use `@BotName autotest legacy` to iterate through test commands on Discord chat like before.
 
 ## How to Use
 
@@ -64,6 +67,10 @@ Once the bot is running and added to your Discord server, you can use the follow
 - Mork Borg special roll: Xd66 (e.g., 1d66)
 - Generate D&D stat block: statystyki_dnd
 - Get help: help
+- Add channel to whitelist (admin only): @BotName Add_Channel <channel_name> or @BotName Add_Channel #channel
+- Run admin autotest summary: @BotName autotest or @BotName autotest summary
+- Run admin autotest legacy mode: @BotName autotest legacy
+- Stop legacy autotest (admin only): @BotName stop
 
 Replace X with the number of dice, Y with the type of die, and Z with the modifier value.
 How It Works
@@ -77,6 +84,24 @@ You can customize the bot by modifying the following:
 Allowed channels in bot_config.py
 Role assignments in roles.py
 Supported dice types in rolls.py
+
+### Whitelist Admin Users (hardcoded)
+
+Users allowed to add channels from Discord messages are configured in bot_config.py:
+
+ALLOWED_ADMIN_USER_IDS = {
+   111111111111111111,
+}
+
+Replace the placeholder with real Discord user IDs.
+
+### Dynamic Whitelist Storage
+
+The bot stores whitelist state in:
+
+config/channel_whitelist.json
+
+On first run, the file is created and seeded with values from channels_whitelist.py.
 
 ## Contributing
 
