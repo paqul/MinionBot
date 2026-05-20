@@ -10,6 +10,7 @@ Currently it returns messages only in Polish language.
 - Advantage/Disadvantage rolls for D&D 5e
 - Bonus/Penalty dice for Call of Cthulhu
 - Special d66 roll for Mork Borg
+- COP RPG rolls (gl command with optional modifiers)
 - D&D stat block generation
 - Auto-test functionality
 - Dynamic channel whitelist updates via mention command (authorized users [by user id] only Friik, Paqul)

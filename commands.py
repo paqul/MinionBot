@@ -10,6 +10,7 @@ from rolls import (
     max_amountofrolls_message,
     morkborg_roll,
     bonus_penalty_callofcthulu_roll,
+    cop_roll,
     roll_regular,
     roll_with_modifier,
     roll_dnd_stat_block,
@@ -101,12 +102,22 @@ class DndStatBlockCommand(RollCommand):
         return roll_dnd_stat_block(author_mention)
 
 
+class CopRollCommand(RollCommand):
+    pattern = re.compile(r"^gl(?:([\+\-\*\/])(.*))? *$")
+
+    def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
+        operator = match.group(1) if match.group(1) else None
+        equation = match.group(2) if match.group(2) else None
+        return cop_roll(author_mention, author_name, True, operator, equation)
+
+
 class CommandRegistry:
     def __init__(self) -> None:
         self.commands = [
             MorkborgRollCommand(),
             AdvantageDisadvantageRollCommand(),
             CallOfCthulhuRollCommand(),
+            CopRollCommand(),
             ModifierRollCommand(),
             RegularRollCommand(),
             DndStatBlockCommand(),
@@ -121,3 +132,4 @@ class CommandRegistry:
                 except ValueError:
                     return None
         return None
+

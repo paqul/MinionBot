@@ -22,7 +22,7 @@ apologize_message = (
 )
 
 sorry_response = (
-    "Proszę o wybaczenie, ale nie posiadam takiej funkcji. Moje możliwości są ograniczone, przepraszam.\n"
+    "Proszę o wybaczenie, ale nie posiadam takiej funkcji.\n"
     "Po więcej informacji i pomoc, napisz komendę ***help***."
 )
 
@@ -38,13 +38,14 @@ help_response = (
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***.\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
     "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności).\n"
+    "- Rzut Glina: ***gl*** (1d6 vs 2d10) lub z modyfikatorem ***gl+2, gl-3*** itp. Wyniki: Triumf, Fuks, Skucha.\n"
     "- Rzut na zestaw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy.\n"
     "  Przerzuca cały zestaw jeżeli suma modyfikatorów wynosi 0 lub gdy najwyższy rzut to 13\n"
     "- Pomoc: komenda ***help***."
 )
 
 character_limit_response = (
-    "- Przepraszam ale wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została usunięta.\n"
+    "- Przepraszam, wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została przycięta.\n"
     "Spróbuj zmniejszyć ilość rzutów." + "**"
 )
 
@@ -249,6 +250,56 @@ def roll_dnd_stat_block(author_mention: str) -> RollResult:
         author_mention=author_mention,
         rolls=rolls,
         dice_type="Rzuty na statystyki D&D",
+    )
+
+
+def cop_roll(
+    author_mention: str,
+    author_name: str,
+    amount_of_rolls: bool,
+    operator: Optional[str],
+    equation: Optional[str],
+) -> RollResult:
+    """
+    COP RPG Roll: 1d6 base (with optional modifier) vs 2d10
+    Outcomes: Triumf (success), Fuks (critical), Skucha (failure)
+    """
+    rolls = []
+    
+    d6_base = r(1, 6)
+    
+    # Apply modifier if provided
+    if operator and equation:
+        try:
+            d6_modified = safe_eval(f"{d6_base}{operator}{equation}")
+            # Clamp to [1, 10]
+            d6_modified = max(1, min(10, int(d6_modified)))
+        except ValueError:
+            return RollResult(author_mention=author_mention, rolls="", error="Niepoprawny modyfikator")
+    else:
+        d6_modified = d6_base
+    
+    # Roll 2d10
+    d10_rolls = [r(1, 10), r(1, 10)]
+    
+    rolls.append(d6_modified)
+    rolls.extend(d10_rolls)
+    
+    # Determine outcome
+    if d6_modified > d10_rolls[0] and d6_modified > d10_rolls[1]:
+        dice_type = "Triumf"
+    elif d10_rolls[0] < d6_modified <= d10_rolls[1]:
+        dice_type = "Fuks - pierwszy"
+    elif d10_rolls[1] < d6_modified <= d10_rolls[0]:
+        dice_type = "Fuks - drugi"
+    else:
+        dice_type = "Skucha"
+    
+    return RollResult(
+        author_mention=author_mention,
+        rolls=rolls,
+        dice_type=dice_type,
+        bonus="gl",
     )
 
 
