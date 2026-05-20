@@ -1,4 +1,4 @@
-# link_bot = https://discord.com/api/oauth2/authorize?client_id=1055576642254286938&permissions=3287864568646&scope=bot
+# link_bot = https://discord.com/oauth2/authorize?client_id=516283630088093696&permissions=277025613824&integration_type=0&scope=bot
 
 import discord
 from discord.ext import tasks, commands
