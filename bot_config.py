@@ -79,11 +79,11 @@ def setup_bot():
                 await msg.channel.send("Nie masz uprawnien do uruchamiania autotestu.")
                 return
 
-            mode = "summary"
+            mode = "legacy"
             parts = mention_body.split(maxsplit=1)
             if len(parts) > 1:
                 requested_mode = parts[1].strip().lower()
-                if requested_mode in {"legacy", "summary"}:
+                if requested_mode == "summary":
                     mode = requested_mode
 
             if mode == "legacy":
