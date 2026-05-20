@@ -66,6 +66,7 @@ Once the bot is running and added to your Discord server, you can use the follow
 - Bonus die & double bonus die(Call of Cthulhu): XdYp (e.g., 1d100p, 1d100pp)
 - Penalty die & double penalty die (Call of Cthulhu): XdYk (e.g., 1d100k, 1d100kk)
 - Mork Borg special roll: Xd66 (e.g., 1d66)
+- COP RPG roll: gl (e.g., gl, gl+5, gl-3) - rolls 1d6 vs 2d10 with optional modifier
 - Generate D&D stat block: statystyki_dnd
 - Get help: help
 - Add channel to whitelist (admin only): @BotName Add_Channel <channel_name> or @BotName Add_Channel #channel
@@ -82,19 +83,19 @@ Key components:
 
 You can customize the bot by modifying the following:
 
-Allowed channels in bot_config.py
-Role assignments in roles.py
-Supported dice types in rolls.py
+- Allowed channels in config\channel_whitelist.json
+- Supported dice types in rolls.py
 
 ### Whitelist Admin Users (hardcoded)
 
 Users allowed to add channels from Discord messages are configured in bot_config.py:
 
+```python
 ALLOWED_ADMIN_USER_IDS = {
    111111111111111111,
 }
-
-Replace the placeholder with real Discord user IDs.
+```
+Replace the current values with your preferred Discord user IDs.
 
 ### Dynamic Whitelist Storage
 
