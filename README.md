@@ -32,7 +32,7 @@ python main.py
 
 To ensure MinionBot automatically restarts after a reboot, crash, disconnection, or downtime, follow these steps:
 
-1. Copy the `MinionBot.service` file from the `linux_server` folder to `/etc/systemd/system` on your Linux server.
+1. Copy the `MinionBot.service` file from the `linux_server` folder to `/etc/systemd/system` on your Linux machine.
 2. Edit the `MinionBot.service` file and update the `User` and `WorkingDirectory` fields to match your setup (e.g., `User=user1`, `WorkingDirectory=/home/user1/MinionBot`).
 3. Enable the service by running:
    ```
@@ -52,7 +52,7 @@ To ensure MinionBot automatically restarts after a reboot, crash, disconnection,
 - `roles.py`: Handles role assignments for new members (customizable).
 
 The bot also includes an auto-test feature for admins from the hardcoded user ID list.
-Use `@BotName autotest` (or `@BotName autotest summary`) to run dynamic tests and get one summary message.
+Use `@BotName autotest summary` to run dynamic tests and get one summary message.
 Use `@BotName autotest legacy` to iterate through test commands on Discord chat like before.
 
 ## How to Use
@@ -69,15 +69,14 @@ Once the bot is running and added to your Discord server, you can use the follow
 - COP RPG roll: gl (e.g., gl, gl+5, gl-3) - rolls 1d6 vs 2d10 with optional modifier
 - Generate D&D stat block: statystyki_dnd
 - Get help: help
-- Add channel to whitelist (admin only): @BotName Add_Channel <channel_name> or @BotName Add_Channel #channel
-- Run admin autotest summary: @BotName autotest or @BotName autotest summary
-- Run admin autotest legacy mode: @BotName autotest legacy
-- Stop legacy autotest (admin only): @BotName stop
+- Add channel to whitelist (admin only): **@BotName** Add_Channel <channel_name> or **@BotName** Add_Channel #channel
+- Run admin autotest summary: **@BotName** autotest summary
+- Run admin autotest legacy mode with all rolls visible in the chat: **@BotName** autotest 
+- Stop legacy autotest (admin only): **@BotName** stop
 
 Replace X with the number of dice, Y with the type of die, and Z with the modifier value.
 How It Works
 The bot listens for messages in specified channels. When it receives a valid command, it processes the request and returns the result of the dice roll(s). The bot uses regular expressions to parse commands and determine which type of roll to perform.
-Key components:
 
 ## Customization
 
