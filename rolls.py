@@ -266,9 +266,9 @@ def cop_roll(
     Outcomes: Triumf (success), Fuks (critical), Skucha (failure)
     """
     rolls = []
-    
+
     d6_base = r(1, 6)
-    
+
     # Apply modifier if provided
     if operator and equation:
         try:
@@ -279,13 +279,13 @@ def cop_roll(
             return RollResult(author_mention=author_mention, rolls="", error="Niepoprawny modyfikator")
     else:
         d6_modified = d6_base
-    
+
     # Roll 2d10
     d10_rolls = [r(1, 10), r(1, 10)]
-    
+
     rolls.append(d6_modified)
     rolls.extend(d10_rolls)
-    
+
     # Determine outcome
     if d6_modified > d10_rolls[0] and d6_modified > d10_rolls[1]:
         dice_type = "Triumf"
@@ -295,7 +295,7 @@ def cop_roll(
         dice_type = "Fuks - drugi"
     else:
         dice_type = "Skucha"
-    
+
     return RollResult(
         author_mention=author_mention,
         rolls=rolls,
