@@ -11,6 +11,7 @@ from rolls import (
     morkborg_roll,
     bonus_penalty_callofcthulu_roll,
     cop_roll,
+    dagger_heart_roll,
     roll_regular,
     roll_with_modifier,
     roll_dnd_stat_block,
@@ -110,6 +111,14 @@ class CopRollCommand(RollCommand):
         equation = match.group(2) if match.group(2) else None
         return cop_roll(author_mention, author_name, True, operator, equation)
 
+class DaggerHeartRollCommand(RollCommand):
+    pattern = re.compile(r"^dh(?:([\+\-\*\/])(.*))? *$")
+
+    def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
+        operator = match.group(1) if match.group(1) else None
+        equation = match.group(2) if match.group(2) else None
+        return dagger_heart_roll(author_mention, author_name, True, operator, equation)
+
 
 class CommandRegistry:
     def __init__(self) -> None:
@@ -118,6 +127,7 @@ class CommandRegistry:
             AdvantageDisadvantageRollCommand(),
             CallOfCthulhuRollCommand(),
             CopRollCommand(),
+            DaggerHeartRollCommand(),
             ModifierRollCommand(),
             RegularRollCommand(),
             DndStatBlockCommand(),

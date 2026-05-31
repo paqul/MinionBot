@@ -14,6 +14,7 @@ from commands import (
     ModifierRollCommand,
     MorkborgRollCommand,
     RegularRollCommand,
+    DaggerHeartRollCommand
 )
 from rolls import sorry_response
 
@@ -52,6 +53,11 @@ def build_dynamic_test_cases() -> list[AutoTestCase]:
             AutoTestCase("cop_basic", "gl"),
             AutoTestCase("cop_modifier_plus", "gl+5"),
             AutoTestCase("cop_modifier_minus", "gl-3"),
+        ],
+        DaggerHeartRollCommand.__name__: [
+            AutoTestCase("daggerheart_basic", "dh"),
+            AutoTestCase("daggerheart_modifier_plus", "dh+3"),
+            AutoTestCase("daggerheart_modifier_expression", "dh+2-1"),
         ],
         ModifierRollCommand.__name__: [AutoTestCase("modifier", "2d20+2-5+3*2")],
         RegularRollCommand.__name__: [AutoTestCase("regular", "3d6")],

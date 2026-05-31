@@ -39,6 +39,7 @@ help_response = (
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
     "- Rzut Specjalny k66 Mork Borg: ***1k66*** (rzut 2k6 gdzie jedna kość to dziesiątki a druga jedności).\n"
     "- Rzut Glina: ***gl*** (1d6 vs 2d10) lub z modyfikatorem ***gl+2, gl-3*** itp. Wyniki: Triumf, Fuks, Skucha.\n"
+    "- Rzut DaggerHeart: ***dh*** (2k12 Hope/Fear), z modyfikatorem np. dh+2; Dublet na obu kościach = Krytyk.\n"
     "- Rzut na zestaw Statystyk D&D 3e & 5e: ***statystyki_dnd*** - generuje 6 rzutów wg zasady 4k6, odrzucająć najniższy.\n"
     "  Przerzuca cały zestaw jeżeli suma modyfikatorów wynosi 0 lub gdy najwyższy rzut to 13\n"
     "- Pomoc: komenda ***help***."
@@ -347,4 +348,45 @@ def bonus_penalty_callofcthulu_roll(
         dice=dice,
         dice_type=dice_type,
         bonus=bonus,
+    )
+
+
+def dagger_heart_roll(
+    author_mention: str,
+    author_name: str,
+    amount_of_rolls: bool,
+    operator: Optional[str],
+    equation: Optional[str],
+) -> RollResult:
+    """
+    Daggerheart: 2d12 (Hope i Fear), wynik = suma.
+    - Hope > Fear -> Hope
+    - Fear > Hope -> Fear
+    - Hope == Fear -> Krytyk
+    Opcjonalny modyfikator działa na sumę.
+    """
+    hope = r(1, 12)
+    fear = r(1, 12)
+    total = hope + fear
+
+    if operator and equation:
+        try:
+            total = safe_eval(f"{total}{operator}{equation}")
+        except ValueError:
+            return RollResult(author_mention=author_mention, rolls="", error="Niepoprawny modyfikator")
+
+    if hope == fear:
+        dice_type = "Krytyk"
+    elif hope > fear:
+        dice_type = "Hope"
+    else:
+        dice_type = "Fear"
+
+    return RollResult(
+        author_mention=author_mention,
+        rolls=f"Hope: {hope}, Fear: {fear}",
+        total=total,
+        dice_type=dice_type,
+        bonus="dh",
+        equation=equation if operator and equation else None,
     )
