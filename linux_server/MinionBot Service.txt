@@ -7,6 +7,7 @@ Before=shutdown.target
 ExecStart=python main.py
 ExecStop=/bin/kill -s QUIT $MAINPID
 WorkingDirectory=/home/minion/MinionBotProd
+EnvironmentFile=/home/minion/MinionBotProd/.env
 Restart=on-failure
 RemainAfterExit=no
 User=minion
