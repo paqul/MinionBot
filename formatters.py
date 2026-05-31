@@ -22,8 +22,8 @@ def format_roll_result(result: RollResult) -> str:
     if result.total is not None:
         total_value = _format_number(result.total)
         if result.equation is not None:
-            return f"({result.author_mention} k{result.dice}) | ***Wynik: {total_value}***  | **Rzuty: {result.rolls}**"
-        return f"({result.author_mention} k{result.dice}) | ***Suma: {total_value}***  | **Rzuty: {result.rolls}**"
+            return f"({result.author_mention} k{result.dice}) | ***Wynik:*** __***{total_value}***__  | **Rzuty: {result.rolls}**"
+        return f"({result.author_mention} k{result.dice}) | ***Suma:*** __***{total_value}***__  | **Rzuty: {result.rolls}**"
 
     if result.dice_type is not None:
         if result.bonus in ("p", "k"):
