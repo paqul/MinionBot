@@ -46,7 +46,7 @@ help_response = (
 )
 
 character_limit_response = (
-    "- Przepraszam, wynik przekroczył dozwolony limit znaków w wiadomości Discord, więc część rzutów została przycięta.\n"
+    "**- Wynik przekroczył dozwolony limit znaków w wiadomości Discord, część rzutów została przycięta.\n"
     "Spróbuj zmniejszyć ilość rzutów." + "**"
 )
 
@@ -193,7 +193,10 @@ def dis_advantage_dnd_roll(
     for sublist in evaluated_rolls:
         sublist.sort(reverse=(bonus == "a"))
 
-    rolls_text = ", ".join(str(sublist) for sublist in evaluated_rolls)
+    rolls_text = ", ".join(
+        f"[__**{sublist[0]}**__, {', '.join(str(x) for x in sublist[1:])}]"
+        for sublist in evaluated_rolls
+    )
     return RollResult(
         author_mention=author_mention,
         rolls=rolls_text,

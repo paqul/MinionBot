@@ -16,7 +16,7 @@ from commands import (
     RegularRollCommand,
     DaggerHeartRollCommand
 )
-from rolls import sorry_response
+from rolls import apologize_message, sorry_response
 
 
 @dataclass
@@ -24,6 +24,7 @@ class AutoTestCase:
     label: str
     command: str
     expect_sorry: bool = False
+    expect_apologize: bool = False
 
 
 @dataclass
@@ -76,6 +77,12 @@ def build_dynamic_test_cases() -> list[AutoTestCase]:
             AutoTestCase("advantage_invalid_dice", "1d6a", expect_sorry=True),
             AutoTestCase("disadvantage_invalid_dice", "1d12d", expect_sorry=True),
             AutoTestCase("advantage_modifier_invalid", "1d8a+5", expect_sorry=True),
+            AutoTestCase("regular_invalid_dice", "1d11", expect_apologize=True),
+            AutoTestCase("coc_invalid_dice_p", "1d20p", expect_apologize=True),
+            AutoTestCase("coc_invalid_dice_k", "1d20k", expect_apologize=True),
+            AutoTestCase("coc_invalid_double_small_dice", "1d6pp", expect_apologize=True),
+            AutoTestCase("coc_mixed_bonus_penalty", "1d100kp", expect_sorry=True),
+            AutoTestCase("coc_mixed_penalty_bonus", "1d100pk", expect_sorry=True),
         ]
     )
     return tests
@@ -101,14 +108,30 @@ def _run_single_test_case(test_case: AutoTestCase, author) -> AutoTestResult:
         )
 
     got_sorry = response == sorry_response
-    if got_sorry != test_case.expect_sorry:
-        expected_text = "oczekiwano sorry_response" if test_case.expect_sorry else "oczekiwano poprawnej odpowiedzi"
+    got_apologize = response == apologize_message
+
+    if test_case.expect_sorry and not got_sorry:
         got_text = "otrzymano sorry_response" if got_sorry else "otrzymano odpowiedz"
         return AutoTestResult(
             label=test_case.label,
             command=test_case.command,
             passed=False,
-            details=f"{expected_text}, {got_text}",
+            details=f"oczekiwano sorry_response, {got_text}",
+        )
+    if test_case.expect_apologize and not got_apologize:
+        return AutoTestResult(
+            label=test_case.label,
+            command=test_case.command,
+            passed=False,
+            details=f"oczekiwano apologize_message, otrzymano: {response[:60]!r}",
+        )
+    if not test_case.expect_sorry and not test_case.expect_apologize and (got_sorry or got_apologize):
+        got_text = "sorry_response" if got_sorry else "apologize_message"
+        return AutoTestResult(
+            label=test_case.label,
+            command=test_case.command,
+            passed=False,
+            details=f"oczekiwano poprawnej odpowiedzi, otrzymano {got_text}",
         )
 
     return AutoTestResult(
@@ -153,77 +176,90 @@ def build_summary_message(results: list[AutoTestResult], duration_seconds: float
     return "\n".join(lines)
 
 
-async def run_legacy_autotest(msg) -> None:
-    rolls = [1, 10, 1000, 99999]
-    dice = [
-        "2",
-        "3",
-        "4",
-        "6",
-        "8",
-        "10",
-        "11",
-        "12",
-        "16",
-        "20",
-        "24",
-        "30",
-        "66",
-        "100",
-        "1000",
-        "20a",
-        "20d",
-        "100a",
-        "100d",
-        "100kk",
-        "100pp",
-        "100kp",
-        "100pk",
-        "100k",
-        "100p",
-        "20*2",
-        "20+2",
-        "20-2",
-        "10+2+2+5-3*2",
-        "20a+100",
-        "20d+100",
-    ]
-
-    await msg.channel.send("# ***Startuje Autotest Legacy.***")
-    for roll in rolls:
-        for die in dice:
-            command = f"{roll}d{die}"
-            await msg.channel.send(command)
-            response = responses.handle_response(command, msg.author, msg.author.id)
-            if response:
-                await msg.channel.send(response)
-            await asyncio.sleep(1.0)
-
-    for command in ["statystyki_dnd", "help"]:
+async def _send_commands(msg, commands: list[str]) -> None:
+    for command in commands:
         await msg.channel.send(command)
         response = responses.handle_response(command, msg.author, msg.author.id)
         if response:
             await msg.channel.send(response)
         await asyncio.sleep(1.0)
 
-    # Test COP RPG rolls
-    await msg.channel.send("### COP RPG Rolls")
-    cop_commands = ["gl", "gl+5", "gl-3", "gl+2", "gl-1"]
-    for cop_command in cop_commands:
-        await msg.channel.send(cop_command)
-        response = responses.handle_response(cop_command, msg.author, msg.author.id)
-        if response:
-            await msg.channel.send(response)
-        await asyncio.sleep(1.0)
 
-    # Test negative cases for advantage/disadvantage
-    await msg.channel.send("### Negative Tests - Invalid Advantage/Disadvantage")
-    invalid_adv_dis = ["1d6a", "1d12d", "1d8a+5", "1d4d-2"]
-    for invalid_cmd in invalid_adv_dis:
-        await msg.channel.send(f"(POWINNO FAILNAC) {invalid_cmd}")
+async def run_legacy_autotest(msg) -> None:
+    rolls = [1, 10, 1000, 99999]
+
+    await msg.channel.send("# ***Startuje Autotest - Widoczny.***")
+
+    ## Positive Tests
+    await msg.channel.send("## Positive Tests")
+
+    # Regular rolls
+    await msg.channel.send("### Regular Rolls")
+    regular_dice = ["2", "3", "4", "6", "8", "10", "12", "16", "20", "24", "30", "100", "1000"]
+    await _send_commands(msg, [f"{roll}d{die}" for roll in rolls for die in regular_dice])
+
+    # Mork Borg k66
+    await msg.channel.send("### Mork Borg k66")
+    await _send_commands(msg, [f"{roll}d66" for roll in rolls])
+
+    # Advantage / Disadvantage
+    await msg.channel.send("### Advantage / Disadvantage")
+    adv_dis_dice = ["20a", "20d", "100a", "100d", "20a+100", "20d+100"]
+    await _send_commands(msg, [f"{roll}d{die}" for roll in rolls for die in adv_dis_dice])
+
+    # Call of Cthulhu
+    await msg.channel.send("### Call of Cthulhu")
+    coc_dice = ["100kk", "100pp", "100k", "100p"]
+    await _send_commands(msg, [f"{roll}d{die}" for roll in rolls for die in coc_dice])
+
+    # Modifier Rolls
+    await msg.channel.send("### Modifier Rolls")
+    modifier_dice = ["20*2", "20+2", "20-2", "10+2+2+5-3*2"]
+    await _send_commands(msg, [f"{roll}d{die}" for roll in rolls for die in modifier_dice])
+
+    # Statystyki D&D i Help
+    await msg.channel.send("### Statystyki D&D & Help")
+    await _send_commands(msg, ["statystyki_dnd", "help"])
+
+    # COP RPG
+    await msg.channel.send("### COP RPG Rolls")
+    await _send_commands(msg, ["gl", "gl+5", "gl-3", "gl+2", "gl-1"])
+
+    # DaggerHeart
+    await msg.channel.send("### DaggerHeart Rolls")
+    await _send_commands(msg, ["dh", "dh+3", "dh-2", "dh+2-1"])
+    
+    # Negative Tests
+    await msg.channel.send("## Negative Tests")
+
+    # Negative Tests - Regular Rolls
+    await msg.channel.send("### Invalid Regular Rolls")
+    invalid_regular = ["1d11", "1d7", "1d9"]
+    for invalid_cmd in invalid_regular:
+        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
         response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
         if response:
             await msg.channel.send(response)
         await asyncio.sleep(1.0)
 
-    await msg.channel.send("# ***Zakonczono Autotest Legacy.***")
+    # Negative Tests - Advantage/Disadvantage
+    await msg.channel.send("### Invalid Advantage/Disadvantage")
+    invalid_adv_dis = ["1d6a", "1d12d", "1d8a+5", "1d4d-2"]
+    for invalid_cmd in invalid_adv_dis:
+        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
+        response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
+        if response:
+            await msg.channel.send(response)
+        await asyncio.sleep(1.0)
+
+    # Negative Tests - Call of Cthulhu
+    await msg.channel.send("### Invalid Call of Cthulhu")
+    invalid_coc = ["1d20p", "1d20k", "1d6pp", "1d100kp", "1d100pk"]
+    for invalid_cmd in invalid_coc:
+        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
+        response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
+        if response:
+            await msg.channel.send(response)
+        await asyncio.sleep(1.0)
+
+    await msg.channel.send("# ***Zakonczono Autotest - Widoczny.***")
