@@ -17,12 +17,12 @@ dices = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
 dnd_dis_advantage_dice = [20, 100]
 apologize_message = (
-    "Nie mam takiej kostki.\n"
+    "🎲 Nie mam takiej kostki. \n"
     "Wpisz *help*, żeby zobaczyć dostępne rzuty."
 )
 
 sorry_response = (
-    "Nie znam tej komendy.\n"
+    "🤷 Nie znam tej komendy.\n"
     "Wpisz ***help***, żeby zobaczyć dostępne opcje."
 )
 
@@ -33,7 +33,7 @@ help_response = (
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
     "  Nie wszystkie funkcje obsługują równania, tylko te gdzie ma to sens w zasadach gry.\n"
-    "  Nie zapominaj o kolejności wykonywania działań. ;)\n"
+    "  Nie zapominaj o kolejności wykonywania działań. 😏\n"
     "- Rzut Przewaga/Utrudnienie D&D 5e(d20) i Mothership(d100): ***1k20a*** lub ***1k20d***. Działa również z modyfikatorem.\n"
     "- Rzut Premiowy/Karny Call Of Cthulu: ***1k100p*** lub ***1k100k***.\n"
     "- Podwójny Rzut Premiowy/Karny Call Of Cthulu: ***1k100pp*** lub ***1k100kk***.\n"
@@ -46,12 +46,12 @@ help_response = (
 )
 
 character_limit_response = (
-    "**- Wiadomość była za długa, więc uciąłem część rzutów.\n"
+    "**- ✂️ Wiadomość była za długa dla Discorda, uciąłem część rzutów.\n"
     "Spróbuj mniejszej liczby rzutów." + "**"
 )
 
 max_amountofrolls_message = (
-    "Maksymalna liczba kości to 9999.\n"
+    "⛔ Maksymalna liczba kości to 9999.\n"
     "Wpisz ***help*** po więcej info."
 )
 
@@ -81,21 +81,23 @@ def _evaluate_ast(node: ast.AST) -> Union[int, float]:
         if isinstance(node.op, ast.Mult):
             return left * right
         if isinstance(node.op, ast.Div):
+            if right == 0:
+                raise ValueError("⚠️ Nie można dzielić przez 0 ;)")
             return left / right
-        raise ValueError("Niepoprawna operacja arytmetyczna")
+        raise ValueError("⚠️ Niepoprawna operacja arytmetyczna")
     if isinstance(node, ast.UnaryOp):
         operand = _evaluate_ast(node.operand)
         if isinstance(node.op, ast.UAdd):
             return +operand
         if isinstance(node.op, ast.USub):
             return -operand
-        raise ValueError("Niepoprawny operator")
+        raise ValueError("⚠️ Niepoprawny operator")
     if isinstance(node, ast.Constant):
         value = node.value
         if not isinstance(value, (int, float)):
-            raise ValueError("Niepoprawna liczba w wyrażeniu")
+            raise ValueError("⚠️ Niepoprawna liczba w wyrażeniu")
         return value
-    raise ValueError("Nieobsługiwany element wyrażenia")
+    raise ValueError("⚠️ Nieobsługiwany element wyrażenia")
 
 
 def safe_eval(expression: str) -> Union[int, float]:
@@ -103,7 +105,7 @@ def safe_eval(expression: str) -> Union[int, float]:
         node = ast.parse(expression.strip(), mode="eval").body
         return _evaluate_ast(node)
     except (SyntaxError, ValueError) as exc:
-        raise ValueError("Niepoprawne wyrażenie modyfikatora") from exc
+        raise ValueError("⚠️ Niepoprawne wyrażenie modyfikatora") from exc
 
 
 def _normalize_rolls(rolls: list[int], sort_rolls: bool, author_name: str) -> list[int]:
