@@ -358,13 +358,6 @@ def dagger_heart_roll(
     operator: Optional[str],
     equation: Optional[str],
 ) -> RollResult:
-    """
-    Daggerheart: 2d12 (Hope i Fear), wynik = suma.
-    - Hope > Fear -> Hope
-    - Fear > Hope -> Fear
-    - Hope == Fear -> Krytyk
-    Opcjonalny modyfikator działa na sumę.
-    """
     hope = r(1, 12)
     fear = r(1, 12)
     total = hope + fear
