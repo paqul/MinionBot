@@ -4,6 +4,10 @@ from typing import Union
 
 from rolls import RollResult, apologize_message
 
+
+def _ansi_yellow(text: str) -> str:
+    return f"```ansi\n\u001b[33m{text}\u001b[0m\n```"
+
 def _ansi_yellow_total(label: str, total: str) -> str:
     return _ansi_yellow(f"{label} {total}")
 
