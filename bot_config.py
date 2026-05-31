@@ -146,6 +146,9 @@ async def send_msg(msg, user_msg, bot_self_mention_string, private):
                 print(E)
         else:
             try:
+                if not responses.should_handle_message(user_msg):
+                    return
+
                 resp = responses.handle_response(user_msg, msg.author, msg.author.id)
                 if resp:
                     (

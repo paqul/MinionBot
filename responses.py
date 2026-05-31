@@ -6,6 +6,19 @@ import sys
 registry = CommandRegistry()
 
 
+def should_handle_message(msg: str) -> bool:
+    normalized_msg = msg.lower().strip()
+
+    if normalized_msg == "help":
+        return True
+
+    for command in registry.commands:
+        if command.matches(normalized_msg):
+            return True
+
+    return False
+
+
 def handle_response(msg, author, author_id) -> str:
     msg = msg.lower().strip()
 
