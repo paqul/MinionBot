@@ -27,8 +27,8 @@ def format_roll_result(result: RollResult) -> str:
 
     if result.dice_type is not None:
         if result.bonus in ("p", "k"):
-            return f"({result.author_mention} [k{result.dice}, *{result.dice_type}*]): {result.rolls}"
-        return f"({result.author_mention} [*{result.dice_type}*]): {result.rolls}"
+            return f"({result.author_mention} [k{result.dice}, ***{result.dice_type}***]): {result.rolls}"
+        return f"({result.author_mention} [***{result.dice_type}***]): {result.rolls}"
 
     if result.dice is not None:
         return f"({result.author_mention} k{result.dice}): {result.rolls}"
