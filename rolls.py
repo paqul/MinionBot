@@ -28,7 +28,7 @@ sorry_response = (
 
 help_response = (
     "Aby uzyskać wynik rzutu kością wpisz komendę ***<ilość kości>k<ilość ściań kości>*** (np. *1k100, 3k20, 2k10* itp.).\n"
-    "Maksymalna <ilość kości> to 9999.\n"
+    "Maksymalna <ilość kości> to ***9999***.\n"
     "Obecnie wspierane kości ***" + str(dices) + "***.\n"
     "Dostępne Funkcje dodatkowe:\n"
     "- Rzut z modyfikatorem: ***1k10+2-5*** dozwolone działania +,-,*. \n"
