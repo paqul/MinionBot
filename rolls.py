@@ -384,7 +384,7 @@ def dagger_heart_roll(
 
     return RollResult(
         author_mention=author_mention,
-        rolls=f"Hope: {hope}, Fear: {fear}",
+        rolls=f"H: {hope}, F: {fear}",
         total=total,
         dice_type=dice_type,
         bonus="dh",

@@ -11,6 +11,7 @@ Currently it returns messages only in Polish language.
 - Bonus/Penalty dice for Call of Cthulhu
 - Special d66 roll for Mork Borg
 - COP RPG rolls (gl command with optional modifiers)
+- DaggerHeart rolls (Hope/Fear with modifiers and critical hits)
 - D&D stat block generation
 - Auto-test functionality
 - Dynamic channel whitelist updates via mention command (authorized users [by user id] only Friik, Paqul)
