@@ -17,7 +17,7 @@ def format_roll_result(result: RollResult) -> str:
 
     if result.bonus == "dh":
         total_value = _format_number(result.total) if result.total is not None else "?"
-        return f"({result.author_mention}): ***Wynik: __{total_value}*** **{result.dice_type}**__ | **{result.rolls}**"
+        return f"({result.author_mention}): ***Wynik:*** __***{total_value}*** **{result.dice_type}**__ | **{result.rolls}**"
 
     if result.total is not None:
         total_value = _format_number(result.total)
