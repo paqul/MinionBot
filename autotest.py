@@ -236,7 +236,7 @@ async def run_legacy_autotest(msg) -> None:
     await msg.channel.send("### Invalid Regular Rolls")
     invalid_regular = ["1d11", "1d7", "1d9"]
     for invalid_cmd in invalid_regular:
-        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
+        await msg.channel.send(f"**(Oczekiwany Fail)** {invalid_cmd}")
         response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
         if response:
             await msg.channel.send(response)
@@ -246,7 +246,7 @@ async def run_legacy_autotest(msg) -> None:
     await msg.channel.send("### Invalid Advantage/Disadvantage")
     invalid_adv_dis = ["1d6a", "1d12d", "1d8a+5", "1d4d-2"]
     for invalid_cmd in invalid_adv_dis:
-        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
+        await msg.channel.send(f"**(Oczekiwany Fail)** {invalid_cmd}")
         response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
         if response:
             await msg.channel.send(response)
@@ -256,7 +256,7 @@ async def run_legacy_autotest(msg) -> None:
     await msg.channel.send("### Invalid Call of Cthulhu")
     invalid_coc = ["1d20p", "1d20k", "1d6pp", "1d100kp", "1d100pk"]
     for invalid_cmd in invalid_coc:
-        await msg.channel.send(f"(Oczekiwany Fail) {invalid_cmd}")
+        await msg.channel.send(f"**(Oczekiwany Fail)** {invalid_cmd}")
         response = responses.handle_response(invalid_cmd, msg.author, msg.author.id)
         if response:
             await msg.channel.send(response)
