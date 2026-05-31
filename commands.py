@@ -35,7 +35,7 @@ class MorkborgRollCommand(RollCommand):
     def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
         amount_of_rolls = int(match.group(1))
         if amount_of_rolls > 9999:
-            raise ValueError(max_amountofrolls_message)
+            return RollResult(author_mention=author_mention, rolls="", error=max_amountofrolls_message)
         dice = int(match.group(2))
         return morkborg_roll(author_mention, author_name, amount_of_rolls, dice)
 
@@ -46,7 +46,7 @@ class AdvantageDisadvantageRollCommand(RollCommand):
     def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
         amount_of_rolls = int(match.group(1))
         if amount_of_rolls > 9999:
-            raise ValueError(max_amountofrolls_message)
+            return RollResult(author_mention=author_mention, rolls="", error=max_amountofrolls_message)
         dice = int(match.group(2))
         bonus = match.group(3)
         operator = match.group(4) if match.group(4) else None
@@ -60,7 +60,7 @@ class CallOfCthulhuRollCommand(RollCommand):
     def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
         amount_of_rolls = int(match.group(1))
         if amount_of_rolls > 9999:
-            raise ValueError(max_amountofrolls_message)
+            return RollResult(author_mention=author_mention, rolls="", error=max_amountofrolls_message)
         dice = int(match.group(3))
         bonus_or_penalty = match.group(4)
         double_bonus_or_penalty = match.group(5)
@@ -78,7 +78,7 @@ class ModifierRollCommand(RollCommand):
     def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
         amount_of_rolls = int(match.group(1))
         if amount_of_rolls > 9999:
-            raise ValueError(max_amountofrolls_message)
+            return RollResult(author_mention=author_mention, rolls="", error=max_amountofrolls_message)
         dice = int(match.group(2))
         operator = match.group(3)
         equation = match.group(4)
@@ -91,7 +91,7 @@ class RegularRollCommand(RollCommand):
     def execute(self, author_mention: str, author_name: str, match: re.Match[str]) -> RollResult:
         amount_of_rolls = int(match.group(1))
         if amount_of_rolls > 9999:
-            raise ValueError(max_amountofrolls_message)
+            return RollResult(author_mention=author_mention, rolls="", error=max_amountofrolls_message)
         dice = int(match.group(2))
         return roll_regular(author_mention, author_name, amount_of_rolls, dice)
 

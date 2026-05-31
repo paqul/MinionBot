@@ -17,13 +17,13 @@ dices = [2, 3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 30, 66, 100, 1000]
 call_of_cthlu_penalty_bonus_dice = [100]
 dnd_dis_advantage_dice = [20, 100]
 apologize_message = (
-    "Bardzo mi przykro ale nie posiadam takiej kostki\n"
-    "Po wiecej informacji i pomoc napisz komendę *help*"
+    "Nie mam takiej kostki.\n"
+    "Wpisz *help*, żeby zobaczyć dostępne rzuty."
 )
 
 sorry_response = (
-    "Proszę o wybaczenie, ale nie posiadam takiej funkcji.\n"
-    "Po więcej informacji i pomoc, napisz komendę ***help***."
+    "Nie znam tej komendy.\n"
+    "Wpisz ***help***, żeby zobaczyć dostępne opcje."
 )
 
 help_response = (
@@ -46,13 +46,13 @@ help_response = (
 )
 
 character_limit_response = (
-    "**- Wynik przekroczył dozwolony limit znaków w wiadomości Discord, część rzutów została przycięta.\n"
-    "Spróbuj zmniejszyć ilość rzutów." + "**"
+    "**- Wiadomość była za długa, więc uciąłem część rzutów.\n"
+    "Spróbuj mniejszej liczby rzutów." + "**"
 )
 
 max_amountofrolls_message = (
-    "Maksymalna <ilość kości> to 9999.\n"
-    "Po więcej informacji i pomoc, napisz komendę ***help***."
+    "Maksymalna liczba kości to 9999.\n"
+    "Wpisz ***help*** po więcej info."
 )
 
 MAX_AMOUNT_OF_ROLLS = 9999

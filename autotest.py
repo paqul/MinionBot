@@ -16,7 +16,7 @@ from commands import (
     RegularRollCommand,
     DaggerHeartRollCommand
 )
-from rolls import apologize_message, sorry_response
+from rolls import apologize_message, max_amountofrolls_message, sorry_response
 
 
 @dataclass
@@ -25,6 +25,7 @@ class AutoTestCase:
     command: str
     expect_sorry: bool = False
     expect_apologize: bool = False
+    expect_max_rolls: bool = False
 
 
 @dataclass
@@ -72,7 +73,7 @@ def build_dynamic_test_cases() -> list[AutoTestCase]:
     tests.extend(
         [
             AutoTestCase("help", "help"),
-            AutoTestCase("too_many_rolls", "10000d20", expect_sorry=True),
+            AutoTestCase("too_many_rolls", "10000d20", expect_max_rolls=True),
             AutoTestCase("unknown_command", "to_nie_istnieje", expect_sorry=True),
             AutoTestCase("advantage_invalid_dice", "1d6a", expect_sorry=True),
             AutoTestCase("disadvantage_invalid_dice", "1d12d", expect_sorry=True),
@@ -109,6 +110,7 @@ def _run_single_test_case(test_case: AutoTestCase, author) -> AutoTestResult:
 
     got_sorry = response == sorry_response
     got_apologize = response == apologize_message
+    got_max_rolls = response == max_amountofrolls_message
 
     if test_case.expect_sorry and not got_sorry:
         got_text = "otrzymano sorry_response" if got_sorry else "otrzymano odpowiedz"
@@ -125,8 +127,22 @@ def _run_single_test_case(test_case: AutoTestCase, author) -> AutoTestResult:
             passed=False,
             details=f"oczekiwano apologize_message, otrzymano: {response[:60]!r}",
         )
-    if not test_case.expect_sorry and not test_case.expect_apologize and (got_sorry or got_apologize):
-        got_text = "sorry_response" if got_sorry else "apologize_message"
+    if test_case.expect_max_rolls and not got_max_rolls:
+        return AutoTestResult(
+            label=test_case.label,
+            command=test_case.command,
+            passed=False,
+            details=f"oczekiwano max_amountofrolls_message, otrzymano: {response[:60]!r}",
+        )
+    if not test_case.expect_sorry and not test_case.expect_apologize and not test_case.expect_max_rolls and (
+        got_sorry or got_apologize or got_max_rolls
+    ):
+        if got_sorry:
+            got_text = "sorry_response"
+        elif got_apologize:
+            got_text = "apologize_message"
+        else:
+            got_text = "max_amountofrolls_message"
         return AutoTestResult(
             label=test_case.label,
             command=test_case.command,
