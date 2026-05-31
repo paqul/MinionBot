@@ -370,17 +370,14 @@ def dagger_heart_roll(
 
     if hope == fear:
         dice_type = "Krytyk"
-        dice_marker = "K"
     elif hope > fear:
         dice_type = "Hope"
-        dice_marker = "H"
     else:
         dice_type = "Fear"
-        dice_marker = "F"
 
     return RollResult(
         author_mention=author_mention,
-        rolls=dice_marker,
+        rolls=f"H: {hope}, F: {fear}",
         total=total,
         dice_type=dice_type,
         bonus="dh",
