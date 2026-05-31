@@ -3,7 +3,7 @@
 import discord
 from discord.ext import tasks, commands
 import responses
-import os
+from params import token
 import asyncio
 import sys
 import time
@@ -14,12 +14,7 @@ from autotest import build_summary_message, run_legacy_autotest, run_summary_aut
 from channels_whitelist import channels_on, channels_on_test
 from whitelist_storage import ChannelWhitelistStore
 
-# Load token from environment variable, fall back to params.py for local dev
-try:
-    key = os.environ["DISCORD_TOKEN"]
-except KeyError:
-    from params import token
-    key = token
+key = token
 channels_on = channels_on #Imports Withelist from channels_whitelist.py
 channels_on_test = channels_on_test #Imports Withelist on test from channels_whitelist.py
 bot_self_mention_string = ""
