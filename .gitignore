@@ -118,6 +118,7 @@ share/python-wheels/
 *.egg
 members.py
 params.py
+.env
 MANIFEST
 
 # PyInstaller
