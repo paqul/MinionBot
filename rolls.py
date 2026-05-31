@@ -367,11 +367,11 @@ def dagger_heart_roll(
             return RollResult(author_mention=author_mention, rolls="", error="Niepoprawny modyfikator")
 
     if hope == fear:
-        dice_type = "❗Krytyk"
+        dice_type = "Krytyk 🎯"
     elif hope > fear:
-        dice_type = "👼Hope"
+        dice_type = "Hope 🌤️"
     else:
-        dice_type = "😱Fear"
+        dice_type = "Fear 😱"
 
     return RollResult(
         author_mention=author_mention,
