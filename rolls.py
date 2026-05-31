@@ -95,11 +95,6 @@ def _evaluate_ast(node: ast.AST) -> Union[int, float]:
         if not isinstance(value, (int, float)):
             raise ValueError("Niepoprawna liczba w wyrażeniu")
         return value
-    if isinstance(node, ast.Num):
-        value = node.n
-        if not isinstance(value, (int, float)):
-            raise ValueError("Niepoprawna liczba w wyrażeniu")
-        return value
     raise ValueError("Nieobsługiwany element wyrażenia")
 
 
@@ -193,10 +188,8 @@ def dis_advantage_dnd_roll(
     for sublist in evaluated_rolls:
         sublist.sort(reverse=(bonus == "a"))
 
-    rolls_text = ", ".join(
-        f"[__**{sublist[0]}**__, {', '.join(str(x) for x in sublist[1:])}]"
-        for sublist in evaluated_rolls
-    )
+    rolls_text = ", ".join(str(sublist) for sublist in evaluated_rolls)
+    
     return RollResult(
         author_mention=author_mention,
         rolls=rolls_text,
