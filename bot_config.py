@@ -18,9 +18,9 @@ import time
 key = token
 channels_on = ["gra-u-szadka", "testy", "DD 3e", "ZEW", "WARHAMMER", "GRA", "CYKLE", "DCC", "OSE",
                "jednostrzały", "DD 5e", "CYBERPUNKRED", "Sesja publiczna", "SESJA PUBLICZNA", "generau-czat",
-               "DELTA GREEN", "Mothership", "Traveller", "cp", "dd",
+               "DELTA GREEN", "Mothership", "Traveller", "cp", "dd", 
                #DPS REQUIREMENT
-               "Off", "Tomas_DPS", "Basia_DPS", "Mirko", "Inne", "Paqul", "Kot", "Stream", "dyskusje", "Coen"
+               "Off", "Tomas_DPS", "Basia_DPS", "Mirko", "Inne", "Paqul", "Kot", "Stream", "dyskusje", "Coen", "Wbear", "Shadow"
                #END OF DPS REQUIREMENT
                #COENCAVE REQUIREMENT
                "Sesja-Coena", "Pogaduszki", "grane-w-gre"]
