@@ -8,7 +8,7 @@ import discord
 from whitelist_storage import ChannelWhitelistStore
 
 
-ADD_CHANNEL_PATTERN = re.compile(r"^add_channel\s+(.+)$", re.IGNORECASE)
+ADD_CHANNEL_PATTERN = re.compile(r"^add_bot_to_channel\s+(.+)$", re.IGNORECASE)
 
 
 def _extract_mention_body(message_content: str, bot_user_id: int) -> Optional[str]:
@@ -35,6 +35,12 @@ def _resolve_channel(raw_value: str, guild: discord.Guild) -> Optional[discord.a
     requested_name = _remove_quotes(raw_value)
     if not requested_name:
         return None
+
+    # Accept either channel name (general) or hash-prefixed form (#general).
+    if requested_name.startswith("#"):
+        requested_name = requested_name[1:].strip()
+        if not requested_name:
+            return None
 
     requested_name_lower = requested_name.lower()
     for channel in guild.channels:
@@ -68,7 +74,7 @@ def handle_admin_mention_command(
 
     channel_argument = add_channel_match.group(1).strip()
     if not channel_argument:
-        return "Uzycie: @bot Add_Channel <nazwa_kanalu_lub_mention_kanalu>."
+        return "Uzycie: @bot Add_Bot_To_Channel <nazwa_kanalu_lub_mention_kanalu>."
 
     channel = _resolve_channel(channel_argument, msg.guild)
     if channel is None:

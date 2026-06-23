@@ -121,15 +121,6 @@ def setup_bot():
     client.run(token)
     # bot.run(token)
 
-
-async def send_private(member, msg):
-    try:
-        response = responses.handle_response(msg, member.name, member.id)
-        await member.send(response)
-    except Exception as E:
-        print(E)
-
-
 async def send_msg(msg, user_msg, bot_self_mention_string, private):
     # print(msg.channel.name)
     # print(msg)

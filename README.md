@@ -76,7 +76,7 @@ Once the bot is running and added to your Discord server, you can use the follow
 - COP RPG roll: gl (e.g., gl, gl+5, gl-3) - rolls 1d6 vs 2d10 with optional modifier
 - Generate D&D stat block: statystyki_dnd
 - Get help: help
-- Add channel to whitelist (admin only): @BotName Add_Channel <channel_name> or @BotName Add_Channel #channel
+- Add channel to whitelist (admin only): @BotName Add_Bot_To_Channel <channel_name>, @BotName Add_Bot_To_Channel #channel, or @BotName Add_Bot_To_Channel <#channel_id>
 - Run admin autotest summary: @BotName autotest or @BotName autotest summary
 - Run admin autotest legacy mode: @BotName autotest legacy
 - Stop legacy autotest (admin only): @BotName stop
