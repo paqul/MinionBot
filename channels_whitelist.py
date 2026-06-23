@@ -31,6 +31,9 @@ channels_on = [
     "Stream",
     "dyskusje",
     "Coen",
+    "Naiya",
+    "Wbear",
+    "Shadow",
     # END OF DPS Channels
     # COENCAVE Channels
     "Sesja-Coena",
