@@ -10,28 +10,46 @@ Currently it returns messages only in Polish language.
 - Advantage/Disadvantage rolls for D&D 5e
 - Bonus/Penalty dice for Call of Cthulhu
 - Special d66 roll for Mork Borg
+- COP RPG rolls (gl command with optional modifiers)
+- DaggerHeart rolls (Hope/Fear with modifiers and critical hits)
 - D&D stat block generation
 - Auto-test functionality
+- Dynamic channel whitelist updates via mention command (authorized users [by user id] only Friik, Paqul)
 
 ## How to Deploy
 
 1. Clone this repository to your local machine.
 2. Install the required dependencies:
 pip install discord.py
-3. Create a `params.py` file in the root directory and add your Discord bot token:
-```python
-token = "YOUR_DISCORD_BOT_TOKEN"
+3. Copy `.env.example` to `.env` and fill in your Discord bot token:
 ```
-4. Run the bot: 
+DISCORD_TOKEN=your_token_here
+```
+   > **Note:** `params.py` (still gitignored) is also supported as a legacy local fallback — the bot uses the env var first, then falls back to `params.py` if the env var is not set.
+4. Run the bot manually: 
 python main.py
+5. (Optional) Setup a service so your bot will automatically start with the machine and restart on crash. For Instructions refer to next section
 
-## Set up auto_wake_up bot after crash/disconnection/down
+## Setting Up Auto-Restart with systemd (Linux)
 
-1. On your linux server in /etc/systemd/system copy file MinionBot.service from linux_server folder
-2. Change "User" and "WorkingDirectory" according your will (e.g. User=user1, WorkingDirectory=/home/user1/MinionBot)
-3. In terminal use command systemctl enable Minionbot.service 
-4. In terminal use command systemctl start Minionbot.service
-5. After using this setup don't use point 4 from chapter "How to Deploy" because command "python main.py" is in file MinionBot.service.txt
+To ensure MinionBot automatically restarts after a reboot, crash, disconnection, or downtime, follow these steps:
+
+1. Copy the `MinionBot.service` file from the `linux_server` folder to `/etc/systemd/system` on your Linux server.
+2. Edit the `MinionBot.service` file and update the `User` and `WorkingDirectory` fields to match your setup (e.g., `User=user1`, `WorkingDirectory=/home/user1/MinionBot`).
+3. Create a `.env` file in your bot's working directory on the server with your bot token:
+```
+DISCORD_TOKEN=your_token_here
+```
+   The systemd service reads this file automatically via `EnvironmentFile=` — no `params.py` needed on the server.
+4. Enable the service by running:
+   ```
+   sudo systemctl enable MinionBot.service
+   ```
+5. Start the service with:
+   ```
+   sudo systemctl start MinionBot.service
+   ```
+6. **Note:** After setting up systemd, do not manually run `python main.py` as described in the "How to Deploy" section. The systemd service will handle starting the bot.
 
 ## Structure Overview
 
@@ -40,7 +58,9 @@ python main.py
 - `rolls.py`: Contains the logic for various dice rolling functions and formatting response messages.
 - `roles.py`: Handles role assignments for new members (customizable).
 
-The bot also includes an auto-test feature that can be triggered with the command `@BotName autotest`. This runs through a series of predefined rolls to ensure all functionalities are working correctly.
+The bot also includes an auto-test feature for admins from the hardcoded user ID list.
+Use `@BotName autotest` (or `@BotName autotest summary`) to run dynamic tests and get one summary message.
+Use `@BotName autotest legacy` to iterate through test commands on Discord chat like before.
 
 ## How to Use
 
@@ -53,8 +73,13 @@ Once the bot is running and added to your Discord server, you can use the follow
 - Bonus die & double bonus die(Call of Cthulhu): XdYp (e.g., 1d100p, 1d100pp)
 - Penalty die & double penalty die (Call of Cthulhu): XdYk (e.g., 1d100k, 1d100kk)
 - Mork Borg special roll: Xd66 (e.g., 1d66)
+- COP RPG roll: gl (e.g., gl, gl+5, gl-3) - rolls 1d6 vs 2d10 with optional modifier
 - Generate D&D stat block: statystyki_dnd
 - Get help: help
+- Add channel to whitelist (admin only): @BotName Add_Bot_To_Channel <channel_name>, @BotName Add_Bot_To_Channel #channel, or @BotName Add_Bot_To_Channel <#channel_id>
+- Run admin autotest summary: @BotName autotest or @BotName autotest summary
+- Run admin autotest legacy mode: @BotName autotest legacy
+- Stop legacy autotest (admin only): @BotName stop
 
 Replace X with the number of dice, Y with the type of die, and Z with the modifier value.
 How It Works
@@ -65,9 +90,27 @@ Key components:
 
 You can customize the bot by modifying the following:
 
-Allowed channels in bot_config.py
-Role assignments in roles.py
-Supported dice types in rolls.py
+- Allowed channels in config\channel_whitelist.json
+- Supported dice types in rolls.py
+
+### Whitelist Admin Users (hardcoded)
+
+Users allowed to add channels from Discord messages are configured in bot_config.py:
+
+```python
+ALLOWED_ADMIN_USER_IDS = {
+   111111111111111111,
+}
+```
+Replace the current values with your preferred Discord user IDs.
+
+### Dynamic Whitelist Storage
+
+The bot stores whitelist state in:
+
+config/channel_whitelist.json
+
+On first run, the file is created and seeded with values from channels_whitelist.py.
 
 ## Contributing
 
