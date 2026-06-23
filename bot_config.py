@@ -4,6 +4,9 @@ import discord
 from discord.ext import tasks, commands
 import responses
 from params import token
+import threading
+import os
+import io
 import asyncio
 import sys
 import time
