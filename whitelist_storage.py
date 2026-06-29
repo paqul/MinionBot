@@ -75,8 +75,9 @@ class ChannelWhitelistStore:
         with self._lock:
             return channel_id in self._channel_ids or normalized_name in self._channel_names
 
-    def _git_commit_whitelist(self, channel_name: str) -> None:
+    def _git_commit_whitelist(self, channel_name: str, action: str) -> None:
         repo_root = Path(__file__).resolve().parent
+        commit_message = f"whitelist: {action} channel #{channel_name}"
         try:
             subprocess.run(
                 ["git", "add", str(self.file_path)],
@@ -85,12 +86,12 @@ class ChannelWhitelistStore:
                 capture_output=True,
             )
             subprocess.run(
-                ["git", "commit", "-m", f"whitelist: add channel #{channel_name}"],
+                ["git", "commit", "-m", commit_message],
                 cwd=repo_root,
                 check=True,
                 capture_output=True,
             )
-            print(f"Git commit: whitelist: add channel #{channel_name}")
+            print(f"Git commit: {commit_message}")
         except subprocess.CalledProcessError as exc:
             stderr = exc.stderr.decode(errors="replace").strip() if exc.stderr else ""
             print(f"Git commit failed: {stderr}")
@@ -105,5 +106,23 @@ class ChannelWhitelistStore:
             self._channel_names.add(normalized_name)
             self._save_unlocked()
 
-        self._git_commit_whitelist(channel_name)
+        self._git_commit_whitelist(channel_name, "add")
         return True, "added"
+
+    def remove_channel(self, channel_id: int, channel_name: str) -> tuple[bool, str]:
+        normalized_name = self._normalize_name(channel_name)
+        with self._lock:
+            has_channel_id = channel_id in self._channel_ids
+            has_channel_name = normalized_name in self._channel_names
+
+            if not has_channel_id and not has_channel_name:
+                return False, "not_whitelisted"
+
+            if has_channel_id:
+                self._channel_ids.remove(channel_id)
+            if has_channel_name:
+                self._channel_names.remove(normalized_name)
+            self._save_unlocked()
+
+        self._git_commit_whitelist(channel_name, "remove")
+        return True, "removed"
