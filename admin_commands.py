@@ -138,13 +138,8 @@ def handle_admin_mention_command(
         return "Nie znaleziono kanalu. Uzyj #nazwa dla tekstowego albo #!nazwa dla glosowego."
 
     if remove_channel_match is not None:
-        removed, reason = whitelist_store.remove_channel(channel.id, channel.name)
-        if not removed and reason == "not_whitelisted":
-            return f"Kanal #{channel.name} nie jest na whiteliscie."
-        return f"Usunieto kanal #{channel.name} z whitelisty."
+        result = whitelist_store.remove_channel(channel.id, channel.name)
+        return result.message
 
-    added, reason = whitelist_store.add_channel(channel.id, channel.name)
-    if not added and reason == "already_whitelisted":
-        return f"Kanal #{channel.name} jest juz na whiteliscie."
-
-    return f"Dodano kanal #{channel.name} do whitelisty."
+    result = whitelist_store.add_channel(channel.id, channel.name)
+    return result.message
