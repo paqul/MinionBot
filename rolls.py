@@ -263,8 +263,6 @@ def cop_roll(
     COP RPG Roll: 1d6 base (with optional modifier) vs 2d10
     Outcomes: Triumf (success), Fuks (critical), Skucha (failure)
     """
-    rolls = []
-
     d6_base = r(1, 6)
 
     # Apply modifier if provided
@@ -281,22 +279,22 @@ def cop_roll(
     # Roll 2d10
     d10_rolls = [r(1, 10), r(1, 10)]
 
-    rolls.append(d6_modified)
-    rolls.extend(d10_rolls)
+    rolls = [d6_base, d10_rolls[0], d10_rolls[1]]
 
     # Determine outcome
     if d6_modified > d10_rolls[0] and d6_modified > d10_rolls[1]:
         dice_type = "Triumf"
     elif d10_rolls[0] < d6_modified <= d10_rolls[1]:
-        dice_type = "Fuks - pierwszy"
+        dice_type = "Fuks - Pierwszy"
     elif d10_rolls[1] < d6_modified <= d10_rolls[0]:
-        dice_type = "Fuks - drugi"
+        dice_type = "Fuks - Drugi"
     else:
         dice_type = "Skucha"
 
     return RollResult(
         author_mention=author_mention,
         rolls=rolls,
+        total=d6_modified if (operator and equation) else None,
         dice_type=dice_type,
         bonus="gl",
     )
