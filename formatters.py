@@ -15,6 +15,19 @@ def format_roll_result(result: RollResult) -> str:
     if result.error:
         return result.error
 
+    if result.bonus == "gl":
+        d6_roll, d10_first, d10_second = result.rolls
+        if result.total is not None:
+            total_value = _format_number(result.total)
+            return (
+                f"({result.author_mention} [k6]): **{d6_roll}** | **Wynik: {total_value}** "
+                f"vs [2k10]: **{d10_first}**, **{d10_second}** -> *{result.dice_type}*"
+            )
+        return (
+            f"({result.author_mention} [k6]): **{d6_roll}** "
+            f"vs [2k10]: **{d10_first}**, **{d10_second}** -> *{result.dice_type}*"
+        )
+
     if result.bonus == "dh":
         total_value = _format_number(result.total) if result.total is not None else "?"
         return f"({result.author_mention}): ***Wynik:*** __***{total_value}*** **{result.dice_type}**__ | {result.rolls}"
